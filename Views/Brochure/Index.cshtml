@@ -1,0 +1,83 @@
+@model IEnumerable<Walton_Happy_Travel.Models.Brochure>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DepartureDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PricePerPerson)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Catering)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxPeople)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxRooms)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accomodation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PricePerPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Catering)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxPeople)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxRooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Accomodation.Discriminator)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BrochureId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BrochureId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BrochureId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

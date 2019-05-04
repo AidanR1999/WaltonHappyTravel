@@ -1,0 +1,68 @@
+@model Walton_Happy_Travel.Models.Brochure
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Brochure</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DepartureDate" class="control-label"></label>
+                <input asp-for="DepartureDate" class="form-control" />
+                <span asp-validation-for="DepartureDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PricePerPerson" class="control-label"></label>
+                <input asp-for="PricePerPerson" class="form-control" />
+                <span asp-validation-for="PricePerPerson" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Catering" class="control-label"></label>
+                <select asp-for="Catering" class="form-control"></select>
+                <span asp-validation-for="Catering" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxPeople" class="control-label"></label>
+                <input asp-for="MaxPeople" class="form-control" />
+                <span asp-validation-for="MaxPeople" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxRooms" class="control-label"></label>
+                <input asp-for="MaxRooms" class="form-control" />
+                <span asp-validation-for="MaxRooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccomodationId" class="control-label"></label>
+                <select asp-for="AccomodationId" class ="form-control" asp-items="ViewBag.AccomodationId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

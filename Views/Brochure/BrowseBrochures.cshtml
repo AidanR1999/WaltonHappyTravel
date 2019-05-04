@@ -1,0 +1,12 @@
+@model Walton_Happy_Travel.ViewModels.ViewBrochuresViewModel
+
+@{
+    ViewData["Title"] = "Browse";
+}
+
+<h2>Brochures</h2>
+
+@foreach(var brochure in Model.Brochures)
+{
+    <p>brochure.Title</p>
+}
