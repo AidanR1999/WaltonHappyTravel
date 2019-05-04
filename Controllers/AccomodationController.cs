@@ -54,15 +54,41 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccomodationId,AccomodationName,AccomodationAddress,Description")] Accomodation accomodation)
+        public async Task<IActionResult> Create(CreateAccomodationViewModel accomodationViewModel, string type)
         {
+            Accomodation accomodation = null;
+
             if (ModelState.IsValid)
             {
+                switch(type)
+                {
+                    case "Hotel": 
+                        accomodation = new Hotel
+                        {
+                            AccomodationName = accomodationViewModel.AccomodationAddress,
+                            AccomodationAddress = accomodationViewModel.AccomodationAddress,
+                            Description = accomodationViewModel.Description,
+                            Rating = 5
+                        };
+                        break;
+                
+                    case "Private":
+                        accomodation = new Private
+                        {
+                            AccomodationName = accomodationViewModel.AccomodationAddress,
+                            AccomodationAddress = accomodationViewModel.AccomodationAddress,
+                            Description = accomodationViewModel.Description
+                        };
+                        break;
+                
+                    default:
+                        return View(accomodationViewModel);
+                }
                 _context.Add(accomodation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(accomodation);
+            return View(accomodationViewModel);
         }
 
         // GET: Accomodation/Edit/5
