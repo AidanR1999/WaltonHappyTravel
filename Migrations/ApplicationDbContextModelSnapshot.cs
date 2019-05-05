@@ -137,7 +137,7 @@ namespace WaltonHappyTravel.Migrations
 
                     b.Property<string>("AccomodationName");
 
-                    b.Property<int?>("CountryId");
+                    b.Property<int>("CountryId");
 
                     b.Property<string>("Description");
 
@@ -438,9 +438,10 @@ namespace WaltonHappyTravel.Migrations
 
             modelBuilder.Entity("Walton_Happy_Travel.Models.Accomodation", b =>
                 {
-                    b.HasOne("Walton_Happy_Travel.Models.Country")
+                    b.HasOne("Walton_Happy_Travel.Models.Country", "Country")
                         .WithMany("Accomodations")
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Walton_Happy_Travel.Models.Booking", b =>

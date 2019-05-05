@@ -49,7 +49,14 @@ namespace Walton_Happy_Travel.Controllers
         // GET: Brochure/Create
         public IActionResult Create()
         {
-            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "Discriminator");
+            ViewData["Catering"] = new SelectList(new List<Catering>
+            {
+                Catering.ALL_INCLUSIVE,
+                Catering.HALF_BOARD,
+                Catering.SELF_CATERING
+            });
+
+            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationId");
             ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryId");
             return View();
         }
@@ -67,7 +74,7 @@ namespace Walton_Happy_Travel.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "Discriminator", brochure.AccomodationId);
+            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationId", brochure.AccomodationId);
             ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryId", brochure.CategoryId);
             return View(brochure);
         }

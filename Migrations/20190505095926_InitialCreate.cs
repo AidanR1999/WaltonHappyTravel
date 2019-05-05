@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace WaltonHappyTravel.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -218,7 +218,7 @@ namespace WaltonHappyTravel.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     AccomodationAddress = table.Column<string>(nullable: true),
                     AccomodationName = table.Column<string>(nullable: true),
-                    CountryId = table.Column<int>(nullable: true),
+                    CountryId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
                     Rating = table.Column<int>(nullable: true)
@@ -231,7 +231,7 @@ namespace WaltonHappyTravel.Migrations
                         column: x => x.CountryId,
                         principalTable: "Countrys",
                         principalColumn: "CountryId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

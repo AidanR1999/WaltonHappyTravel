@@ -28,6 +28,11 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="CountryId" class="control-label"></label>
+                <input asp-for="CountryId" class="form-control" />
+                <span asp-validation-for="CountryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 @Html.Label("type")
                 @Html.Editor("type", new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessage("password", "", new { @class = "text-danger" })

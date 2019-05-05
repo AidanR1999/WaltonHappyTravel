@@ -68,6 +68,7 @@ namespace Walton_Happy_Travel.Controllers
                             AccomodationName = accomodationViewModel.AccomodationAddress,
                             AccomodationAddress = accomodationViewModel.AccomodationAddress,
                             Description = accomodationViewModel.Description,
+                            CountryId = accomodationViewModel.CountryId,
                             Rating = 5
                         };
                         break;
@@ -77,7 +78,8 @@ namespace Walton_Happy_Travel.Controllers
                         {
                             AccomodationName = accomodationViewModel.AccomodationAddress,
                             AccomodationAddress = accomodationViewModel.AccomodationAddress,
-                            Description = accomodationViewModel.Description
+                            Description = accomodationViewModel.Description,
+                            CountryId = accomodationViewModel.CountryId
                         };
                         break;
                 

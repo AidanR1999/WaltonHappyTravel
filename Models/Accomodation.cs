@@ -24,5 +24,10 @@ namespace Walton_Happy_Travel.Models
         //nav properties
         //1:M - Accomodation:Brochure
         public virtual IEnumerable<Brochure> Brochures { get; set; }
+
+        //1:M - Country:Accomodation
+        [InverseProperty("Country")]
+        public int CountryId { get; set; }
+        public virtual Country Country { get; set; }
     }
 }
