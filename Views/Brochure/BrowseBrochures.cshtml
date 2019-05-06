@@ -5,3 +5,8 @@
 }
 
 <h2>Brochures</h2>
+
+@foreach(var brochure in Model.Brochures)
+{
+    <p>@brochure.Description</p>
+}
