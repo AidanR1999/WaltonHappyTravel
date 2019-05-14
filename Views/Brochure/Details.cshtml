@@ -1,0 +1,16 @@
+@model Walton_Happy_Travel.Models.Brochure
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="container">
+    <h1>@Model.Accomodation.AccomodationName</h1>
+    <h2>@Model.Description</h2>
+</div>
+
+<div>
+    <a href="@Url.Action("CheckDate", "Booking", new { brochureId = @Model.BrochureId })">Book</a>
+</div>

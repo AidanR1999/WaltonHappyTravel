@@ -1,0 +1,13 @@
+@model Walton_Happy_Travel.Models.CheckDateViewModel
+
+@using (Html.BeginForm("CheckDate", "Booking"))
+{
+    @Html.HiddenFor(m => m.BrochureId)
+
+    <label asp-for="DepartureDate" class="control-label"></label>
+    <input asp-for="DepartureDate" class="form-control" />
+
+    <div class="form-group">
+        <input type="submit" value="CheckDate" name="CheckDate" class="btn btn-default" />
+    </div>
+}

@@ -1,0 +1,13 @@
+@model Walton_Happy_Travel.Models.AddPeopleViewModel
+
+@using (Html.BeginForm("AddPeople", "Booking"))
+{
+    @Html.HiddenFor(m => m.BookingId)
+
+    <label asp-for="PeopleAdded" class="control-label"></label>
+    <input asp-for="PeopleAdded" class="form-control" />
+
+    <div class="form-group">
+        <input type="submit" value="Add People" name="AddPeople" class="btn btn-default" />
+    </div>
+}
