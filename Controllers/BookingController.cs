@@ -217,7 +217,7 @@ namespace Walton_Happy_Travel.Controllers
 
                 //add booking to database
                 _context.Bookings.Add(booking);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 //redirect to AddPeople action
                 return RedirectToAction("AddNumberOfPeople", "Person", new { bookingId = booking.BookingId });
@@ -234,6 +234,10 @@ namespace Walton_Happy_Travel.Controllers
             Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
             Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
             List<Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
+
+            booking.TotalPrice = brochure.PricePerPerson * persons.Count;
+            _context.Bookings.Update(booking);
+            await _context.SaveChangesAsync();
 
             BookingConfirmationViewModel model = new BookingConfirmationViewModel
             {

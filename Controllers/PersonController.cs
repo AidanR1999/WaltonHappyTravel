@@ -46,9 +46,9 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Person/Create
-        public IActionResult Create()
+        public IActionResult Create(int? bookingId)
         {
-            ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId");
+            ViewData["BookingId"] = (int) bookingId;
             return View();
         }
 
@@ -63,7 +63,7 @@ namespace Walton_Happy_Travel.Controllers
             {
                 _context.Add(person);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = person.BookingId });
             }
             ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId", person.BookingId);
             return View(person);
@@ -98,8 +98,11 @@ namespace Walton_Happy_Travel.Controllers
                 return NotFound();
             }
 
+            var bookingId = person.BookingId;
+
             if (ModelState.IsValid)
             {
+                
                 try
                 {
                     _context.Update(person);
@@ -116,9 +119,9 @@ namespace Walton_Happy_Travel.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = person.BookingId });
+                return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = bookingId });
             }
-            ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId", person.BookingId);
+            ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId", bookingId);
             return View(person);
         }
 
@@ -141,15 +144,12 @@ namespace Walton_Happy_Travel.Controllers
             return View(person);
         }
 
-        // POST: Person/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var person = await _context.Persons.SingleOrDefaultAsync(m => m.PersonId == id);
             _context.Persons.Remove(person);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = person.PersonId });
         }
 
         private bool PersonExists(int id)
@@ -195,7 +195,7 @@ namespace Walton_Happy_Travel.Controllers
                 //updating the total price of the booking
                 booking.TotalPrice = brochure.PricePerPerson * model.PeopleAdded;
                 _context.Bookings.Update(booking);   
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 //redirect to AddPeople action
                 return RedirectToAction(nameof(PersonController.AddPeople), new { bookingId = model.BookingId, numberOfPeople = model.PeopleAdded });
@@ -257,7 +257,7 @@ namespace Walton_Happy_Travel.Controllers
             {
                 _context.Persons.Add(person);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             //redirect to Confirmation page
             return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = model.BookingId });

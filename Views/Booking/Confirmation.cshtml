@@ -55,8 +55,11 @@
                 <td>@person.Surname</td>
                 <td>@person.DateOfBirth</td>
                 <td>
-                    @Html.ActionLink("Update", "Edit", "Person", new { id = person.PersonId}) | 
-                    @Html.ActionLink("Remove", "Delete", "Person", new { id = person.PersonId })
+                    @Html.ActionLink("Update", "Edit", "Person", new { id = person.PersonId})  
+                    @if(Model.Persons.Count() > 1)
+                    {
+                        @Html.ActionLink("| Remove", "DeleteConfirmed", "Person", new { id = person.PersonId });
+                    }
                 </td>
                 @{i++;}
             </tr>
@@ -64,5 +67,5 @@
         
     </tr>
     </table>
-    
+    <p align="right">@Html.ActionLink("+ Add Person", "Create", "Person", new { bookingId = Model.BookingId })</p>
 }
