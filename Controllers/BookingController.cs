@@ -205,6 +205,7 @@ namespace Walton_Happy_Travel.Controllers
                 Booking booking = new Booking
                 {
                     BrochureId = model.BrochureId,
+                    Brochure = await _context.Brochures.FindAsync(model.BrochureId),
                     DepartureDate = (DateTime) model.DepartureDate,
                     PaymentType = PaymentType.STRIPE,
                     TotalPrice = brochure.PricePerPerson,
@@ -219,11 +220,17 @@ namespace Walton_Happy_Travel.Controllers
                 _context.SaveChanges();
 
                 //redirect to AddPeople action
-                return RedirectToAction("AddPeople", "Person", new { bookingId = booking.BookingId });
+                return RedirectToAction("AddNumberOfPeople", "Person", new { bookingId = booking.BookingId });
             }
 
             //on fail return to previous page
             return RedirectToAction(nameof(BrochureController.Browse));
+        }
+
+        public async Task<IActionResult> Confirmation(int? bookingId)
+        {
+            Booking model = await _context.Bookings.FindAsync(bookingId);
+            return View(model);
         }
     }
 

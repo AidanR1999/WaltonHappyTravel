@@ -1,0 +1,20 @@
+@model Walton_Happy_Travel.Models.Booking
+
+ <table style="width:100%">
+  <tr>
+    <th>Booking Reference</th>
+    <th>Destination</th>
+    <th>Departure Date</th>
+    <th>Duration</th>
+    <th>Catering</th>
+    <th>Total Price</th>
+  </tr>
+  <tr>
+    <td>@Model.BookingId</td>
+    <td>@Model.Brochure.Accomodation.AccomodationName</td>
+    <td>@Model.DepartureDate</td>
+    <td>@Model.Brochure.Duration</td>
+    <td>@Model.Brochure.Catering</td>
+    <td>@Model.TotalPrice</td>
+  </tr>
+</table> 

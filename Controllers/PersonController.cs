@@ -161,14 +161,14 @@ namespace Walton_Happy_Travel.Controllers
         /// loads the add people page to allow users to select how many people are on this booking
         /// </summary>
         /// <param name="bookingId">bookingId for booking</param>
-        /// <returns>AddPeople page</returns>
-        public IActionResult AddPeople(int? bookingId)
+        /// <returns>AddNumberOfPeople page</returns>
+        public IActionResult AddNumberOfPeople(int? bookingId)
         {
             //if brochureId is null, redirect to browse brochures page
             if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse));
 
             //populate the model and inject into the page
-            AddPeopleViewModel model = new AddPeopleViewModel
+            AddNumberOfPeopleViewModel model = new AddNumberOfPeopleViewModel
             {
                 BookingId = (int) bookingId,
                 PeopleAdded = 1
@@ -180,9 +180,9 @@ namespace Walton_Happy_Travel.Controllers
         /// gets the people the user has selected and updates the booking to accomodate
         /// </summary>
         /// <param name="model">Viewmodel from page</param>
-        /// <returns>Redirects to AddPerson page</returns>
+        /// <returns>Redirects to AddPeople page</returns>
         [HttpPost]
-        public async Task<IActionResult> AddPeople(AddPeopleViewModel model)
+        public async Task<IActionResult> AddNumberOfPeople(AddNumberOfPeopleViewModel model)
         {
             //get booking from database
             var booking = await _context.Bookings.FindAsync(model.BookingId);
@@ -209,37 +209,63 @@ namespace Walton_Happy_Travel.Controllers
                     ++i;
                 }
 
+                var brochure = await _context.Brochures.FindAsync(booking.BrochureId);
+
+                //updating the total price of the booking
+                booking.TotalPrice = brochure.PricePerPerson * persons.Count();
+
                 //add persons to booking and update the database
                 booking.Persons = persons;
                 _context.Bookings.Update(booking);   
                 _context.SaveChanges();
 
-                //redirect to AddPerson action
-                return RedirectToAction(nameof(PersonController.AddPerson), new { bookingId = model.BookingId });
+                //redirect to AddPeople action
+                return RedirectToAction(nameof(PersonController.AddPeople), new { bookingId = model.BookingId });
             }
 
             //on fail, return the page
-            return RedirectToAction(nameof(AddPeople), new { bookingId = model.BookingId });
+            return RedirectToAction(nameof(AddNumberOfPeople), new { bookingId = model.BookingId });
         }
 
-        public async Task<IActionResult> AddPerson(int? bookingId)
+        /// <summary>
+        /// loads page for users to be able to add the details of people in the booking
+        /// </summary>
+        /// <param name="bookingId">bookingId of the booking</param>
+        /// <returns>AddPeople Page</returns>
+        public ActionResult AddPeople(int? bookingId)
         {
+            //if bookingId is null, redirect to browse brochures page
             if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse));
 
-            AddPersonToBookingViewModel model = new AddPersonToBookingViewModel
+            //populate the model and inject into the page
+            AddPeopleToBookingViewModel model = new AddPeopleToBookingViewModel
             {
                 BookingId = (int) bookingId,
                 PeopleToAdd = _context.Persons.Where(b => b.BookingId == bookingId).ToList()
             };
-
             return View(model);
         }
 
+        /// <summary>
+        /// updates the booking in the database with the details of the people
+        /// </summary>
+        /// <param name="model">view model from page</param>
+        /// <returns>Redirects to Confirmation page</returns>
         [HttpPost]
-        public async Task<IActionResult> AddPerson(AddPersonToBookingViewModel model)
+        public async Task<IActionResult> AddPeople(AddPeopleToBookingViewModel model)
         {
+            //gets the booking from the database
+            var booking = await _context.Bookings.FindAsync(model.BookingId);
 
-            return View(model);
+            //convert IList to List as it can be casted as IEnumerable
+            booking.Persons = model.PeopleToAdd.ToList();
+
+            //update the database
+            _context.Bookings.Update(booking);
+            _context.SaveChanges();
+
+            //redirect to Confirmation page
+            return RedirectToAction(nameof(BookingController.Confirmation), new { bookingId = model.BookingId });
         }
     }
 }

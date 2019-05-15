@@ -8,15 +8,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
-    public class AddPersonToBookingViewModel
+    public class AddNumberOfPeopleViewModel
     {
         public int BookingId { get; set; }
 
-        public IList<Person> PeopleToAdd { get; set; }
-
-        public AddPersonToBookingViewModel()
-        {
-            PeopleToAdd = new List<Person>();
-        }
+        [Display(Name = "How many people on the booking?")]
+        public int PeopleAdded { get; set; }
     }
 }
