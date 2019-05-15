@@ -1,20 +1,68 @@
-@model Walton_Happy_Travel.Models.Booking
+@model Walton_Happy_Travel.Models.BookingConfirmationViewModel
 
  <table style="width:100%">
   <tr>
-    <th>Booking Reference</th>
-    <th>Destination</th>
-    <th>Departure Date</th>
-    <th>Duration</th>
-    <th>Catering</th>
-    <th>Total Price</th>
+    <tr>
+        <th>Booking Reference</th>
+        <td>@Model.BookingId</td>
+    </tr>
+    <tr>
+        <th>Accomomdation</th>
+        <td>@Model.AccomodationName</td>
+    </tr>
+    <tr>
+        <th>Country</th>
+        <td>@Model.CountryName</td>
+    </tr>
+    <tr>
+        <th>Departure Date</th>
+        <td>@Model.DepartureDate</td>
+        <td>Change</td>
+    </tr>
+    <tr>
+        <th>Duration</th>
+        <td>@Model.Duration Days</td>
+    </tr>
+    <tr>
+        <th>Catering</th>
+        <td>@Model.Catering</td>
+    </tr>
+    <tr>
+        <th>Total Price</th>
+        <td>@Model.TotalPrice</td>
+    </tr>
   </tr>
-  <tr>
-    <td>@Model.BookingId</td>
-    <td>@Model.Brochure.Accomodation.AccomodationName</td>
-    <td>@Model.DepartureDate</td>
-    <td>@Model.Brochure.Duration</td>
-    <td>@Model.Brochure.Catering</td>
-    <td>@Model.TotalPrice</td>
-  </tr>
-</table> 
+</table>
+
+<hr>
+@{  int i = 1;   
+    
+    <table style="width:100%">
+    <tr>
+        <tr>
+            <th>People</th>
+            <th>First Name</th>
+            <th>Middle Name(s)</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+        </tr>
+        @foreach (var person in Model.Persons)
+        {
+            <tr>
+                <th>Person #@i</th>
+                <td>@person.Forename</td>
+                <td>@person.MiddleNames</td>
+                <td>@person.Surname</td>
+                <td>@person.DateOfBirth</td>
+                <td>
+                    @Html.ActionLink("Update", "Edit", "Person", new { id = person.PersonId}) | 
+                    @Html.ActionLink("Remove", "Delete", "Person", new { id = person.PersonId })
+                </td>
+                @{i++;}
+            </tr>
+        }
+        
+    </tr>
+    </table>
+    
+}

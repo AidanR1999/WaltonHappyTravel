@@ -116,7 +116,7 @@ namespace Walton_Happy_Travel.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = person.BookingId });
             }
             ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId", person.BookingId);
             return View(person);
@@ -190,37 +190,15 @@ namespace Walton_Happy_Travel.Controllers
             //if booking is not empty
             if(booking != null)
             {
-                //create a new list of persons
-                List<Person> persons = new List<Person>();
-
-                //for every person the user wants added, add a blank person object   
-                int i = 0;
-                while (i < model.PeopleAdded)
-                {
-                    persons.Add(new Person
-                    {
-                        Forename = "",
-                        MiddleNames = "",
-                        Surname = "",
-                        DateOfBirth = DateTime.Now,
-                        BookingId = booking.BookingId
-                    });
-
-                    ++i;
-                }
-
                 var brochure = await _context.Brochures.FindAsync(booking.BrochureId);
 
                 //updating the total price of the booking
-                booking.TotalPrice = brochure.PricePerPerson * persons.Count();
-
-                //add persons to booking and update the database
-                booking.Persons = persons;
+                booking.TotalPrice = brochure.PricePerPerson * model.PeopleAdded;
                 _context.Bookings.Update(booking);   
                 _context.SaveChanges();
 
                 //redirect to AddPeople action
-                return RedirectToAction(nameof(PersonController.AddPeople), new { bookingId = model.BookingId });
+                return RedirectToAction(nameof(PersonController.AddPeople), new { bookingId = model.BookingId, numberOfPeople = model.PeopleAdded });
             }
 
             //on fail, return the page
@@ -232,16 +210,30 @@ namespace Walton_Happy_Travel.Controllers
         /// </summary>
         /// <param name="bookingId">bookingId of the booking</param>
         /// <returns>AddPeople Page</returns>
-        public ActionResult AddPeople(int? bookingId)
+        public ActionResult AddPeople(int? bookingId, int? numberOfPeople)
         {
             //if bookingId is null, redirect to browse brochures page
             if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse));
+
+            List<Person> peopleToAdd = new List<Person>();
+
+            for(int i = 0; i < numberOfPeople; i++)
+            {
+                peopleToAdd.Add(new Person
+                {
+                    Forename = "",
+                    MiddleNames = "",
+                    Surname = "",
+                    DateOfBirth = DateTime.Now
+                });
+            }
 
             //populate the model and inject into the page
             AddPeopleToBookingViewModel model = new AddPeopleToBookingViewModel
             {
                 BookingId = (int) bookingId,
-                PeopleToAdd = _context.Persons.Where(b => b.BookingId == bookingId).ToList()
+                NumberOfPeople = (int) numberOfPeople,
+                PeopleToAdd = peopleToAdd
             };
             return View(model);
         }
@@ -261,11 +253,14 @@ namespace Walton_Happy_Travel.Controllers
             booking.Persons = model.PeopleToAdd.ToList();
 
             //update the database
-            _context.Bookings.Update(booking);
+            foreach(var person in booking.Persons)
+            {
+                _context.Persons.Add(person);
+            }
             _context.SaveChanges();
 
             //redirect to Confirmation page
-            return RedirectToAction(nameof(BookingController.Confirmation), new { bookingId = model.BookingId });
+            return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = model.BookingId });
         }
     }
 }

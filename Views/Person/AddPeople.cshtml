@@ -4,20 +4,20 @@
 {
     @Html.HiddenFor(m => m.BookingId)
 
-    for(int i = 1; i < Model.PeopleToAdd.Count() + 1; i++)
+    for(int i = 0; i < Model.NumberOfPeople; i++)
     {
-        <h1>Person #@i</h1>
-        <label asp-for="PeopleToAdd.ElementAt(i - 1).Forename" class="control-label"></label>
-        @Html.EditorFor(x => x.PeopleToAdd[i - 1].Forename, new { @class = "form-control"})
+        <h1>Person #@(i + 1)</h1>
+        <label asp-for="PeopleToAdd.ElementAt(i).Forename" class="control-label"></label>
+        @Html.EditorFor(x => x.PeopleToAdd[i].Forename, new { @class = "form-control"})
 
-        <label asp-for="PeopleToAdd.ElementAt(i - 1).MiddleNames" class="control-label"></label>
-        @Html.EditorFor(x => x.PeopleToAdd[i - 1].MiddleNames, new { @class = "form-control"})
+        <label asp-for="PeopleToAdd.ElementAt(i).MiddleNames" class="control-label"></label>
+        @Html.EditorFor(x => x.PeopleToAdd[i].MiddleNames, new { @class = "form-control"})
 
-        <label asp-for="PeopleToAdd.ElementAt(i - 1).Surname" class="control-label"></label>
-        @Html.EditorFor(x => x.PeopleToAdd[i - 1].Surname, new { @class = "form-control"})
+        <label asp-for="PeopleToAdd.ElementAt(i).Surname" class="control-label"></label>
+        @Html.EditorFor(x => x.PeopleToAdd[i].Surname, new { @class = "form-control"})
 
-        <label asp-for="PeopleToAdd.ElementAt(i - 1).DateOfBirth" class="control-label"></label>    
-        @Html.EditorFor(x => x.PeopleToAdd[i - 1].DateOfBirth, new { @class = "form-control"})
+        <label asp-for="PeopleToAdd.ElementAt(i).DateOfBirth" class="control-label"></label>    
+        @Html.EditorFor(x => x.PeopleToAdd[i].DateOfBirth, new { @class = "form-control"})
 
         <br />    
     }

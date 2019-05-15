@@ -229,7 +229,23 @@ namespace Walton_Happy_Travel.Controllers
 
         public async Task<IActionResult> Confirmation(int? bookingId)
         {
-            Booking model = await _context.Bookings.FindAsync(bookingId);
+            Booking booking = await _context.Bookings.FindAsync(bookingId);
+            Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
+            Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
+            Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
+            List<Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
+
+            BookingConfirmationViewModel model = new BookingConfirmationViewModel
+            {
+                BookingId = (int) bookingId,
+                AccomodationName = accomodation.AccomodationName,
+                CountryName = country.CountryName,
+                DepartureDate = booking.DepartureDate,
+                Duration = brochure.Duration,
+                Catering = brochure.Catering,
+                TotalPrice = booking.TotalPrice,
+                Persons = persons
+            };
             return View(model);
         }
     }
