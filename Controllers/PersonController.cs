@@ -226,13 +226,19 @@ namespace Walton_Happy_Travel.Controllers
         {
             if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse));
 
-            var booking = await _context.Bookings.FindAsync(bookingId);
-
             AddPersonToBookingViewModel model = new AddPersonToBookingViewModel
             {
                 BookingId = (int) bookingId,
-                PeopleToAdd = booking.Persons
+                PeopleToAdd = _context.Persons.Where(b => b.BookingId == bookingId).ToList()
             };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPerson(AddPersonToBookingViewModel model)
+        {
+
             return View(model);
         }
     }

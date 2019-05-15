@@ -219,7 +219,7 @@ namespace Walton_Happy_Travel.Controllers
                 _context.SaveChanges();
 
                 //redirect to AddPeople action
-                return RedirectToAction(nameof(PersonController.AddPeople), new { bookingId = booking.BookingId });
+                return RedirectToAction("AddPeople", "Person", new { bookingId = booking.BookingId });
             }
 
             //on fail return to previous page

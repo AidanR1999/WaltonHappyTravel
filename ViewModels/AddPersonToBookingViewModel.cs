@@ -12,7 +12,7 @@ namespace Walton_Happy_Travel.Models
     {
         public int BookingId { get; set; }
 
-        public IEnumerable<Person> PeopleToAdd { get; set; }
+        public IList<Person> PeopleToAdd { get; set; }
 
         public AddPersonToBookingViewModel()
         {

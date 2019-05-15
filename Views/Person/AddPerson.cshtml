@@ -1,0 +1,27 @@
+@model Walton_Happy_Travel.Models.AddPersonToBookingViewModel
+
+@using (Html.BeginForm("AddPerson", "Person"))
+{
+    @Html.HiddenFor(m => m.BookingId)
+
+    for(int i = 1; i < Model.PeopleToAdd.Count() + 1; i++)
+    {
+        <h1>Person #@i</h1>
+        <label asp-for="PeopleToAdd.ElementAt(i - 1).Forename" class="control-label"></label>
+        @Html.EditorFor(x => x.PeopleToAdd[i - 1].Forename, new { @class = "form-control"})
+
+        <label asp-for="PeopleToAdd.ElementAt(i - 1).MiddleNames" class="control-label"></label>
+        @Html.EditorFor(x => x.PeopleToAdd[i - 1].MiddleNames, new { @class = "form-control"})
+
+        <label asp-for="PeopleToAdd.ElementAt(i - 1).Surname" class="control-label"></label>
+        @Html.EditorFor(x => x.PeopleToAdd[i - 1].Surname, new { @class = "form-control"})
+
+        <label asp-for="PeopleToAdd.ElementAt(i - 1).DateOfBirth" class="control-label"></label>    
+        @Html.EditorFor(x => x.PeopleToAdd[i - 1].DateOfBirth, new { @class = "form-control"})    
+    }
+    
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Add People" name="AddPeople" class="btn btn-default" />
+    </div>
+}
