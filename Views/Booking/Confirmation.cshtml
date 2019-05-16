@@ -1,4 +1,6 @@
+@using Microsoft.Extensions.Options;
 @model Walton_Happy_Travel.Models.BookingConfirmationViewModel
+@inject IOptions<StripeSettings> Stripe;
 
 <h1>Booking Details</h1>
 <hr>
@@ -31,7 +33,7 @@
     </tr>
     <tr>
         <th>Total Price</th>
-        <td>@Model.TotalPrice</td>
+        <td>£@Model.TotalPrice</td>
     </tr>
   </tr>
 </table>
@@ -70,4 +72,25 @@
     </tr>
     </table>
     <p align="right">@Html.ActionLink("+ Add Person", "Create", "Person", new { bookingId = Model.BookingId })</p>
+}
+<hr>
+
+@using (Html.BeginForm("MakePayment", "Booking", new { bookingId = Model.BookingId }, FormMethod.Post))
+{
+    var newPrice = Model.TotalPrice * 100;
+    <div align="center">
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="@Stripe.Value.PublishableKey"
+            data-amount="@newPrice"
+            data-name="Walton Happy Travel"
+            data-label="Make Payment"
+            data-description="Full payment"
+            data-locale="gb"
+            data-currency="GBP"
+            data-zip-code="false"
+            data-allow-remember-me ="false"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+        </script>
+    </div>
 }

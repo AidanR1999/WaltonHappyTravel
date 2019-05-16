@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
 using Walton_Happy_Travel.Services;
+using Stripe;
 
 namespace Walton_Happy_Travel
 {
@@ -19,6 +20,7 @@ namespace Walton_Happy_Travel
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
         }
 
         public IConfiguration Configuration { get; }
@@ -40,6 +42,8 @@ namespace Walton_Happy_Travel
                 options.ClientId = "816410532546-pi1a2h38i0lspipv9cq4im7bd7jcn614.apps.googleusercontent.com";
                 options.ClientSecret = "L6fQlpWlEPKslTkgeFFMzKr0";
             });
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
             services.AddMvc();
         }
 
