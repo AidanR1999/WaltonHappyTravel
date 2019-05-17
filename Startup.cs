@@ -12,6 +12,7 @@ using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
 using Walton_Happy_Travel.Services;
 using Stripe;
+using Walton_Happy_Travel.DatabaseSeeders;
 
 namespace Walton_Happy_Travel
 {
@@ -48,7 +49,7 @@ namespace Walton_Happy_Travel
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seeder seeder)
         {
             if (env.IsDevelopment())
             {
@@ -70,6 +71,7 @@ namespace Walton_Happy_Travel
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            seeder.Seed();
         }
     }
 }
