@@ -44,7 +44,7 @@ namespace Walton_Happy_Travel
                 options.ClientSecret = "L6fQlpWlEPKslTkgeFFMzKr0";
             });
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-
+            services.AddTransient<Seeder>();
             services.AddMvc();
         }
 
@@ -71,7 +71,7 @@ namespace Walton_Happy_Travel
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            seeder.Seed();
+            //seeder.Seed();
         }
     }
 }
