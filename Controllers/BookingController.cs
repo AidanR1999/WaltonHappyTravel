@@ -4,16 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
 using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
+=======
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Walton_Happy_Travel.Data;
+using Walton_Happy_Travel.Models;
+using System.Security.Claims;
+using Stripe;
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
 
 namespace Walton_Happy_Travel.Controllers
 {
     public class BookingController : Controller
     {
         private readonly ApplicationDbContext _context;
+<<<<<<< HEAD
 
+=======
+        private UserManager<IdentityUser> _userManager;
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public BookingController(ApplicationDbContext context)
         {
             _context = context;
@@ -47,10 +60,16 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Booking/Create
+<<<<<<< HEAD
         public IActionResult Create()
         {
             ViewData["BrochureId"] = new SelectList(_context.Brochures, "BrochureId", "BrochureId");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+=======
+        public IActionResult Create(int? brochureId, bool? dateAvailable, DateTime? date)
+        {
+
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             return View();
         }
 
@@ -59,8 +78,14 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         public async Task<IActionResult> Create([Bind("BookingId,NoOfRooms,PaymentType,TotalPrice,AmountPaid,SpecialRequirements,UserId,BrochureId")] Booking booking)
         {
+=======
+        public async Task<IActionResult> Create(Booking model)
+        {
+            Booking booking = null;
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             if (ModelState.IsValid)
             {
                 _context.Add(booking);
@@ -162,5 +187,173 @@ namespace Walton_Happy_Travel.Controllers
         {
             return _context.Bookings.Any(e => e.BookingId == id);
         }
+<<<<<<< HEAD
     }
+=======
+
+        /// <summary>
+        /// loads the page where users can check date availability for booking
+        /// </summary>
+        /// <param name="brochureId">ID of brochure selected by the user</param>
+        /// <returns>CheckDate view</returns>
+        public IActionResult CheckDate(int? brochureId)
+        {
+            //if brochureId is null, redirect to browse brochures page
+            if (brochureId == null) return RedirectToAction(nameof(BrochureController.Browse));
+
+            //populate the model and inject into the page
+            CheckDateViewModel model = new CheckDateViewModel
+            {
+                BrochureId = (int) brochureId,
+                DepartureDate = null
+            };
+            return View(model);
+        }
+
+        /// <summary>
+        /// checks if date is available, if so: create a new booking to add to the database.
+        /// </summary>
+        /// <param name="model">Viewmodel for page</param>
+        /// <returns>Redrect to AddPeople action</returns>
+        [HttpPost]
+        public async Task<IActionResult> CheckDate(CheckDateViewModel model)
+        {
+            //get the brochure from the database
+            Brochure brochure = await _context.Brochures.FindAsync(model.BrochureId);
+
+            //look for all bookings under that brochure and check is selected date is taken
+            var results = brochure.Bookings.Where(b => b.DepartureDate.Equals(model.DepartureDate));
+
+            //result should return 0 if date is available
+            if(results.Count() == 0)
+            {
+                //create a new booking
+                Booking booking = new Booking
+                {
+                    BrochureId = model.BrochureId,
+                    Brochure = await _context.Brochures.FindAsync(model.BrochureId),
+                    DepartureDate = (DateTime) model.DepartureDate,
+                    PaymentType = PaymentType.STRIPE,
+                    TotalPrice = brochure.PricePerPerson,
+                    AmountPaid = 0,
+                    SpecialRequirements = "",
+                    Status = "IN_PROGRESS",
+                    UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+
+                //add booking to database
+                _context.Bookings.Add(booking);
+                await _context.SaveChangesAsync();
+
+                //redirect to AddPeople action
+                return RedirectToAction("AddNumberOfPeople", "Person", new { bookingId = booking.BookingId });
+            }
+
+            //on fail return to previous page
+            return RedirectToAction(nameof(BrochureController.Browse));
+        }
+
+        /// <summary>
+        /// loads the confirmation page to finalise and make payments
+        /// </summary>
+        /// <param name="bookingId">id of booking</param>
+        /// <returns>Confirmation page</returns>
+        public async Task<IActionResult> Confirmation(int? bookingId)
+        {
+            //gets all data from the database related to the booking
+            Booking booking = await _context.Bookings.FindAsync(bookingId);
+            Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
+            Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
+            Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
+            List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
+
+            //updates the total price of the booking in the database
+            booking.TotalPrice = brochure.PricePerPerson * persons.Count;
+            _context.Bookings.Update(booking);
+            await _context.SaveChangesAsync();
+
+            //populate the viewmodel and inject into the view
+            BookingConfirmationViewModel model = new BookingConfirmationViewModel
+            {
+                BookingId = (int) bookingId,
+                AccomodationName = accomodation.AccomodationName,
+                CountryName = country.CountryName,
+                DepartureDate = booking.DepartureDate,
+                Duration = brochure.Duration,
+                Catering = brochure.Catering,
+                TotalPrice = booking.TotalPrice,
+                Persons = persons
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MakePayment(int? bookingId, string stripeEmail, string stripeToken)
+        {
+            var booking = await _context.Bookings.FindAsync(bookingId);
+
+            var customerService = new CustomerService();
+            var chargeService = new ChargeService();
+
+            var customer = customerService.Create(new CustomerCreateOptions
+            {
+                Email = stripeEmail,
+                SourceToken = stripeToken
+            });
+
+            var charge = await chargeService.CreateAsync(new ChargeCreateOptions
+            {
+                Amount = Convert.ToInt32(booking.TotalPrice * 100),
+                Description = "Booking Id: " + booking.BookingId,
+                Currency = "gbp",
+                CustomerId = customer.Id
+            });
+
+            booking.Status = "Completed";
+            booking.AmountPaid = booking.TotalPrice;
+            _context.Bookings.Update(booking);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Invoice), new { bookingId = booking.BookingId });
+        }
+
+        public async Task<IActionResult> Invoice(int? bookingId)
+        {
+            Booking booking = await _context.Bookings.FindAsync(bookingId);
+
+            var user = await _context.Users.FindAsync(booking.UserId);
+            var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(currentUserId == null) 
+                return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
+            if((!currentUserId.Equals(user.Id) && !User.IsInRole("Staff"))) 
+                return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
+
+            Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
+            Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
+            Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
+            List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
+
+            BookingInvoiceViewModel model = new BookingInvoiceViewModel
+            {
+                BookingId = (int) bookingId,
+                BookingStatus = booking.Status,
+                AccomodationName = accomodation.AccomodationName,
+                CountryName = country.CountryName,
+                DepartureDate = booking.DepartureDate,
+                Duration = brochure.Duration,
+                Catering = brochure.Catering,
+                TotalPrice = booking.TotalPrice,
+                AmountPaid = booking.AmountPaid,
+                Persons = persons
+            };
+            
+            if(booking.Status.Equals("IN PROGRESS")) 
+                return RedirectToAction(nameof(BookingController.Confirmation), new { bookingId = bookingId });
+
+            return View(model);
+        }
+    }
+
+    
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
 }

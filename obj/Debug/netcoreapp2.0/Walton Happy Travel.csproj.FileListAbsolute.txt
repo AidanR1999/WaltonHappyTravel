@@ -11,3 +11,44 @@ D:\Walton Happy Travel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfo.
 D:\Walton Happy Travel\obj\Debug\netcoreapp2.0\Walton Happy Travel.dll
 D:\Walton Happy Travel\obj\Debug\netcoreapp2.0\Walton Happy Travel.pdb
 d:\Walton Happy Travel\bin\Debug\netcoreapp2.0\app.db
+<<<<<<< HEAD
+=======
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.deps.json
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.runtimeconfig.json
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.runtimeconfig.dev.json
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.dll
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.pdb
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.csprojAssemblyReference.cache
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.csproj.CoreCompileInputs.cache
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfoInputs.cache
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfo.cs
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.dll
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.pdb
+d:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\app.db
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.deps.json
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.runtimeconfig.json
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.runtimeconfig.dev.json
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.dll
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.pdb
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.csprojAssemblyReference.cache
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.csproj.CoreCompileInputs.cache
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfoInputs.cache
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfo.cs
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.dll
+D:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\obj\Debug\netcoreapp2.0\Walton Happy Travel.pdb
+d:\Visual Studio Code Projects\WaltonHappyTravel-master\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\app.db
+D:\WaltonHappyTravel\bin\Debug\netcoreapp2.0\Walton Happy Travel.deps.json
+D:\WaltonHappyTravel\bin\Debug\netcoreapp2.0\Walton Happy Travel.runtimeconfig.json
+D:\WaltonHappyTravel\bin\Debug\netcoreapp2.0\Walton Happy Travel.runtimeconfig.dev.json
+d:\WaltonHappyTravel\bin\Debug\netcoreapp2.0\Walton Happy Travel.dll
+d:\WaltonHappyTravel\bin\Debug\netcoreapp2.0\Walton Happy Travel.pdb
+d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.csprojAssemblyReference.cache
+d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.csproj.CoreCompileInputs.cache
+d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfoInputs.cache
+d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfo.cs
+d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.dll
+d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.pdb
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e

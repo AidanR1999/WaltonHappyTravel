@@ -6,6 +6,7 @@
 
 <h2>Details</h2>
 
+<<<<<<< HEAD
 <div>
     <h4>Brochure</h4>
     <hr />
@@ -69,4 +70,13 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.BrochureId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+=======
+<div class="container">
+    <h1>@Model.Accomodation.AccomodationName</h1>
+    <h2>@Model.Description</h2>
+</div>
+
+<div>
+    <a href="@Url.Action("CheckDate", "Booking", new { brochureId = @Model.BrochureId })">Book</a>
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
 </div>

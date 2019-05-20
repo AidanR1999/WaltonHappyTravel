@@ -13,9 +13,12 @@
     <thead>
         <tr>
                 <th>
+<<<<<<< HEAD
                     @Html.DisplayNameFor(model => model.DepartureDate)
                 </th>
                 <th>
+=======
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
                     @Html.DisplayNameFor(model => model.Duration)
                 </th>
                 <th>
@@ -30,9 +33,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.MaxPeople)
                 </th>
+<<<<<<< HEAD
                 <th>
                     @Html.DisplayNameFor(model => model.MaxRooms)
                 </th>
+=======
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             <th>
                 @Html.DisplayNameFor(model => model.Accomodation)
             </th>
@@ -46,9 +52,12 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+<<<<<<< HEAD
                 @Html.DisplayFor(modelItem => item.DepartureDate)
             </td>
             <td>
+=======
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
                 @Html.DisplayFor(modelItem => item.Duration)
             </td>
             <td>
@@ -64,6 +73,7 @@
                 @Html.DisplayFor(modelItem => item.MaxPeople)
             </td>
             <td>
+<<<<<<< HEAD
                 @Html.DisplayFor(modelItem => item.MaxRooms)
             </td>
             <td>
@@ -71,6 +81,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Category.CategoryId)
+=======
+                @Html.DisplayFor(modelItem => item.Accomodation.AccomodationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BrochureId">Edit</a> |

@@ -1,0 +1,96 @@
+@using Microsoft.Extensions.Options;
+@model Walton_Happy_Travel.Models.BookingConfirmationViewModel
+@inject IOptions<StripeSettings> Stripe;
+
+<h1>Booking Details</h1>
+<hr>
+ <table style="width:100%">
+  <tr>
+    <tr>
+        <th>Booking Reference</th>
+        <td>@Model.BookingId</td>
+    </tr>
+    <tr>
+        <th>Accomomdation</th>
+        <td>@Model.AccomodationName</td>
+    </tr>
+    <tr>
+        <th>Country</th>
+        <td>@Model.CountryName</td>
+    </tr>
+    <tr>
+        <th>Departure Date</th>
+        <td>@Model.DepartureDate</td>
+        <td>Change</td>
+    </tr>
+    <tr>
+        <th>Duration</th>
+        <td>@Model.Duration Days</td>
+    </tr>
+    <tr>
+        <th>Catering</th>
+        <td>@Model.Catering</td>
+    </tr>
+    <tr>
+        <th>Total Price</th>
+        <td>£@Model.TotalPrice</td>
+    </tr>
+  </tr>
+</table>
+
+<hr>
+@{  int i = 1;   
+    
+    <table style="width:100%">
+    <tr>
+        <tr>
+            <th>People</th>
+            <th>First Name</th>
+            <th>Middle Name(s)</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+        </tr>
+        @foreach (var person in Model.Persons)
+        {
+            <tr>
+                <th>Person #@i</th>
+                <td>@person.Forename</td>
+                <td>@person.MiddleNames</td>
+                <td>@person.Surname</td>
+                <td>@person.DateOfBirth</td>
+                <td>
+                    @Html.ActionLink("Update", "Edit", "Person", new { id = person.PersonId})  
+                    @if(Model.Persons.Count() > 1)
+                    {
+                        @Html.ActionLink("| Remove", "DeleteConfirmed", "Person", new { id = person.PersonId });
+                    }
+                </td>
+                @{i++;}
+            </tr>
+        }
+        
+    </tr>
+    </table>
+    <p align="right">@Html.ActionLink("+ Add Person", "Create", "Person", new { bookingId = Model.BookingId })</p>
+}
+<hr>
+
+@using (Html.BeginForm("MakePayment", "Booking", new { bookingId = Model.BookingId }, FormMethod.Post))
+{
+    var newPrice = Model.TotalPrice * 100;
+    <div align="center">
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="@Stripe.Value.PublishableKey"
+            data-amount="@newPrice"
+            data-name="Walton Happy Travel"
+            data-label="Make Payment"
+            data-description="Full payment"
+            data-locale="gb"
+            data-currency="GBP"
+            data-zip-code="false"
+            data-allow-remember-me ="false"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+        </script>
+    </div>
+}

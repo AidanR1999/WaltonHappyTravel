@@ -14,6 +14,13 @@ namespace Walton_Happy_Travel.Models
     /// </summary>
     public class Hotel : Accomodation
     {
+<<<<<<< HEAD
+=======
+        /// <summary>
+        /// Rating of the hotel
+        /// </summary>
+        /// <value>integer</value>
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public int Rating { get; set; }
     }
 }

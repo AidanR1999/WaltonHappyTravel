@@ -1,0 +1,31 @@
+@model Walton_Happy_Travel.ViewBrochuresViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Browse";
+}
+
+<h2>Brochures</h2>
+
+@foreach(var brochure in Model.Brochures)
+{
+
+    <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="post-preview">
+                            <a href="@Html.Raw(Url.Action("Details", "Brochure", new { id = @brochure.BrochureId }))">
+                                <h2 class="post-title">
+                                    @brochure.Accomodation.AccomodationName
+                                </h2>
+                                <h3 class="post-subtitle">
+                                    Price: £@brochure.PricePerPerson p/person
+                                </h3>
+                            </a>
+                            <p class="post-meta">Duration: @brochure.Duration</p>
+                            <p class="post-meta">Type: @brochure.Accomodation.GetType()</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+}

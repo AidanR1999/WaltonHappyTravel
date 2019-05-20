@@ -66,7 +66,11 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         public async Task<IActionResult> Create([Bind("BrochureId,DepartureDate,Duration,PricePerPerson,Description,Catering,MaxPeople,MaxRooms,CategoryId,AccomodationId")] Brochure brochure)
+=======
+        public async Task<IActionResult> Create([Bind("BrochureId,Duration,PricePerPerson,Description,Catering,MaxPeople,CategoryId,AccomodationId")] Brochure brochure)
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         {
             if (ModelState.IsValid)
             {
@@ -170,6 +174,7 @@ namespace Walton_Happy_Travel.Controllers
             return _context.Brochures.Any(e => e.BrochureId == id);
         }
 
+<<<<<<< HEAD
         public async Task<IActionResult> BrowseBrochures()
         {
             ViewBrochuresViewModel model = new ViewBrochuresViewModel()
@@ -178,6 +183,23 @@ namespace Walton_Happy_Travel.Controllers
                 Categories = await _context.Categorys.ToListAsync()
             };
             
+=======
+        /// <summary>
+        /// loads the browse brochures page with all brochures available to book
+        /// </summary>
+        /// <returns>Browse page</returns>
+        public async Task<IActionResult> Browse()
+        {
+            //populate the model and inject into page
+            ViewBrochuresViewModel model = new ViewBrochuresViewModel()
+            {
+                //get all brochures from database
+                Brochures = await _context.Brochures.Include(b=> b.Accomodation).ToListAsync(),
+
+                //get all categories of brochures from database
+                Categories = await _context.Categorys.ToListAsync()
+            };
+>>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             return View(model);
         }
     }
