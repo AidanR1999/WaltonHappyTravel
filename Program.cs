@@ -7,10 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-<<<<<<< HEAD
-=======
 using Walton_Happy_Travel.DatabaseSeeders;
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
 
 namespace Walton_Happy_Travel
 {

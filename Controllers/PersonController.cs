@@ -46,15 +46,9 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Person/Create
-<<<<<<< HEAD
-        public IActionResult Create()
-        {
-            ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId");
-=======
         public IActionResult Create(int? bookingId)
         {
             ViewData["BookingId"] = (int) bookingId;
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             return View();
         }
 
@@ -69,11 +63,7 @@ namespace Walton_Happy_Travel.Controllers
             {
                 _context.Add(person);
                 await _context.SaveChangesAsync();
-<<<<<<< HEAD
-                return RedirectToAction(nameof(Index));
-=======
                 return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = person.BookingId });
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             }
             ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId", person.BookingId);
             return View(person);
@@ -108,16 +98,11 @@ namespace Walton_Happy_Travel.Controllers
                 return NotFound();
             }
 
-<<<<<<< HEAD
-            if (ModelState.IsValid)
-            {
-=======
             var bookingId = person.BookingId;
 
             if (ModelState.IsValid)
             {
                 
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
                 try
                 {
                     _context.Update(person);
@@ -134,15 +119,9 @@ namespace Walton_Happy_Travel.Controllers
                         throw;
                     }
                 }
-<<<<<<< HEAD
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId", person.BookingId);
-=======
                 return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = bookingId });
             }
             ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId", bookingId);
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             return View(person);
         }
 
@@ -165,30 +144,18 @@ namespace Walton_Happy_Travel.Controllers
             return View(person);
         }
 
-<<<<<<< HEAD
-        // POST: Person/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-=======
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var person = await _context.Persons.SingleOrDefaultAsync(m => m.PersonId == id);
             _context.Persons.Remove(person);
             await _context.SaveChangesAsync();
-<<<<<<< HEAD
-            return RedirectToAction(nameof(Index));
-=======
             return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = person.PersonId });
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         }
 
         private bool PersonExists(int id)
         {
             return _context.Persons.Any(e => e.PersonId == id);
         }
-<<<<<<< HEAD
-=======
         
         /// <summary>
         /// loads the add people page to allow users to select how many people are on this booking
@@ -295,6 +262,5 @@ namespace Walton_Happy_Travel.Controllers
             //redirect to Confirmation page
             return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = model.BookingId });
         }
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
     }
 }

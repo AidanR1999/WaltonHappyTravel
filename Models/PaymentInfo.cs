@@ -14,14 +14,6 @@ namespace Walton_Happy_Travel.Models
     /// </summary>
     public class PaymentInfo
     {
-<<<<<<< HEAD
-        [Key]
-        public int PaymentId { get; set; }
-        public CardType CardType { get; set; }
-        public string CardNumber { get; set; }
-        public string NameOnCard { get; set; }
-        public string SecurityNumber { get; set; }
-=======
         /// <summary>
         /// Payment Identifier
         /// </summary>
@@ -57,29 +49,22 @@ namespace Walton_Happy_Travel.Models
         /// ExpiryDate of card
         /// </summary>
         /// <value>DateTime</value>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public DateTime ExpiryDate { get; set; }
 
         //nav properties
         //1:1 - User:PaymentInfo
-<<<<<<< HEAD
-=======
         /// <summary>
         /// User on the booking
         /// </summary>
         /// <value>ApplicationUser</value>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         [InverseProperty("ApplicationUser")]
         public string UserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
-<<<<<<< HEAD
-=======
     /// <summary>
     /// Enumerable for types of card available
     /// </summary>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
     public enum CardType
     {
         VISA, MASTERCARD

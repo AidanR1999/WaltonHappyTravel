@@ -8,13 +8,10 @@ using Walton_Happy_Travel.Models;
 
 namespace Walton_Happy_Travel.Data
 {
-<<<<<<< HEAD
-=======
     /// <summary>
     /// Context for the database. Interacts with the database
     /// </summary>
     /// <typeparam name="ApplicationUser"></typeparam>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Accomodation> Accomodations { get; set; }

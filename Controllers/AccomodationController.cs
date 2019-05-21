@@ -65,11 +65,7 @@ namespace Walton_Happy_Travel.Controllers
                     case "Hotel": 
                         accomodation = new Hotel
                         {
-<<<<<<< HEAD
-                            AccomodationName = accomodationViewModel.AccomodationAddress,
-=======
                             AccomodationName = accomodationViewModel.AccomodationName,
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
                             AccomodationAddress = accomodationViewModel.AccomodationAddress,
                             Description = accomodationViewModel.Description,
                             CountryId = accomodationViewModel.CountryId,
@@ -80,11 +76,7 @@ namespace Walton_Happy_Travel.Controllers
                     case "Private":
                         accomodation = new Private
                         {
-<<<<<<< HEAD
-                            AccomodationName = accomodationViewModel.AccomodationAddress,
-=======
                             AccomodationName = accomodationViewModel.AccomodationName,
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
                             AccomodationAddress = accomodationViewModel.AccomodationAddress,
                             Description = accomodationViewModel.Description,
                             CountryId = accomodationViewModel.CountryId

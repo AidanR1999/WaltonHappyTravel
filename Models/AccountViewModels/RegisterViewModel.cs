@@ -14,11 +14,7 @@ namespace Walton_Happy_Travel.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required]
-<<<<<<< HEAD
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-=======
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -34,11 +30,7 @@ namespace Walton_Happy_Travel.Models.AccountViewModels
         public string Forename { get; set; }
 
         [DataType(DataType.Text)]
-<<<<<<< HEAD
-        [Display(Name = "MiddleNames")]
-=======
         [Display(Name = "Middle Name(s)")]
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public string MiddleNames { get; set; }
 
         [Required]

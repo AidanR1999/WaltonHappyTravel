@@ -12,11 +12,8 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
-<<<<<<< HEAD
-=======
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Stripe.net" Version="25.18.0" />
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
   </ItemGroup>
 
   <ItemGroup>

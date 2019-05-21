@@ -16,14 +16,6 @@ namespace Walton_Happy_Travel.Models
     {
         [Key]
         public int BookingId { get; set; }
-<<<<<<< HEAD
-        public int NoOfRooms { get; set; }
-        public PaymentType PaymentType { get; set; }
-        public double TotalPrice { get; set; }
-        public double AmountPaid { get; set; }
-        public string SpecialRequirements { get; set; }
-
-=======
 
         /// <summary>
         /// Enum that holds the payment type of the booking
@@ -73,16 +65,12 @@ namespace Walton_Happy_Travel.Models
         /// <summary>
         /// Parameterless constructor to initialise the Enumerable of people
         /// </summary>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public Booking()
         {
             Persons = new List<Person>();
         }
 
         //nav properties
-<<<<<<< HEAD
-        //1:M - User:Booking
-=======
 
         //1:M - User:Booking
         /// <summary>
@@ -90,33 +78,21 @@ namespace Walton_Happy_Travel.Models
         /// </summary>
         /// <value>User</value>
         [Required]
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         [InverseProperty("ApplicationUser")]
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
         //1:M - Brochure:Booking
-<<<<<<< HEAD
-=======
         /// <summary>
         /// The brochure that the booking is made under
         /// </summary>
         /// <value>Brochure</value>
         [Required]
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         [InverseProperty("Brochure")]
         public int BrochureId { get; set; }
         public virtual Brochure Brochure { get; set; }
 
         //1:M - Booking:Person
-<<<<<<< HEAD
-        public virtual IEnumerable<Person> Persons { get; set; }
-    }
-
-    public enum PaymentType
-    {
-        CARD, PAYPAL
-=======
         /// <summary>
         /// List of people that are attatched to the booking
         /// </summary>
@@ -130,6 +106,5 @@ namespace Walton_Happy_Travel.Models
     public enum PaymentType
     {
         STRIPE, PAYPAL
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
     }
 }

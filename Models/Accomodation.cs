@@ -3,25 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-<<<<<<< HEAD
-=======
 using Microsoft.AspNetCore.Http;
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
-<<<<<<< HEAD
-    public abstract class Accomodation
-    {
-        [Key]
-        public int AccomodationId { get; set; }
-        public string AccomodationName { get; set; }
-        public string AccomodationAddress { get; set; }
-        public string Description { get; set; }
-
-=======
     /// <summary>
     /// Super class of accomodations available on the service.
     /// Holds the basic information of every accomodation
@@ -60,19 +47,12 @@ namespace Walton_Happy_Travel.Models
         /// <summary>
         /// Parameterless constructure initailising the Enumerable brochures
         /// </summary>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public Accomodation()
         {
             Brochures = new List<Brochure>();
         }
         
         //nav properties
-<<<<<<< HEAD
-        //1:M - Accomodation:Brochure
-        public virtual IEnumerable<Brochure> Brochures { get; set; }
-
-        //1:M - Country:Accomodation
-=======
 
         //1:M - Accomodation:Brochure
         /// <summary>
@@ -86,7 +66,6 @@ namespace Walton_Happy_Travel.Models
         /// The country this accomodation is in
         /// </summary>
         /// <value>Country</value>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         [InverseProperty("Country")]
         public int CountryId { get; set; }
         public virtual Country Country { get; set; }

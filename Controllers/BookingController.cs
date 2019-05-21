@@ -4,29 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-<<<<<<< HEAD
-using Microsoft.EntityFrameworkCore;
-using Walton_Happy_Travel.Data;
-using Walton_Happy_Travel.Models;
-=======
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
 using System.Security.Claims;
 using Stripe;
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
 
 namespace Walton_Happy_Travel.Controllers
 {
     public class BookingController : Controller
     {
         private readonly ApplicationDbContext _context;
-<<<<<<< HEAD
-
-=======
         private UserManager<IdentityUser> _userManager;
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public BookingController(ApplicationDbContext context)
         {
             _context = context;
@@ -60,16 +50,9 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Booking/Create
-<<<<<<< HEAD
-        public IActionResult Create()
-        {
-            ViewData["BrochureId"] = new SelectList(_context.Brochures, "BrochureId", "BrochureId");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-=======
         public IActionResult Create(int? brochureId, bool? dateAvailable, DateTime? date)
         {
 
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             return View();
         }
 
@@ -78,14 +61,9 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD
-        public async Task<IActionResult> Create([Bind("BookingId,NoOfRooms,PaymentType,TotalPrice,AmountPaid,SpecialRequirements,UserId,BrochureId")] Booking booking)
-        {
-=======
         public async Task<IActionResult> Create(Booking model)
         {
             Booking booking = null;
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
             if (ModelState.IsValid)
             {
                 _context.Add(booking);
@@ -187,9 +165,6 @@ namespace Walton_Happy_Travel.Controllers
         {
             return _context.Bookings.Any(e => e.BookingId == id);
         }
-<<<<<<< HEAD
-    }
-=======
 
         /// <summary>
         /// loads the page where users can check date availability for booking
@@ -355,5 +330,4 @@ namespace Walton_Happy_Travel.Controllers
     }
 
     
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
 }

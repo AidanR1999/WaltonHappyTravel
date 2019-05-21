@@ -13,18 +13,6 @@ namespace Walton_Happy_Travel.Models
     /// </summary>
     public class Brochure
     {
-<<<<<<< HEAD
-        [Key]
-        public int BrochureId { get; set; }
-        public DateTime DepartureDate { get; set; }
-        public int Duration { get; set; }
-        public double PricePerPerson { get; set; }
-        public string Description { get; set; }
-        public Catering Catering { get; set; }
-        public int MaxPeople { get; set; }
-        public int MaxRooms { get; set; }
-
-=======
         /// <summary>
         /// Brochure Identifier
         /// </summary>
@@ -70,19 +58,12 @@ namespace Walton_Happy_Travel.Models
         /// <summary>
         /// Parameterless contstructor to initialise the Enumerable of bookings
         /// </summary>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public Brochure()
         {
             Bookings = new List<Booking>();
         }
 
         //nav properties
-<<<<<<< HEAD
-        //1:M - Brochure:Booking
-        public virtual IEnumerable<Booking> Bookings { get; set; }
-
-        //1:M - Category:Brochures
-=======
 
         //1:M - Brochure:Booking
         /// <summary>
@@ -97,31 +78,24 @@ namespace Walton_Happy_Travel.Models
         /// </summary>
         /// <value>Category</value>
         [Required]
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         [InverseProperty("Category")]
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
         //1:M - Accomodation:Brochure
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Accomodation associated with the brochure
         /// </summary>
         /// <value>Accomodation</value>
         [Required]
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         [InverseProperty("Accomodation")]
         public int AccomodationId { get; set; }
         public virtual Accomodation Accomodation { get; set; }
     }
 
-<<<<<<< HEAD
-=======
     /// <summary>
     /// Enum of catering available
     /// </summary>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
     public enum Catering
     {
         ALL_INCLUSIVE, HALF_BOARD, SELF_CATERING

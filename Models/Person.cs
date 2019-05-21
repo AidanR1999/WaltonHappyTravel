@@ -13,13 +13,6 @@ namespace Walton_Happy_Travel.Models
     /// </summary>
     public class Person
     {
-<<<<<<< HEAD
-        [Key]
-        public int PersonId { get; set; }
-        public string Forename { get; set; }
-        public string MiddleNames { get; set; }
-        public string Surname { get; set; }
-=======
         /// <summary>
         /// Person Identifier
         /// </summary>
@@ -55,18 +48,14 @@ namespace Walton_Happy_Travel.Models
         [Required]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date of birth")]
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public DateTime DateOfBirth { get; set; }
 
         //nav properties
         //1:M - Booking:Person
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Booking associated with the person
         /// </summary>
         /// <value>Booking</value>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         [InverseProperty("Booking")]
         public int BookingId { get; set; }
         public virtual Booking Booking { get; set; }

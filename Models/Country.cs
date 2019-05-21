@@ -13,12 +13,6 @@ namespace Walton_Happy_Travel.Models
     /// </summary>
     public class Country
     {
-<<<<<<< HEAD
-        [Key]
-        public int CountryId { get; set; }
-        public string CountryName { get; set; }
-
-=======
         /// <summary>
         /// Country Identifier
         /// </summary>
@@ -37,7 +31,6 @@ namespace Walton_Happy_Travel.Models
         /// <summary>
         /// Parameterless constructor to initialise the Enumerable of accomodations
         /// </summary>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public Country()
         {
             Accomodations = new List<Accomodation>();
@@ -45,13 +38,10 @@ namespace Walton_Happy_Travel.Models
 
         //nav properties
         //1:M - Category:Brochure
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Accomodations that are in the country
         /// </summary>
         /// <value>Enumerable of accomodations</value>
->>>>>>> c089588605b4ee3cede64435b177a54f071bfe1e
         public virtual IEnumerable<Accomodation> Accomodations { get; set; }
     }
 }
