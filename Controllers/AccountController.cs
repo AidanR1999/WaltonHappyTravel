@@ -13,6 +13,10 @@ using Microsoft.Extensions.Options;
 using Walton_Happy_Travel.Models;
 using Walton_Happy_Travel.Models.AccountViewModels;
 using Walton_Happy_Travel.Services;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Walton_Happy_Travel.Controllers
 {
@@ -217,7 +221,8 @@ namespace Walton_Happy_Travel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            returnUrl = returnUrl ?? Url.Content("~/");
+            //ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 var user = new Customer { UserName = model.Email, Email = model.Email, Forename = model.Forename, MiddleNames = model.MiddleNames, Surname = model.Surname, DateOfBirth = model.DateOfBirth, TimeOfRegistration = DateTime.Now };
@@ -227,12 +232,21 @@ namespace Walton_Happy_Travel.Controllers
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    var callbackUrl = Url.Action(
+                        "ConfirmEmail",
+                        "Account",
+                        new
+                        {
+                            userid = user.Id,
+                            code = code
+                        },
+                        protocol: Request.Scheme);
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    await _emailSender.SendEmailAsync(model.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    // Commented this line out to prevent newly registered users from being able to automatically signed in
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
                 }
                 AddErrors(result);
             }
