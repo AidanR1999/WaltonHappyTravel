@@ -7,25 +7,30 @@
 
 <h2>Brochures</h2>
 
-@foreach(var brochure in Model.Brochures)
-{
-
-    <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                        <div class="post-preview">
-                            <a href="@Html.Raw(Url.Action("Details", "Brochure", new { id = @brochure.BrochureId }))">
-                                <h2 class="post-title">
-                                    @brochure.Accomodation.AccomodationName
-                                </h2>
-                                <h3 class="post-subtitle">
-                                    Price: £@brochure.PricePerPerson p/person
-                                </h3>
-                            </a>
-                            <p class="post-meta">Duration: @brochure.Duration</p>
-                            <p class="post-meta">Type: @brochure.Accomodation.GetType()</p>
+<div class="row">
+    @foreach(var brochure in Model.Brochures)
+    {
+        <div class="col-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">
+                                <label style="font-size:23px;color:steelblue;">@brochure.Accomodation.AccomodationName</label>
+                            </h4>
                         </div>
+
+                        <img class="card-img-top" style="height:100%;" src="" alt="Card Image" />
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <label style="font-size:20px; color:#a51313"><b>£@brochure.PricePerPerson</b> per/person</label>
+                                </div>
+                                <a asp-action="Details" asp-controller="Brochure" class="btn pull-right btn-outline-info fas fa-plane-departure" asp-route-id="@brochure.BrochureId"> View Details</a>
+                            </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-}
+    }
+</div>

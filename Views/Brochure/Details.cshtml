@@ -3,14 +3,32 @@
 @{
     ViewData["Title"] = "Details";
 }
+<br/>
+<div class="row">
+    <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">
+                                <label style="font-size:23px;color:steelblue;">@Model.Accomodation.AccomodationName</label>
+                            </h4>
+                        </div>
 
-<h2>Details</h2>
+                        <img class="card-img-top" style="height:100%;" src="" alt="Card Image" />
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <label style="font-size:20px; color:#a51313"><b>£@Model.PricePerPerson</b> per/person</label>
+                                </div>
+                                <a asp-action="Details" asp-controller="Brochure" class="btn pull-right btn-outline-info fas fa-plane-departure" asp-route-id="@Model.BrochureId"> View Details</a>
+                            </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                            </div>
+                        </div>
 
-<div class="container">
-    <h1>@Model.Accomodation.AccomodationName</h1>
-    <h2>@Model.Description</h2>
-</div>
+                    </div>
+                </div>
 
-<div>
-    <a href="@Url.Action("CheckDate", "Booking", new { brochureId = @Model.BrochureId })">Book</a>
+    <div>
+        <a href="@Url.Action("CheckDate", "Booking", new { brochureId = @Model.BrochureId })">Book</a>
+    </div>
 </div>
