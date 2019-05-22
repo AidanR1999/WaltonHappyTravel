@@ -1,7 +1,7 @@
 @model Walton_Happy_Travel.Models.Brochure
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @Model.Accomodation.AccomodationName;
 }
 <br/>
 <div class="row">
@@ -11,24 +11,24 @@
                             <h4 class="my-0 font-weight-normal">
                                 <label style="font-size:23px;color:steelblue;">@Model.Accomodation.AccomodationName</label>
                             </h4>
+                            <h4 class="my-0 font-weight-normal">
+                                <label class="fas fa-map-marker-alt" style="font-size:12px;color:grey;"> @Model.Accomodation.AccomodationAddress</label>
+                            </h4>
                         </div>
-
                         <img class="card-img-top" style="height:100%;" src="" alt="Card Image" />
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <label style="font-size:20px; color:#a51313"><b>£@Model.PricePerPerson</b> per/person</label>
                                 </div>
-                                <a asp-action="Details" asp-controller="Brochure" class="btn pull-right btn-outline-info fas fa-plane-departure" asp-route-id="@Model.BrochureId"> View Details</a>
+                                @Html.ActionLink(" Book", "CheckDate", "Booking", new { brochureId = @Model.BrochureId }, new { @class = "btn pull-right btn-outline-info fas fa-plane-departure"})
                             </div>
-                                <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                    <p>@Model.Description</p>
+                                    <p>@Model.Accomodation.Description</p>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-    <div>
-        <a href="@Url.Action("CheckDate", "Booking", new { brochureId = @Model.BrochureId })">Book</a>
-    </div>
 </div>
