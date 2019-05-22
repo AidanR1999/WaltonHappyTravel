@@ -41,6 +41,7 @@ namespace Walton_Happy_Travel
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<SendGridSettings>(Configuration.GetSection("SendGrid"));
             services.AddAuthentication().AddGoogle(options =>
             {
                 options.ClientId = "816410532546-pi1a2h38i0lspipv9cq4im7bd7jcn614.apps.googleusercontent.com";
