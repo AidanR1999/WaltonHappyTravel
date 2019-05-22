@@ -236,14 +236,22 @@ namespace Walton_Happy_Travel.Controllers
         public async Task<IActionResult> Confirmation(int? bookingId)
         {
             //gets all data from the database related to the booking
-            Booking booking = await _context.Bookings.FindAsync(bookingId);
-            Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
-            Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
-            Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
-            List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
+            Booking booking = await _context.Bookings
+                .Include(b => b.Brochure)
+                .Include(b => b.Brochure.Category)
+                .Include(b => b.Brochure.Accomodation)
+                .Include(b => b.Brochure.Accomodation.Country)
+                .Include(b => b.Persons)
+                .SingleOrDefaultAsync(b => b.BookingId == bookingId);
+
+       //     Booking booking = await _context.Bookings.FindAsync(bookingId);
+        //    Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
+        //    Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
+        //    Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
+        //    List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
 
             //updates the total price of the booking in the database
-            booking.TotalPrice = brochure.PricePerPerson * persons.Count;
+            booking.TotalPrice = booking.Brochure.PricePerPerson * booking.Persons.Count();
             _context.Bookings.Update(booking);
             await _context.SaveChangesAsync();
 
@@ -251,31 +259,42 @@ namespace Walton_Happy_Travel.Controllers
             BookingConfirmationViewModel model = new BookingConfirmationViewModel
             {
                 BookingId = (int) bookingId,
-                AccomodationName = accomodation.AccomodationName,
-                CountryName = country.CountryName,
+                AccomodationName = booking.Brochure.Accomodation.AccomodationName,
+                CountryName = booking.Brochure.Accomodation.Country.CountryName,
                 DepartureDate = booking.DepartureDate,
-                Duration = brochure.Duration,
-                Catering = brochure.Catering,
+                Duration = booking.Brochure.Duration,
+                Catering = booking.Brochure.Catering,
                 TotalPrice = booking.TotalPrice,
-                Persons = persons
+                Persons = booking.Persons
             };
             return View(model);
         }
 
+        /// <summary>
+        /// Loads the payment details into stripe API
+        /// </summary>
+        /// <param name="bookingId">id of booking</param>
+        /// <param name="stripeEmail">email user has entered</param>
+        /// <param name="stripeToken">the token of payment details</param>
+        /// <returns>Invoice page</returns>
         [HttpPost]
         public async Task<IActionResult> MakePayment(int? bookingId, string stripeEmail, string stripeToken)
         {
+            //gets the booking from the database
             var booking = await _context.Bookings.FindAsync(bookingId);
 
+            //creates new objects required from the stripe API
             var customerService = new CustomerService();
             var chargeService = new ChargeService();
 
+            //creating a customer using the API
             var customer = customerService.Create(new CustomerCreateOptions
             {
                 Email = stripeEmail,
                 SourceToken = stripeToken
             });
 
+            //charging the customer using the details from the booking
             var charge = await chargeService.CreateAsync(new ChargeCreateOptions
             {
                 Amount = Convert.ToInt32(booking.TotalPrice * 100),
@@ -284,11 +303,17 @@ namespace Walton_Happy_Travel.Controllers
                 CustomerId = customer.Id
             });
 
+            //set the status of the booking to complete
             booking.Status = "Completed";
+
+            //update the amount paid
             booking.AmountPaid = booking.TotalPrice;
+
+            //update the booking in the database
             _context.Bookings.Update(booking);
             await _context.SaveChangesAsync();
 
+            //load the invoice page
             return RedirectToAction(nameof(Invoice), new { bookingId = booking.BookingId });
         }
 

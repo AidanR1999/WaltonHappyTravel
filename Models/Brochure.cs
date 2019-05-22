@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Walton_Happy_Travel.Models
 {
@@ -46,6 +48,7 @@ namespace Walton_Happy_Travel.Models
         /// </summary>
         /// <value>Enum Catering</value>
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Catering Catering { get; set; }
 
         /// <summary>
@@ -96,8 +99,9 @@ namespace Walton_Happy_Travel.Models
     /// <summary>
     /// Enum of catering available
     /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum Catering
     {
-        ALL_INCLUSIVE, HALF_BOARD, SELF_CATERING
+        ALL_INCLUSIVE = 1, HALF_BOARD = 2, SELF_CATERING = 3
     }
 }

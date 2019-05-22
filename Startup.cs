@@ -71,7 +71,8 @@ namespace Walton_Happy_Travel
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            //seeder.Seed();
+
+            Seeder.Initialise().Wait();
         }
     }
 }

@@ -27,22 +27,32 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Brochure/Details/5
+        /// <summary>
+        /// loads the details of the selected brochure
+        /// </summary>
+        /// <param name="id">id of brochure</param>
+        /// <returns>Details page</returns>
         public async Task<IActionResult> Details(int? id)
         {
+            //if id is null, return error message
             if (id == null)
             {
                 return NotFound();
             }
 
+            //get the brochure from the database
             var brochure = await _context.Brochures
                 .Include(b => b.Accomodation)
                 .Include(b => b.Category)
                 .SingleOrDefaultAsync(m => m.BrochureId == id);
+
+            //if brochure doesnt exist, return error
             if (brochure == null)
             {
                 return NotFound();
             }
 
+            //load Details page, inject model
             return View(brochure);
         }
 

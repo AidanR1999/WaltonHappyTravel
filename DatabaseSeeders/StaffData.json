@@ -1,0 +1,42 @@
+[
+    //System Admin
+    {
+        "Email": "sysadmin@whtravel.com",
+        "Forename": "System",
+        "MiddleNamess": "",
+        "Surname": "Administrator",
+        "DateOfBirth": "02/11/1999"
+    },
+    //Shop Manager
+    {
+        "Email": "shopmanager@whtravel.com",
+        "Forename": "Shop",
+        "MiddleNamess": "shopone",
+        "Surname": "Manager",
+        "DateOfBirth": "02/11/1999"
+    },
+    //Assistant Manager
+    {
+        "Email": "assistantman@whtravel.com",
+        "Forename": "Assistant",
+        "MiddleNamess": "shopone",
+        "Surname": "Manager",
+        "DateOfBirth": "02/11/1999"
+    },
+    //Travel Assistant
+    {
+        "Email": "travelassistant@whtravel.com",
+        "Forename": "Travel",
+        "MiddleNames": "shopone",
+        "Surname": "Assistant",
+        "DateOfBirth": "02/11/1999"
+    },
+    //Invoice Clerk
+    {
+        "Email": "invoiceclerk@whtravel.com",
+        "Forename": "Invoice",
+        "MiddleNames": "",
+        "Surname": "Clerk",
+        "DateOfBirth": "02/11/1999"
+    }
+]

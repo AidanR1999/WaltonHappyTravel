@@ -1,0 +1,72 @@
+[
+    {
+        "AccomodationName":"Melia Alicante Hotel",
+        "AccomodationAddress":"Plaza del Puerto, 3, 03001 Alicante",
+        "Description":"The Melia Alicante Hotel is a 4 star accommodation located on Costa Blanca in the heart of Alicante town directly in front of the marina with sweeping views of the sea. A specialised service known as The Level is available for those who require a more luxurious service and is reserved exclusively for adults. Other hotel facilities at the Melia Alicante include a spa, gym, seasonal kids’ club, disabled access and several Mediterranean-inspired restaurants.",
+        "CountryId":1,
+        "Rating":4
+    },
+    {
+        "AccomodationName":"Sol Pelicanos Ocas Hotel",
+        "AccomodationAddress":"Calle Gerona, 45, 03503 Benidorm",
+        "Description":"As seen on ITV’s hit sitcom Benidorm, the sister hotels Sol Pelicanos Ocas offer 3 star all inclusive accommodation on Spain's east coast. Just 300 m from the renowned Levante Beach, the spacious hotel complex boasts multiple restaurants, family-friendly entertainment and an impressive lagoon-style pool. Take your pick of on-site daytime activities, including the children’s kids’ club during the summer months. In the evenings, Broadway-inspired shows and parties take place by the pool.",
+        "CountryId":1,
+        "Rating":3
+    },
+    {
+        "AccomodationName":"Quality Hotel Nova Domus",
+        "AccomodationAddress":"Via Girolamo Savonarola 38, 00195 Rome",
+        "Description":"A cheap yet quality hotel the Hotel Nova Domus Rome is excellent value for money ideal for both business person or tourist alike. General Information Regarding Hotel Nova Domus Rome - A four star city centre hotel located very near the Vatican museums and St Peters. Location - 5 minutes walk to Vatican Museums 10 minutes to St Peters the largest church in Christendom. The Metro Stop Cipro Musei Vaticani is only 4 minutes walk away and is only 3 stops from the Spanish Steps and the Baroque capital of the Eternal City.",
+        "CountryId":3,
+        "Rating":4
+    },
+    {
+        "AccomodationName":"Doria Grand Hotel",
+        "AccomodationAddress":"Viale Andrea Doria 22, 20124 Milano",
+        "Description":"With a stay at Doria Grand Hotel, you'll be centrally located in Milan, just a 3-minute walk from Corso Buenos Aires and 6 minutes by foot from Piazzale Loreto. This 4-star hotel is 3.5 mi (5.7 km) from Bocconi University and 3.8 mi (6.2 km) from Cathedral of Milan.",
+        "CountryId":3,
+        "Rating":4
+    },
+    {
+        "AccomodationName":"Jupiter Lisboa Hotel",
+        "AccomodationAddress":"Av. da República, 46, 1050-195 Lisboa",
+        "Description":"Jupiter Lisboa Hotel is a new 4 stars hotel, located in the heart of the city of Lisbon, open since July 2015. The building preserves the historical original facade designed by the renowned architect Miguel Ventura Terra in 1906, while the interior has been updated to match the most actual guests expectations.",
+        "CountryId":2,
+        "Rating":4
+    },
+    {
+        "AccomodationName":"Hotel Villa Olympia",
+        "AccomodationAddress":"Perivolos, 84703 Santorini",
+        "Description":"Make yourself at home in one of the 32 air-conditioned rooms featuring refrigerators. Rooms have private furnished balconies or patios. Complimentary wireless Internet access keeps you connected, and satellite programming is available for your entertainment. Private bathrooms with showers feature complimentary toiletries and hair dryers.",
+        "CountryId":5,
+        "Rating":3
+    },
+    {
+        "AccomodationName":"Letsos Hotel",
+        "AccomodationAddress":"Alykanas, Zante, Zakynthos, 29100",
+        "Description":"In the popular tourist resort of Alykanas, on the north-eastern coast of Zante, is the 3 star Letsos Hotel. Centrally located just 500 m from Alykanas beach and 500 m from the resort centre, the hotel offers self catering or bed and breakfast accommodation centred around a large outdoor pool and kids’ pool area. Set within landscaped gardens, this low-rise family run hotel offers a traditional Greek welcome in pleasant surroundings.",
+        "CountryId":5,
+        "Rating":3
+    },
+    {
+        "AccomodationName":"Mitsis Grand Hotel",
+        "AccomodationAddress":"Papanikolaou, Rhodes Town 851 00",
+        "Description":"Mitsis Grand Hotel is an all inclusive 5 star hotel in Rhodes that is located on the beacj and close to the town. The hotel enjoys grand architecture, with balconies in every room, many offering views of the Aegean Sea. The hotel has eight restaurants and two bars.",
+        "CountryId":5,
+        "Rating":5
+    },
+    {
+        "AccomodationName":"Hôtel de l'Europe",
+        "AccomodationAddress":"38 rue du Fossé des Tanneurs, 67000 Strasbourg",
+        "Description":"Hôtel de l'Europe by HappyCulture provides en suite accommodation in Petite France, the historic pedestrian area of Strasbourg’s city centre and is 550 yards from Notre Dame Cathedral. It is set in a 15th-century coaching inn.",
+        "CountryId":4,
+        "Rating":4
+    },
+    {
+        "AccomodationName":"Hotel Le Golfe Bleu",
+        "AccomodationAddress":"Saint Raphael, 83240 Cavalaire-sur-Mer",
+        "Description":"The Golfe Bleu is a 2-star hotel located 50 yards from the beaches and 3 minutes from the shops in Cavalaire-sur-Mer. It offers free Wi-Fi, free parking and rooms for families.",
+        "CountryId":4,
+        "Rating":2
+    }
+]

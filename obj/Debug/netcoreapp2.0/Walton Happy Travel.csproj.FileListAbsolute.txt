@@ -10,7 +10,6 @@ D:\Walton Happy Travel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfoI
 D:\Walton Happy Travel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfo.cs
 D:\Walton Happy Travel\obj\Debug\netcoreapp2.0\Walton Happy Travel.dll
 D:\Walton Happy Travel\obj\Debug\netcoreapp2.0\Walton Happy Travel.pdb
-d:\Walton Happy Travel\bin\Debug\netcoreapp2.0\app.db
 D:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.deps.json
 D:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.runtimeconfig.json
 D:\Visual Studio Code Projects\WaltonHappyTravel-master\bin\Debug\netcoreapp2.0\Walton Happy Travel.runtimeconfig.dev.json
@@ -49,3 +48,4 @@ d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfoInp
 d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfo.cs
 d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.dll
 d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.pdb
+d:\Walton Happy Travel\bin\Debug\netcoreapp2.0\app.db

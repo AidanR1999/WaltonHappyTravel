@@ -1,0 +1,92 @@
+[
+    {
+        "Duration":7,
+        "PricePerson":89.99,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":2,
+        "MaxPeople":5,
+        "CategoryId":1,
+        "AccomodationId":1
+    },
+    {
+        "Duration":14,
+        "PricePerson":129.99,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":1,
+        "MaxPeople":6,
+        "CategoryId":2,
+        "AccomodationId":2
+    },
+    {
+        "Duration":3,
+        "PricePerson":30.00,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":3,
+        "MaxPeople":2,
+        "CategoryId":3,
+        "AccomodationId":3
+    },
+    {
+        "Duration":5,
+        "PricePerson":59.99,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":3,
+        "MaxPeople":4,
+        "CategoryId":4,
+        "AccomodationId":8
+    },
+    {
+        "Duration":4,
+        "PricePerson":99.99,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":2,
+        "MaxPeople":2,
+        "CategoryId":3,
+        "AccomodationId":4
+    }, 
+    {
+        "Duration":7,
+        "PricePerson":49.00,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":2,
+        "MaxPeople":6,
+        "CategoryId":2,
+        "AccomodationId":7
+    },
+    {
+        "Duration":2,
+        "PricePerson":30.00,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":2,
+        "MaxPeople":5,
+        "CategoryId":2,
+        "AccomodationId":10
+    },
+    {
+        "Duration":14,
+        "PricePerson":99.99,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":1,
+        "MaxPeople":5,
+        "CategoryId":2,
+        "AccomodationId":4
+    },
+    {
+        "Duration":3,
+        "PricePerson":25.00,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":3,
+        "MaxPeople":5,
+        "CategoryId":2,
+        "AccomodationId":11
+    },
+    {
+        "Duration":2,
+        "PricePerson":30.00,
+        "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
+        "Catering":2,
+        "MaxPeople":5,
+        "CategoryId":2,
+        "AccomodationId":12
+    }
+]
