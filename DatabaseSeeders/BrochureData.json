@@ -1,7 +1,7 @@
 [
     {
         "Duration":7,
-        "PricePerson":89.99,
+        "PricePerPerson":89.99,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":2,
         "MaxPeople":5,
@@ -10,7 +10,7 @@
     },
     {
         "Duration":14,
-        "PricePerson":129.99,
+        "PricePerPerson":129.99,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":1,
         "MaxPeople":6,
@@ -19,7 +19,7 @@
     },
     {
         "Duration":3,
-        "PricePerson":30.00,
+        "PricePerPerson":30.00,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":3,
         "MaxPeople":2,
@@ -28,7 +28,7 @@
     },
     {
         "Duration":5,
-        "PricePerson":59.99,
+        "PricePerPerson":59.99,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":3,
         "MaxPeople":4,
@@ -37,7 +37,7 @@
     },
     {
         "Duration":4,
-        "PricePerson":99.99,
+        "PricePerPerson":99.99,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":2,
         "MaxPeople":2,
@@ -46,7 +46,7 @@
     }, 
     {
         "Duration":7,
-        "PricePerson":49.00,
+        "PricePerPerson":49.00,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":2,
         "MaxPeople":6,
@@ -55,7 +55,7 @@
     },
     {
         "Duration":2,
-        "PricePerson":30.00,
+        "PricePerPerson":30.00,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":2,
         "MaxPeople":5,
@@ -64,7 +64,7 @@
     },
     {
         "Duration":14,
-        "PricePerson":99.99,
+        "PricePerPerson":99.99,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":1,
         "MaxPeople":5,
@@ -73,7 +73,7 @@
     },
     {
         "Duration":3,
-        "PricePerson":25.00,
+        "PricePerPerson":25.00,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":3,
         "MaxPeople":5,
@@ -82,7 +82,7 @@
     },
     {
         "Duration":2,
-        "PricePerson":30.00,
+        "PricePerPerson":30.00,
         "Description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum justo. Aenean eu ante et justo rutrum vehicula. Etiam ut ante et eros sodales finibus in vel justo. Aenean gravida augue turpis, et vestibulum nisl congue et. Pellentesque commodo mi nec faucibus consequat. Proin feugiat euismod orci sed commodo.",
         "Catering":2,
         "MaxPeople":5,

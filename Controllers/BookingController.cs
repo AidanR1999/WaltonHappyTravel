@@ -125,6 +125,7 @@ namespace Walton_Happy_Travel.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BrochureId"] = new SelectList(_context.Brochures, "BrochureId", "BrochureId", booking.BrochureId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
             return View(booking);
@@ -236,19 +237,11 @@ namespace Walton_Happy_Travel.Controllers
         public async Task<IActionResult> Confirmation(int? bookingId)
         {
             //gets all data from the database related to the booking
-            Booking booking = await _context.Bookings
-                .Include(b => b.Brochure)
-                .Include(b => b.Brochure.Category)
-                .Include(b => b.Brochure.Accomodation)
-                .Include(b => b.Brochure.Accomodation.Country)
-                .Include(b => b.Persons)
-                .SingleOrDefaultAsync(b => b.BookingId == bookingId);
-
-       //     Booking booking = await _context.Bookings.FindAsync(bookingId);
-        //    Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
-        //    Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
-        //    Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
-        //    List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
+            Booking booking = await _context.Bookings.FindAsync(bookingId);
+            Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
+            Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
+            Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
+            List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
 
             //updates the total price of the booking in the database
             booking.TotalPrice = booking.Brochure.PricePerPerson * booking.Persons.Count();
@@ -259,8 +252,8 @@ namespace Walton_Happy_Travel.Controllers
             BookingConfirmationViewModel model = new BookingConfirmationViewModel
             {
                 BookingId = (int) bookingId,
-                AccomodationName = booking.Brochure.Accomodation.AccomodationName,
-                CountryName = booking.Brochure.Accomodation.Country.CountryName,
+                AccomodationName = accomodation.AccomodationName,
+                CountryName = country.CountryName,
                 DepartureDate = booking.DepartureDate,
                 Duration = booking.Brochure.Duration,
                 Catering = booking.Brochure.Catering,
@@ -317,22 +310,37 @@ namespace Walton_Happy_Travel.Controllers
             return RedirectToAction(nameof(Invoice), new { bookingId = booking.BookingId });
         }
 
+        /// <summary>
+        /// Confirms the booking and loads the invoice page
+        /// </summary>
+        /// <param name="bookingId">id of booking</param>
+        /// <returns>Invoice page</returns>
         public async Task<IActionResult> Invoice(int? bookingId)
         {
+            //get booking from database
             Booking booking = await _context.Bookings.FindAsync(bookingId);
 
+            //get user of booking
             var user = await _context.Users.FindAsync(booking.UserId);
+
+            //get current user
             var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //if user is not logged in, redirect to browse
             if(currentUserId == null) 
                 return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
+
+            //if users dont match or is not staff, redirect to browse
             if((!currentUserId.Equals(user.Id) && !User.IsInRole("Staff"))) 
                 return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
+            //gets all data from the database related to the booking
             Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
             Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
             Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
             List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
 
+            //populate the model with the necessary data
             BookingInvoiceViewModel model = new BookingInvoiceViewModel
             {
                 BookingId = (int) bookingId,
@@ -347,9 +355,11 @@ namespace Walton_Happy_Travel.Controllers
                 Persons = persons
             };
             
+            //if booking is not complete, redirect to booking confirmation
             if(booking.Status.Equals("IN PROGRESS")) 
                 return RedirectToAction(nameof(BookingController.Confirmation), new { bookingId = bookingId });
 
+            //loads page, inject model
             return View(model);
         }
     }
