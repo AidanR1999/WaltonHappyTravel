@@ -18,5 +18,6 @@ namespace Walton_Happy_Travel.Models
         public Catering Catering { get; set; }
         public double TotalPrice { get; set; }
         public IEnumerable<Person> Persons { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -168,8 +168,10 @@ namespace Walton_Happy_Travel.Controllers
             UserBookingsViewModel model = new UserBookingsViewModel
             {
                 Bookings = _context.Bookings.Where(b => b.UserId.Equals(currentUserId))
+                    .Include(b => b.Brochure)
+                    .Include(b => b.Brochure.Accomodation)
+                    .Include(b => b.Persons)
             };
-
             //load page
             return View(model);
         }

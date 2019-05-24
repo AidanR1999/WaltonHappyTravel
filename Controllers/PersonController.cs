@@ -149,7 +149,7 @@ namespace Walton_Happy_Travel.Controllers
             var person = await _context.Persons.SingleOrDefaultAsync(m => m.PersonId == id);
             _context.Persons.Remove(person);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = person.PersonId });
+            return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = person.BookingId });
         }
 
         private bool PersonExists(int id)

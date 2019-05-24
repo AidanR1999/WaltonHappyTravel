@@ -194,6 +194,11 @@ namespace Walton_Happy_Travel.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckDate(CheckDateViewModel model)
         {
+            if(model.DepartureDate < DateTime.Now)
+            {
+                return View(model);
+            }
+
             //get the brochure from the database
             Brochure brochure = await _context.Brochures.FindAsync(model.BrochureId);
 
@@ -236,6 +241,9 @@ namespace Walton_Happy_Travel.Controllers
         /// <returns>Confirmation page</returns>
         public async Task<IActionResult> Confirmation(int? bookingId)
         {
+            //if booking id is null go to browse brochures
+            if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
+
             //gets all data from the database related to the booking
             Booking booking = await _context.Bookings.FindAsync(bookingId);
             Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
@@ -258,7 +266,8 @@ namespace Walton_Happy_Travel.Controllers
                 Duration = booking.Brochure.Duration,
                 Catering = booking.Brochure.Catering,
                 TotalPrice = booking.TotalPrice,
-                Persons = booking.Persons
+                Persons = booking.Persons,
+                Status = booking.Status
             };
             return View(model);
         }
@@ -317,6 +326,9 @@ namespace Walton_Happy_Travel.Controllers
         /// <returns>Invoice page</returns>
         public async Task<IActionResult> Invoice(int? bookingId)
         {
+            //if booking id is null go to browse brochures
+            if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
+
             //get booking from database
             Booking booking = await _context.Bookings.FindAsync(bookingId);
 
@@ -361,6 +373,51 @@ namespace Walton_Happy_Travel.Controllers
 
             //loads page, inject model
             return View(model);
+        }
+
+        public async Task<IActionResult> Cancel(int? bookingId)
+        {
+            var model = await _context.Bookings.Where(b => b.BookingId == bookingId).Include(b => b.Brochure).Include(b => b.Brochure.Accomodation).FirstOrDefaultAsync();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Cancel")]
+        public async Task<IActionResult> CancelConfirmed(int? bookingId, string stripeEmail, string stripeToken)
+        {
+            var booking = await _context.Bookings.FindAsync(bookingId);
+
+            var daysBetween = (booking.DepartureDate - DateTime.Now).TotalDays;
+            var price = 1.00;
+            if(daysBetween < 7)
+            {
+                price *= 0.75;
+            }
+
+            //creates new objects required from the stripe API
+            var customerService = new CustomerService();
+            var chargeService = new ChargeService();
+
+            //creating a customer using the API
+            var customer = customerService.Create(new CustomerCreateOptions
+            {
+                Email = stripeEmail,
+                SourceToken = stripeToken
+            });
+
+            //charging the customer using the details from the booking
+            var charge = await chargeService.CreateAsync(new ChargeCreateOptions
+            {
+                Amount = Convert.ToInt32(price * 100),
+                Description = "Booking Id: " + booking.BookingId,
+                Currency = "gbp",
+                CustomerId = customer.Id
+            });
+
+            booking.Status = "Cancelled";
+            _context.Update(booking);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ApplicationUserController.UserBookings), "ApplicationUser");
         }
     }
 

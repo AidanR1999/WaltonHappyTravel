@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Walton_Happy_Travel
+namespace Walton_Happy_Travel.Models
 {
     public class ViewBrochuresViewModel
     {

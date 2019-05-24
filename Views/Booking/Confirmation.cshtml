@@ -2,6 +2,7 @@
 @model Walton_Happy_Travel.Models.BookingConfirmationViewModel
 @inject IOptions<StripeSettings> Stripe;
 
+<br/>
 <h1>Booking Details</h1>
 <hr>
  <table style="width:100%">
@@ -21,7 +22,10 @@
     <tr>
         <th>Departure Date</th>
         <td>@Model.DepartureDate</td>
-        <td>Change</td>
+        @if(!Model.Status.Equals("Completed"))
+        {
+            <td>Change</td>
+        }
     </tr>
     <tr>
         <th>Duration</th>
@@ -60,7 +64,7 @@
                 <td>@person.DateOfBirth</td>
                 <td>
                     @Html.ActionLink("Update", "Edit", "Person", new { id = person.PersonId})  
-                    @if(Model.Persons.Count() > 1)
+                    @if(Model.Persons.Count() > 1 && !Model.Status.Equals("Completed"))
                     {
                         @Html.ActionLink("| Remove", "DeleteConfirmed", "Person", new { id = person.PersonId });
                     }
@@ -71,26 +75,32 @@
         
     </tr>
     </table>
-    <p align="right">@Html.ActionLink("+ Add Person", "Create", "Person", new { bookingId = Model.BookingId })</p>
+    if(!Model.Status.Equals("Completed"))
+    {
+        <p align="right">@Html.ActionLink("+ Add Person", "Create", "Person", new { bookingId = Model.BookingId })</p>
+    }
 }
-<hr>
 
-@using (Html.BeginForm("MakePayment", "Booking", new { bookingId = Model.BookingId }, FormMethod.Post))
+@if(!Model.Status.Equals("Completed"))
 {
-    var newPrice = Model.TotalPrice * 100;
-    <div align="center">
-        <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="@Stripe.Value.PublishableKey"
-            data-amount="@newPrice"
-            data-name="Walton Happy Travel"
-            data-label="Make Payment"
-            data-description="Full payment"
-            data-locale="gb"
-            data-currency="GBP"
-            data-zip-code="false"
-            data-allow-remember-me ="false"
-            data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
-        </script>
-    </div>
+    <hr>
+    @using (Html.BeginForm("MakePayment", "Booking", new { bookingId = Model.BookingId }, FormMethod.Post))
+    {
+        var newPrice = Model.TotalPrice * 100;
+        <div align="center">
+            <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="@Stripe.Value.PublishableKey"
+                data-amount="@newPrice"
+                data-name="Walton Happy Travel"
+                data-label="Make Payment"
+                data-description="Full payment"
+                data-locale="gb"
+                data-currency="GBP"
+                data-zip-code="false"
+                data-allow-remember-me ="false"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+            </script>
+        </div>
+    }
 }
