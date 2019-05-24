@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace WaltonHappyTravel.Migrations
 {
-    public partial class InitalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -193,7 +193,6 @@ namespace WaltonHappyTravel.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ApplicationUserId = table.Column<string>(nullable: true),
                     CardNumber = table.Column<string>(nullable: true),
-                    CardType = table.Column<int>(nullable: false),
                     ExpiryDate = table.Column<DateTime>(nullable: false),
                     NameOnCard = table.Column<string>(nullable: true),
                     SecurityNumber = table.Column<string>(nullable: true),
@@ -245,6 +244,7 @@ namespace WaltonHappyTravel.Migrations
                     Catering = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     Duration = table.Column<int>(nullable: false),
+                    ImageLink = table.Column<string>(nullable: true),
                     MaxPeople = table.Column<int>(nullable: false),
                     PricePerPerson = table.Column<double>(nullable: false)
                 },

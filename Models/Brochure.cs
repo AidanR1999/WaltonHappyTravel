@@ -44,6 +44,12 @@ namespace Walton_Happy_Travel.Models
         public string Description { get; set; }
 
         /// <summary>
+        /// Holds the location of the image
+        /// </summary>
+        /// <value>string</value>
+        public string ImageLink { get; set;}
+
+        /// <summary>
         /// The catering available with the brochure
         /// </summary>
         /// <value>Enum Catering</value>

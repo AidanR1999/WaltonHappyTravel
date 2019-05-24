@@ -48,5 +48,5 @@ d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfoInp
 d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.AssemblyInfo.cs
 d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.dll
 d:\WaltonHappyTravel\obj\Debug\netcoreapp2.0\Walton Happy Travel.pdb
-d:\Walton Happy Travel\bin\Debug\netcoreapp2.0\app.db
 d:\WaltonHappyTravel\bin\Debug\netcoreapp2.0\app.db
+d:\Walton Happy Travel\bin\Debug\netcoreapp2.0\app.db

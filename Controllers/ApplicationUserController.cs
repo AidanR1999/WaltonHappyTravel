@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
+using System.Security.Claims;
 
 namespace Walton_Happy_Travel.Controllers
 {
@@ -148,6 +150,28 @@ namespace Walton_Happy_Travel.Controllers
         private bool ApplicationUserExists(string id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        /// <summary>
+        /// displays all bookings the user has made
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> UserBookings()
+        {
+            //if user is not logged in, redirect to home
+            if(!User.Identity.IsAuthenticated) return RedirectToAction(nameof(HomeController.Index), "Home");
+
+            //get user id
+            var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //populate and inject view model
+            UserBookingsViewModel model = new UserBookingsViewModel
+            {
+                Bookings = _context.Bookings.Where(b => b.UserId.Equals(currentUserId))
+            };
+
+            //load page
+            return View(model);
         }
     }
 }

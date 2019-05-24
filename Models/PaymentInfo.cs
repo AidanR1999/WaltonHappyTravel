@@ -20,12 +20,6 @@ namespace Walton_Happy_Travel.Models
         /// <value>integer</value>
         [Key]
         public int PaymentId { get; set; }
-        
-        /// <summary>
-        /// Type of card
-        /// </summary>
-        /// <value>Enum of CardType</value>
-        public CardType CardType { get; set; }
 
         /// <summary>
         /// Number on card
@@ -60,13 +54,5 @@ namespace Walton_Happy_Travel.Models
         [InverseProperty("ApplicationUser")]
         public string UserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
-    }
-
-    /// <summary>
-    /// Enumerable for types of card available
-    /// </summary>
-    public enum CardType
-    {
-        VISA, MASTERCARD
     }
 }

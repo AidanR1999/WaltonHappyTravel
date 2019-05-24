@@ -13,8 +13,8 @@ using Walton_Happy_Travel.Models;
 namespace WaltonHappyTravel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190522013341_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20190523150412_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -271,6 +271,8 @@ namespace WaltonHappyTravel.Migrations
 
                     b.Property<int>("Duration");
 
+                    b.Property<string>("ImageLink");
+
                     b.Property<int>("MaxPeople");
 
                     b.Property<double>("PricePerPerson");
@@ -318,8 +320,6 @@ namespace WaltonHappyTravel.Migrations
                     b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("CardNumber");
-
-                    b.Property<int>("CardType");
 
                     b.Property<DateTime>("ExpiryDate");
 

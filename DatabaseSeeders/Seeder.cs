@@ -281,6 +281,7 @@ namespace Walton_Happy_Travel.DatabaseSeeders
             //for every brochure in file
             foreach(var brochure in brochures)
             {
+                brochure.ImageLink = @"\images\BrochureImages\default_image.jpg";
                 //add brochure to database
                 await _context.Brochures.AddAsync(brochure);
             }

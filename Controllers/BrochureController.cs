@@ -1,3 +1,4 @@
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
+using Walton_Happy_Travel.Utilities;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Walton_Happy_Travel.Controllers
 {
     public class BrochureController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _hosting;
 
-        public BrochureController(ApplicationDbContext context)
+        public BrochureController(ApplicationDbContext context, IHostingEnvironment hosting)
         {
             _context = context;
+            _hosting = hosting;
         }
 
         // GET: Brochure
@@ -65,9 +70,10 @@ namespace Walton_Happy_Travel.Controllers
                 Catering.HALF_BOARD,
                 Catering.SELF_CATERING
             });
+            
 
-            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationId");
-            ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryId");
+            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationName");
+            ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryName");
             return View();
         }
 
@@ -80,12 +86,56 @@ namespace Walton_Happy_Travel.Controllers
         {
             if (ModelState.IsValid)
             {
+                //add brochure to database
                 _context.Add(brochure);
                 await _context.SaveChangesAsync();
+
+                //get image from form
+                string webRootPath = _hosting.WebRootPath;
+                var files = HttpContext.Request.Form.Files;
+
+                //if image is uploaded
+                if(files.Count != 0)
+                {
+                    //getting the extension and path of the image
+                    var uploads = Path.Combine(webRootPath, SD.ImageFolder);
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    //using dependency injection to get a filestream using the path of images
+                    using (var filestream = new FileStream(Path.Combine(uploads, brochure.BrochureId + extension), FileMode.Create))
+                    {
+                        //store image in images folder
+                        await files[0].CopyToAsync(filestream);
+                    }
+
+                    //stores image location in object
+                    brochure.ImageLink = @"\" + SD.ImageFolder + @"\" + brochure.BrochureId + extension;
+                }
+                //if image is not uploaded
+                else
+                {
+                    //load brochure with set default image
+                    var uploads = Path.Combine(webRootPath, SD.ImageFolder + @"\" + SD.DefaultBrochureImage);
+                    System.IO.File.Copy(uploads,webRootPath + @"\" + SD.ImageFolder + @"\" + brochure.BrochureId + ".jpg");
+                    brochure.ImageLink = @"\" + SD.ImageFolder + @"\" + brochure.BrochureId + ".jpg";
+                }
+
+                //update database
+                await _context.SaveChangesAsync();
+
+                //redirect to index page
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationId", brochure.AccomodationId);
-            ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryId", brochure.CategoryId);
+
+            //if fail, return back to view
+            ViewData["Catering"] = new SelectList(new List<Catering>
+            {
+                Catering.ALL_INCLUSIVE,
+                Catering.HALF_BOARD,
+                Catering.SELF_CATERING
+            });
+            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationName", brochure.AccomodationId);
+            ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryName", brochure.CategoryId);
             return View(brochure);
         }
 

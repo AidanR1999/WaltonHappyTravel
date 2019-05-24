@@ -270,6 +270,8 @@ namespace WaltonHappyTravel.Migrations
 
                     b.Property<int>("Duration");
 
+                    b.Property<string>("ImageLink");
+
                     b.Property<int>("MaxPeople");
 
                     b.Property<double>("PricePerPerson");
@@ -317,8 +319,6 @@ namespace WaltonHappyTravel.Migrations
                     b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("CardNumber");
-
-                    b.Property<int>("CardType");
 
                     b.Property<DateTime>("ExpiryDate");
 
