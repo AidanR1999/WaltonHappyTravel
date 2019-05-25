@@ -174,6 +174,9 @@ namespace Walton_Happy_Travel.Controllers
         /// <returns>CheckDate view</returns>
         public IActionResult CheckDate(int? brochureId)
         {
+            //if user is not logged in, send to login screen
+            if(!User.Identity.IsAuthenticated) return RedirectToAction(nameof(AccountController.Login), "Account");
+
             //if brochureId is null, redirect to browse brochures page
             if (brochureId == null) return RedirectToAction(nameof(BrochureController.Browse));
 
