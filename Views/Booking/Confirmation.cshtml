@@ -2,6 +2,10 @@
 @model Walton_Happy_Travel.Models.BookingConfirmationViewModel
 @inject IOptions<StripeSettings> Stripe;
 
+@{
+    ViewData["Title"] = @Model.AccomodationName;
+}
+
 <br/>
 <h1>Booking Details</h1>
 <hr>
@@ -81,7 +85,7 @@
     }
 }
 
-@if(!Model.Status.Equals("Completed"))
+@if(!Model.Status.Equals("Completed") && Model.Persons.Count() > 0)
 {
     <hr>
     @using (Html.BeginForm("MakePayment", "Booking", new { bookingId = Model.BookingId }, FormMethod.Post))

@@ -2,10 +2,13 @@
 @model Walton_Happy_Travel.Models.Booking
 @inject IOptions<StripeSettings> Stripe;
 
+@{
+    ViewData["Title"] = @Model.Brochure.Accomodation.AccomodationName;
+}
+
 <br/>
 <h1>Cancel Booking Ref: @Model.BookingId</h1>
 
-@*Html.BeginForm(new { bookingId = Model.BookingId })*@
 
 <p>Are you sure you wish to cancel this booking to <b> @Model.Brochure.Accomodation.AccomodationName </b> on <b>@Model.DepartureDate</b>?</p>
     @{  var charge = 1.00;

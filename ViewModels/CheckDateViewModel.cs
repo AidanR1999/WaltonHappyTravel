@@ -11,6 +11,7 @@ namespace Walton_Happy_Travel.Models
     public class CheckDateViewModel
     {
         public int BrochureId { get; set; }
-        public DateTime? DepartureDate { get; set; }
+        public DateTime DepartureDate { get; set; }
+        public IEnumerable<DateTime> UnavailableDates { get; set; }
     }
 }

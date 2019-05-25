@@ -177,11 +177,31 @@ namespace Walton_Happy_Travel.Controllers
             //if brochureId is null, redirect to browse brochures page
             if (brochureId == null) return RedirectToAction(nameof(BrochureController.Browse));
 
+            //get all the bookings from the database where it shares the same brochure
+            var bookings = _context.Bookings.Where(b => b.BrochureId == brochureId).Include(b => b.Brochure);
+            List<DateTime> unavailableDates = new List<DateTime>();
+
+            //store the dates for every booking
+            foreach(var booking in bookings)
+            {
+                //store departure date
+                unavailableDates.Add(booking.DepartureDate);
+
+                //store the dates included in the duration after departure
+                var duration = booking.Brochure.Duration;
+                while(duration > 0)
+                {
+                    unavailableDates.Add(booking.DepartureDate.AddDays(duration));
+                    duration--;
+                }
+            }
+
             //populate the model and inject into the page
             CheckDateViewModel model = new CheckDateViewModel
             {
                 BrochureId = (int) brochureId,
-                DepartureDate = null
+                DepartureDate = DateTime.Now.Date,
+                UnavailableDates = unavailableDates
             };
             return View(model);
         }
@@ -194,7 +214,8 @@ namespace Walton_Happy_Travel.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckDate(CheckDateViewModel model)
         {
-            if(model.DepartureDate < DateTime.Now)
+            //if date is in the past, reload page
+            if(model.DepartureDate < DateTime.Now || model.DepartureDate == null)
             {
                 return View(model);
             }
@@ -202,36 +223,40 @@ namespace Walton_Happy_Travel.Controllers
             //get the brochure from the database
             Brochure brochure = await _context.Brochures.FindAsync(model.BrochureId);
 
-            //look for all bookings under that brochure and check is selected date is taken
-            var results = brochure.Bookings.Where(b => b.DepartureDate.Equals(model.DepartureDate));
+            //check if user already has a booking in progress
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userResults = _context.Bookings.Where(b => b.UserId.Equals(userId)).Where(b => b.Status.Equals("IN_PROGRESS"));
 
-            //result should return 0 if date is available
-            if(results.Count() == 0)
+            //remove booking from database if one exists
+            if(await userResults.CountAsync() > 0)
             {
-                //create a new booking
-                Booking booking = new Booking
+                foreach(var oldBooking in userResults)
                 {
-                    BrochureId = model.BrochureId,
-                    Brochure = await _context.Brochures.FindAsync(model.BrochureId),
-                    DepartureDate = (DateTime) model.DepartureDate,
-                    PaymentType = PaymentType.STRIPE,
-                    TotalPrice = brochure.PricePerPerson,
-                    AmountPaid = 0,
-                    SpecialRequirements = "",
-                    Status = "IN_PROGRESS",
-                    UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                };
-
-                //add booking to database
-                _context.Bookings.Add(booking);
-                await _context.SaveChangesAsync();
-
-                //redirect to AddPeople action
-                return RedirectToAction("AddNumberOfPeople", "Person", new { bookingId = booking.BookingId });
+                    _context.Remove(oldBooking);
+                }
+                //var oldBooking = await userResults.FirstOrDefaultAsync();
             }
 
-            //on fail return to previous page
-            return RedirectToAction(nameof(BrochureController.Browse));
+            //create a new booking
+            Booking booking = new Booking
+            {
+                BrochureId = model.BrochureId,
+                Brochure = await _context.Brochures.FindAsync(model.BrochureId),
+                DepartureDate = (DateTime) model.DepartureDate,
+                PaymentType = PaymentType.STRIPE,
+                TotalPrice = brochure.PricePerPerson,
+                AmountPaid = 0,
+                SpecialRequirements = "",
+                Status = "IN_PROGRESS",
+                UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+
+            //add booking to database
+            _context.Bookings.Add(booking);
+            await _context.SaveChangesAsync();
+
+            //redirect to AddPeople action
+            return RedirectToAction("AddNumberOfPeople", "Person", new { bookingId = booking.BookingId });
         }
 
         /// <summary>
@@ -381,19 +406,32 @@ namespace Walton_Happy_Travel.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// confirms cancellation of booking and charges customer
+        /// </summary>
+        /// <param name="bookingId">id for booking</param>
+        /// <param name="stripeEmail">email attatched to stripe payment</param>
+        /// <param name="stripeToken">token generated by stripe client</param>
+        /// <returns>Redirects to my bookings page</returns>
         [HttpPost]
         [ActionName("Cancel")]
         public async Task<IActionResult> CancelConfirmed(int? bookingId, string stripeEmail, string stripeToken)
         {
+            //gets the booking from the database
             var booking = await _context.Bookings.FindAsync(bookingId);
 
+            //finds out how many days are between the booking and cancelling
             var daysBetween = (booking.DepartureDate - DateTime.Now).TotalDays;
             var price = 1.00;
+
+            //if its less than 7 days before departure, charge a 75% fee of the initial payment
             if(daysBetween < 7)
             {
                 price *= 0.75;
             }
 
+            //charge the customer £1.00 if cancelling ahead of time
             //creates new objects required from the stripe API
             var customerService = new CustomerService();
             var chargeService = new ChargeService();
@@ -414,9 +452,12 @@ namespace Walton_Happy_Travel.Controllers
                 CustomerId = customer.Id
             });
 
+            //update booking in the database
             booking.Status = "Cancelled";
             _context.Update(booking);
             await _context.SaveChangesAsync();
+
+            //redirect to my bookings page
             return RedirectToAction(nameof(ApplicationUserController.UserBookings), "ApplicationUser");
         }
     }

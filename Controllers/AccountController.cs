@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,13 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Walton_Happy_Travel.Models;
 using Walton_Happy_Travel.Models.AccountViewModels;
 using Walton_Happy_Travel.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Walton_Happy_Travel.Models;
 
 namespace Walton_Happy_Travel.Controllers
 {
@@ -46,7 +47,7 @@ namespace Walton_Happy_Travel.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> Login(string returnUrl)
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -58,7 +59,7 @@ namespace Walton_Happy_Travel.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
