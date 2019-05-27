@@ -69,5 +69,10 @@ namespace Walton_Happy_Travel.Models
         [InverseProperty("Country")]
         public int CountryId { get; set; }
         public virtual Country Country { get; set; }
+
+        //1:M Accomodation:User
+        [InverseProperty("User")]
+        public string UserId { get; set; }
+        public virtual Staff StaffAssigned { get; set; }
     }
 }

@@ -11,5 +11,15 @@ namespace Walton_Happy_Travel.Models.AccountViewModels
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        public string Forename { get; set; }
+
+        [Required]
+        public string Surname { get; set; }
+
+        [Required]
+        [Display(Name = "Date of Birth")]
+        public DateTime DateOfBirth { get; set; }
     }
 }

@@ -146,9 +146,15 @@ namespace WaltonHappyTravel.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
+                    b.Property<string>("StaffAssignedId");
+
+                    b.Property<string>("UserId");
+
                     b.HasKey("AccomodationId");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("StaffAssignedId");
 
                     b.ToTable("Accomodations");
 
@@ -451,6 +457,10 @@ namespace WaltonHappyTravel.Migrations
                         .WithMany("Accomodations")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Walton_Happy_Travel.Models.Staff", "StaffAssigned")
+                        .WithMany("AccomodationsAssigned")
+                        .HasForeignKey("StaffAssignedId");
                 });
 
             modelBuilder.Entity("Walton_Happy_Travel.Models.Booking", b =>

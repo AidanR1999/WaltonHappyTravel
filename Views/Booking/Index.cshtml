@@ -12,23 +12,26 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.PaymentType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TotalPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AmountPaid)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SpecialRequirements)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.Brochure)
+                @Html.DisplayName("Booking Ref")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayName("Accomodation")
+            </th>
+            <th>
+                @Html.DisplayName("Brochure")
+            </th>
+            <th>
+                @Html.DisplayName("Departure Date")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountPaid)
             </th>
             <th></th>
         </tr>
@@ -37,27 +40,32 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.PaymentType)
+                @Html.DisplayFor(modelItem => item.BookingId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
+                @Html.DisplayFor(modelItem => item.User.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AmountPaid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialRequirements)
+                @Html.DisplayFor(modelItem => item.Brochure.Accomodation.AccomodationName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Brochure.BrochureId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.DepartureDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BookingId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BookingId">Delete</a>
+                £
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+            <td>
+                £
+                @Html.DisplayFor(modelItem => item.AmountPaid)
+            </td>
+            
+            <td>
+                <a asp-action="Invoice" asp-route-bookingId="@item.BookingId">Invoice</a> |
+                <a asp-action="Confirmation" asp-route-bookingId="@item.BookingId">Amend</a>
             </td>
         </tr>
 }

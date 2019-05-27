@@ -13,5 +13,11 @@ namespace Walton_Happy_Travel.Models
     /// </summary>
     public class Staff : ApplicationUser
     {
+        public virtual IEnumerable<Accomodation> AccomodationsAssigned { get; set; }
+
+        public Staff()
+        {
+            AccomodationsAssigned = new List<Accomodation>();
+        }
     }
 }

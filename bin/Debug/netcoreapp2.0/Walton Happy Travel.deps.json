@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "82d56a391ecc675b9977428e40122b70903bfbff"
+    "signature": "f4c27da40d240fbea9b95287e35235a3f2e0b509"
   },
   "compilationOptions": {
     "defines": [
@@ -31,13 +31,114 @@
           "Newtonsoft.Json": "12.0.2",
           "Sendgrid": "9.11.0",
           "Stripe.net": "25.18.0",
-          "TinyMCE": "5.0.6"
+          "TinyMCE": "5.0.6",
+          "jsreport.AspNetCore": "2.0.1",
+          "jsreport.Binary": "2.4.0",
+          "jsreport.Local": "2.0.1"
         },
         "runtime": {
           "Walton Happy Travel.dll": {}
         },
         "compile": {
           "Walton Happy Travel.dll": {}
+        }
+      },
+      "jsreport.AspNetCore/2.0.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.0.3",
+          "Microsoft.AspNetCore.Mvc": "2.0.4",
+          "jsreport.Shared": "2.0.1",
+          "jsreport.Types": "2.2.7"
+        },
+        "runtime": {
+          "lib/netstandard2.0/jsreport.AspNetCore.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/jsreport.AspNetCore.dll": {}
+        }
+      },
+      "jsreport.Binary/2.4.0": {
+        "dependencies": {
+          "jsreport.Shared": "2.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/jsreport.Binary.dll": {
+            "assemblyVersion": "2.4.0.0",
+            "fileVersion": "2.4.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/jsreport.Binary.dll": {}
+        }
+      },
+      "jsreport.Client/3.0.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.4.0",
+          "NETStandard.Library": "2.0.0",
+          "Newtonsoft.Json": "12.0.2",
+          "System.Net.Http": "4.3.2",
+          "jsreport.Shared": "2.0.1",
+          "jsreport.Types": "2.2.7"
+        },
+        "runtime": {
+          "lib/netstandard1.6/jsreport.Client.dll": {
+            "assemblyVersion": "3.0.1.0",
+            "fileVersion": "3.0.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/jsreport.Client.dll": {}
+        }
+      },
+      "jsreport.Local/2.0.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2",
+          "jsreport.Client": "3.0.1",
+          "jsreport.Shared": "2.0.1",
+          "jsreport.Types": "2.2.7"
+        },
+        "runtime": {
+          "lib/netstandard2.0/jsreport.Local.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/jsreport.Local.dll": {}
+        }
+      },
+      "jsreport.Shared/2.0.1": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.0",
+          "Newtonsoft.Json": "12.0.2",
+          "jsreport.Types": "2.2.7"
+        },
+        "runtime": {
+          "lib/netstandard1.6/jsreport.Shared.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/jsreport.Shared.dll": {}
+        }
+      },
+      "jsreport.Types/2.2.7": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.0",
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "runtime": {
+          "lib/netstandard1.6/jsreport.Types.dll": {
+            "assemblyVersion": "2.2.7.0",
+            "fileVersion": "2.2.6.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/jsreport.Types.dll": {}
         }
       },
       "Libuv/1.10.0": {
@@ -1623,7 +1724,7 @@
           "Microsoft.Rest.ClientRuntime.Azure": "3.3.7",
           "NETStandard.Library": "2.0.0",
           "Newtonsoft.Json": "12.0.2",
-          "System.Net.Http": "4.3.0"
+          "System.Net.Http": "4.3.2"
         },
         "runtime": {
           "lib/netstandard1.4/Microsoft.Azure.KeyVault.dll": {
@@ -2678,7 +2779,7 @@
           "System.Collections.Specialized": "4.3.0",
           "System.Diagnostics.Contracts": "4.3.0",
           "System.IdentityModel.Tokens.Jwt": "5.1.4",
-          "System.Net.Http": "4.3.0"
+          "System.Net.Http": "4.3.2"
         },
         "runtime": {
           "lib/netstandard1.4/Microsoft.IdentityModel.Protocols.dll": {
@@ -3799,7 +3900,7 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.2": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
           "System.Collections": "4.3.0",
@@ -4790,6 +4891,48 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "jsreport.AspNetCore/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RGdI0WyARJDCVWtsVMVe3La0r7CeJPqKsPk69ST0954beZB2W6Yco6K0O5h2mQPfLS6/jOyMe6dJjYI6c6Icew==",
+      "path": "jsreport.aspnetcore/2.0.1",
+      "hashPath": "jsreport.aspnetcore.2.0.1.nupkg.sha512"
+    },
+    "jsreport.Binary/2.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8EZmvp+Z1mnzocYPBeFwh/gnMVgFKiL27aNH4fJhWI8gmoILx8ZdlKEe7yKVHqgzUMi4mPlIhk5fHiJDbf6XIQ==",
+      "path": "jsreport.binary/2.4.0",
+      "hashPath": "jsreport.binary.2.4.0.nupkg.sha512"
+    },
+    "jsreport.Client/3.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-b/YgD2XtZB+sfxiL2hfWFuELIx7d1+ZPj0zR8x4yZyDQFgI3laSOcyM0/nfHorVtvpCEFeMnSTlhgyM5h4/7UA==",
+      "path": "jsreport.client/3.0.1",
+      "hashPath": "jsreport.client.3.0.1.nupkg.sha512"
+    },
+    "jsreport.Local/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Q3MmwECWPHztc/vOuzJ+4C5TAnF7bznfhpT5REuGqQBvMIemrybyO0hxtrSY/XfC7KqnvsdusWvx6WNn55F7gA==",
+      "path": "jsreport.local/2.0.1",
+      "hashPath": "jsreport.local.2.0.1.nupkg.sha512"
+    },
+    "jsreport.Shared/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4OXv0i7JBUVxLYp9VoLQOs0QF7V4wV+VMepari1VPbw2CfflcVY7r8kA2SxKGKfMrZSMgVi48mgCd+woiTp0fg==",
+      "path": "jsreport.shared/2.0.1",
+      "hashPath": "jsreport.shared.2.0.1.nupkg.sha512"
+    },
+    "jsreport.Types/2.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vc7B7Ieb9MlbzL0MtfC7v8eiLrlXwMqmWpU9Q/Mv7n6lDom4iqiNxBFQ8e4BaKn8/AzwOQzkzjqoAKU9rL8IGQ==",
+      "path": "jsreport.types/2.2.7",
+      "hashPath": "jsreport.types.2.2.7.nupkg.sha512"
     },
     "Libuv/1.10.0": {
       "type": "package",
@@ -6492,12 +6635,12 @@
       "path": "system.linq.queryable/4.0.1",
       "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
     },
-    "System.Net.Http/4.3.0": {
+    "System.Net.Http/4.3.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sYg+FtILtRQuYWSIAuNOELwVuVsxVyJGWQyOnlAzhV4xvhyFnON1bAzYYC+jjRW8JREM45R0R5Dgi8MTC5sEwA==",
-      "path": "system.net.http/4.3.0",
-      "hashPath": "system.net.http.4.3.0.nupkg.sha512"
+      "sha512": "sha512-4HYUu8WuiSCNZifYY2wDn27dESG43gGNOSv0Eg1vdu/wSsRs5Gg90IdWjA+yAaGBGBBKneziNPeVd8mhEz82vg==",
+      "path": "system.net.http/4.3.2",
+      "hashPath": "system.net.http.4.3.2.nupkg.sha512"
     },
     "System.Net.NameResolution/4.3.0": {
       "type": "package",

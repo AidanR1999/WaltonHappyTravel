@@ -27,7 +27,6 @@
         @foreach (DateTime date in Model.UnavailableDates)
         {
             Console.WriteLine(date.ToString());
-            //note JS month is zero-based for no good reason at all... 
             @:disableddates.push(new Date(@date.Year, @date.Month-1, @date.Day))
         }
 
@@ -43,6 +42,7 @@
                 dateFormat: "dd/mm/yy"
             });
         });
+        
     </script>  
 
 }

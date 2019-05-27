@@ -1,24 +1,31 @@
 @model Walton_Happy_Travel.Models.AddPeopleToBookingViewModel
 
+@{
+    ViewData["Title"] = "Add people to booking";
+}
+
 @using (Html.BeginForm("AddPeople", "Person"))
 {
     @Html.HiddenFor(m => m.BookingId)
 
     for(int i = 0; i < Model.NumberOfPeople; i++)
     {
+        
         <h1>Person #@(i + 1)</h1>
-        <label asp-for="PeopleToAdd.ElementAt(i).Forename" class="control-label"></label>
-        @Html.EditorFor(x => x.PeopleToAdd[i].Forename, new { @class = "form-control"})
 
-        <label asp-for="PeopleToAdd.ElementAt(i).MiddleNames" class="control-label"></label>
-        @Html.EditorFor(x => x.PeopleToAdd[i].MiddleNames, new { @class = "form-control"})
+        <div class="row">
+            <label asp-for="PeopleToAdd.ElementAt(i).Forename" class="control-label"></label>
+            @Html.EditorFor(x => x.PeopleToAdd[i].Forename, new { @class = "form-control"})
 
-        <label asp-for="PeopleToAdd.ElementAt(i).Surname" class="control-label"></label>
-        @Html.EditorFor(x => x.PeopleToAdd[i].Surname, new { @class = "form-control"})
+            <label asp-for="PeopleToAdd.ElementAt(i).MiddleNames" class="control-label"></label>
+            @Html.EditorFor(x => x.PeopleToAdd[i].MiddleNames, new { @class = "form-control"})
 
-        <label asp-for="PeopleToAdd.ElementAt(i).DateOfBirth" class="control-label"></label>    
-        @Html.EditorFor(x => x.PeopleToAdd[i].DateOfBirth, new { @class = "form-control"})
+            <label asp-for="PeopleToAdd.ElementAt(i).Surname" class="control-label"></label>
+            @Html.EditorFor(x => x.PeopleToAdd[i].Surname, new { @class = "form-control"})
 
+            <label asp-for="PeopleToAdd.ElementAt(i).DateOfBirth" class="control-label"></label>    
+            @Html.EditorFor(x => x.PeopleToAdd[i].DateOfBirth, new { htmlAttributes = new { @class = "datepicker_recurring_start", @PlaceHolder = "dd/mm/yyyy" }})
+        </div>
         <br />    
     }
     
@@ -26,4 +33,18 @@
     <div class="form-group">
         <input type="submit" value="Add People" name="AddPeople" class="btn btn-default" />
     </div>
+
+}
+
+@section Scripts{
+    <script>
+        $('body').on('focus',".datepicker_recurring_start", function(){
+            $(this).datepicker({
+                maxDate: 0,
+                showMonthAfterYear: true,
+                changeYear: true,
+                changeMonth: true
+            });
+        });
+    </script>  
 }

@@ -41,6 +41,6 @@
 </div>
 
 <div>
-    <a asp-action="Confirmation" asp-controller="Booking" asp-route-bookingId="BookingId">Back to Confirmation</a>
+    @Html.ActionLink("Back to Confirmation", "Confirmation", "Booking", new { bookingId = ViewData["BookingId"] })
 </div>
 

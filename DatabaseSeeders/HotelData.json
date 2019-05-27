@@ -4,7 +4,7 @@
         "AccomodationAddress":"Plaza del Puerto, 3, 03001 Alicante",
         "Description":"The Melia Alicante Hotel is a 4 star accommodation located on Costa Blanca in the heart of Alicante town directly in front of the marina with sweeping views of the sea. A specialised service known as The Level is available for those who require a more luxurious service and is reserved exclusively for adults. Other hotel facilities at the Melia Alicante include a spa, gym, seasonal kids’ club, disabled access and several Mediterranean-inspired restaurants.",
         "CountryId":1,
-        "Rating":4
+        "Rating":4,
     },
     {
         "AccomodationName":"Sol Pelicanos Ocas Hotel",
@@ -19,6 +19,7 @@
         "Description":"A cheap yet quality hotel the Hotel Nova Domus Rome is excellent value for money ideal for both business person or tourist alike. General Information Regarding Hotel Nova Domus Rome - A four star city centre hotel located very near the Vatican museums and St Peters. Location - 5 minutes walk to Vatican Museums 10 minutes to St Peters the largest church in Christendom. The Metro Stop Cipro Musei Vaticani is only 4 minutes walk away and is only 3 stops from the Spanish Steps and the Baroque capital of the Eternal City.",
         "CountryId":3,
         "Rating":4
+        
     },
     {
         "AccomodationName":"Doria Grand Hotel",

@@ -13,6 +13,9 @@ using Walton_Happy_Travel.Models;
 using Walton_Happy_Travel.Services;
 using Stripe;
 using Walton_Happy_Travel.DatabaseSeeders;
+using jsreport.AspNetCore;
+using jsreport.Local;
+using jsreport.Binary;
 
 namespace Walton_Happy_Travel
 {
@@ -50,6 +53,10 @@ namespace Walton_Happy_Travel
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.AddTransient<Seeder>();
             services.AddMvc();
+            services.AddJsReport(new LocalReporting()
+                .UseBinary(JsReportBinary.GetBinary())
+                .AsUtility()
+                .Create());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,6 +2,92 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.0": {
+      "jsreport.AspNetCore/2.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.0.1",
+          "Microsoft.AspNetCore.Mvc": "2.0.1",
+          "jsreport.Shared": "2.0.1",
+          "jsreport.Types": "2.2.7"
+        },
+        "compile": {
+          "lib/netstandard2.0/jsreport.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/jsreport.AspNetCore.dll": {}
+        }
+      },
+      "jsreport.Binary/2.4.0": {
+        "type": "package",
+        "dependencies": {
+          "jsreport.Shared": "1.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/jsreport.Binary.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/jsreport.Binary.dll": {}
+        }
+      },
+      "jsreport.Client/3.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.4.0",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.3",
+          "System.Net.Http": "4.3.2",
+          "jsreport.Shared": "2.0.1",
+          "jsreport.Types": "2.2.7"
+        },
+        "compile": {
+          "lib/netstandard1.6/jsreport.Client.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/jsreport.Client.dll": {}
+        }
+      },
+      "jsreport.Local/2.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.3",
+          "jsreport.Client": "3.0.1",
+          "jsreport.Shared": "2.0.1",
+          "jsreport.Types": "2.2.7"
+        },
+        "compile": {
+          "lib/netstandard2.0/jsreport.Local.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/jsreport.Local.dll": {}
+        }
+      },
+      "jsreport.Shared/2.0.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.3",
+          "jsreport.Types": "2.2.7"
+        },
+        "compile": {
+          "lib/netstandard1.6/jsreport.Shared.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/jsreport.Shared.dll": {}
+        }
+      },
+      "jsreport.Types/2.2.7": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.3"
+        },
+        "compile": {
+          "lib/netstandard1.6/jsreport.Types.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/jsreport.Types.dll": {}
+        }
+      },
       "Libuv/1.10.0": {
         "type": "package",
         "dependencies": {
@@ -3858,7 +3944,7 @@
           "lib/netstandard1.3/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.2": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -4964,6 +5050,90 @@
     }
   },
   "libraries": {
+    "jsreport.AspNetCore/2.0.1": {
+      "sha512": "RGdI0WyARJDCVWtsVMVe3La0r7CeJPqKsPk69ST0954beZB2W6Yco6K0O5h2mQPfLS6/jOyMe6dJjYI6c6Icew==",
+      "type": "package",
+      "path": "jsreport.aspnetcore/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jsreport.aspnetcore.2.0.1.nupkg.sha512",
+        "jsreport.aspnetcore.nuspec",
+        "lib/netstandard2.0/jsreport.AspNetCore.dll",
+        "lib/netstandard2.0/jsreport.AspNetCore.xml"
+      ]
+    },
+    "jsreport.Binary/2.4.0": {
+      "sha512": "8EZmvp+Z1mnzocYPBeFwh/gnMVgFKiL27aNH4fJhWI8gmoILx8ZdlKEe7yKVHqgzUMi4mPlIhk5fHiJDbf6XIQ==",
+      "type": "package",
+      "path": "jsreport.binary/2.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jsreport.binary.2.4.0.nupkg.sha512",
+        "jsreport.binary.nuspec",
+        "lib/net45/jsreport.Binary.dll",
+        "lib/netstandard2.0/jsreport.Binary.dll"
+      ]
+    },
+    "jsreport.Client/3.0.1": {
+      "sha512": "b/YgD2XtZB+sfxiL2hfWFuELIx7d1+ZPj0zR8x4yZyDQFgI3laSOcyM0/nfHorVtvpCEFeMnSTlhgyM5h4/7UA==",
+      "type": "package",
+      "path": "jsreport.client/3.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jsreport.client.3.0.1.nupkg.sha512",
+        "jsreport.client.nuspec",
+        "lib/net45/jsreport.Client.dll",
+        "lib/netstandard1.6/jsreport.Client.dll"
+      ]
+    },
+    "jsreport.Local/2.0.1": {
+      "sha512": "Q3MmwECWPHztc/vOuzJ+4C5TAnF7bznfhpT5REuGqQBvMIemrybyO0hxtrSY/XfC7KqnvsdusWvx6WNn55F7gA==",
+      "type": "package",
+      "path": "jsreport.local/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jsreport.local.2.0.1.nupkg.sha512",
+        "jsreport.local.nuspec",
+        "lib/net45/jsreport.Local.dll",
+        "lib/net45/jsreport.Local.xml",
+        "lib/netstandard2.0/jsreport.Local.dll",
+        "lib/netstandard2.0/jsreport.Local.xml"
+      ]
+    },
+    "jsreport.Shared/2.0.1": {
+      "sha512": "4OXv0i7JBUVxLYp9VoLQOs0QF7V4wV+VMepari1VPbw2CfflcVY7r8kA2SxKGKfMrZSMgVi48mgCd+woiTp0fg==",
+      "type": "package",
+      "path": "jsreport.shared/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jsreport.shared.2.0.1.nupkg.sha512",
+        "jsreport.shared.nuspec",
+        "lib/net45/jsreport.Shared.dll",
+        "lib/net45/jsreport.Shared.xml",
+        "lib/netstandard1.6/jsreport.Shared.dll",
+        "lib/netstandard1.6/jsreport.Shared.xml"
+      ]
+    },
+    "jsreport.Types/2.2.7": {
+      "sha512": "vc7B7Ieb9MlbzL0MtfC7v8eiLrlXwMqmWpU9Q/Mv7n6lDom4iqiNxBFQ8e4BaKn8/AzwOQzkzjqoAKU9rL8IGQ==",
+      "type": "package",
+      "path": "jsreport.types/2.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jsreport.types.2.2.7.nupkg.sha512",
+        "jsreport.types.nuspec",
+        "lib/net45/jsreport.Types.dll",
+        "lib/net45/jsreport.Types.xml",
+        "lib/netstandard1.6/jsreport.Types.dll",
+        "lib/netstandard1.6/jsreport.Types.xml"
+      ]
+    },
     "Libuv/1.10.0": {
       "sha512": "GsCf4q+eyaI49rCPlgYxdxa1SQCysXFFdSJWdstrwxytg4+VPYLYrXD4AT2rjHVJ+UF7SSWX9CapWEYaU4ejVQ==",
       "type": "package",
@@ -10510,10 +10680,10 @@
         "system.linq.queryable.nuspec"
       ]
     },
-    "System.Net.Http/4.3.0": {
-      "sha512": "sYg+FtILtRQuYWSIAuNOELwVuVsxVyJGWQyOnlAzhV4xvhyFnON1bAzYYC+jjRW8JREM45R0R5Dgi8MTC5sEwA==",
+    "System.Net.Http/4.3.2": {
+      "sha512": "4HYUu8WuiSCNZifYY2wDn27dESG43gGNOSv0Eg1vdu/wSsRs5Gg90IdWjA+yAaGBGBBKneziNPeVd8mhEz82vg==",
       "type": "package",
-      "path": "system.net.http/4.3.0",
+      "path": "system.net.http/4.3.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -10535,49 +10705,9 @@
         "ref/monotouch10/_._",
         "ref/net45/_._",
         "ref/net46/System.Net.Http.dll",
-        "ref/net46/System.Net.Http.xml",
-        "ref/net46/de/System.Net.Http.xml",
-        "ref/net46/es/System.Net.Http.xml",
-        "ref/net46/fr/System.Net.Http.xml",
-        "ref/net46/it/System.Net.Http.xml",
-        "ref/net46/ja/System.Net.Http.xml",
-        "ref/net46/ko/System.Net.Http.xml",
-        "ref/net46/ru/System.Net.Http.xml",
-        "ref/net46/zh-hans/System.Net.Http.xml",
-        "ref/net46/zh-hant/System.Net.Http.xml",
         "ref/netcore50/System.Net.Http.dll",
-        "ref/netcore50/System.Net.Http.xml",
-        "ref/netcore50/de/System.Net.Http.xml",
-        "ref/netcore50/es/System.Net.Http.xml",
-        "ref/netcore50/fr/System.Net.Http.xml",
-        "ref/netcore50/it/System.Net.Http.xml",
-        "ref/netcore50/ja/System.Net.Http.xml",
-        "ref/netcore50/ko/System.Net.Http.xml",
-        "ref/netcore50/ru/System.Net.Http.xml",
-        "ref/netcore50/zh-hans/System.Net.Http.xml",
-        "ref/netcore50/zh-hant/System.Net.Http.xml",
         "ref/netstandard1.1/System.Net.Http.dll",
-        "ref/netstandard1.1/System.Net.Http.xml",
-        "ref/netstandard1.1/de/System.Net.Http.xml",
-        "ref/netstandard1.1/es/System.Net.Http.xml",
-        "ref/netstandard1.1/fr/System.Net.Http.xml",
-        "ref/netstandard1.1/it/System.Net.Http.xml",
-        "ref/netstandard1.1/ja/System.Net.Http.xml",
-        "ref/netstandard1.1/ko/System.Net.Http.xml",
-        "ref/netstandard1.1/ru/System.Net.Http.xml",
-        "ref/netstandard1.1/zh-hans/System.Net.Http.xml",
-        "ref/netstandard1.1/zh-hant/System.Net.Http.xml",
         "ref/netstandard1.3/System.Net.Http.dll",
-        "ref/netstandard1.3/System.Net.Http.xml",
-        "ref/netstandard1.3/de/System.Net.Http.xml",
-        "ref/netstandard1.3/es/System.Net.Http.xml",
-        "ref/netstandard1.3/fr/System.Net.Http.xml",
-        "ref/netstandard1.3/it/System.Net.Http.xml",
-        "ref/netstandard1.3/ja/System.Net.Http.xml",
-        "ref/netstandard1.3/ko/System.Net.Http.xml",
-        "ref/netstandard1.3/ru/System.Net.Http.xml",
-        "ref/netstandard1.3/zh-hans/System.Net.Http.xml",
-        "ref/netstandard1.3/zh-hant/System.Net.Http.xml",
         "ref/portable-net45+win8+wpa81/_._",
         "ref/win8/_._",
         "ref/wpa81/_._",
@@ -10588,7 +10718,7 @@
         "runtimes/win/lib/net46/System.Net.Http.dll",
         "runtimes/win/lib/netcore50/System.Net.Http.dll",
         "runtimes/win/lib/netstandard1.3/System.Net.Http.dll",
-        "system.net.http.4.3.0.nupkg.sha512",
+        "system.net.http.4.3.2.nupkg.sha512",
         "system.net.http.nuspec"
       ]
     },
@@ -13576,7 +13706,10 @@
       "Newtonsoft.Json >= 12.0.2",
       "SendGrid >= 9.11.0",
       "Stripe.net >= 25.18.0",
-      "TinyMCE >= 5.0.6"
+      "TinyMCE >= 5.0.6",
+      "jsreport.AspNetCore >= 2.0.1",
+      "jsreport.Binary >= 2.4.0",
+      "jsreport.Local >= 2.0.1"
     ]
   },
   "packageFolders": {
@@ -13654,6 +13787,18 @@
           "TinyMCE": {
             "target": "Package",
             "version": "[5.0.6, )"
+          },
+          "jsreport.AspNetCore": {
+            "target": "Package",
+            "version": "[2.0.1, )"
+          },
+          "jsreport.Binary": {
+            "target": "Package",
+            "version": "[2.4.0, )"
+          },
+          "jsreport.Local": {
+            "target": "Package",
+            "version": "[2.0.1, )"
           }
         },
         "imports": [

@@ -10,6 +10,8 @@ using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
 using System.Security.Claims;
 using Stripe;
+using jsreport.AspNetCore;
+using jsreport.Types;
 
 namespace Walton_Happy_Travel.Controllers
 {
@@ -25,8 +27,26 @@ namespace Walton_Happy_Travel.Controllers
         // GET: Booking
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Bookings.Include(b => b.Brochure).Include(b => b.User);
-            return View(await applicationDbContext.ToListAsync());
+            //get the current logged in user
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var model = new List<Booking>();
+
+            if(User.IsInRole("Admin"))
+            {
+                model = await _context.Bookings.ToListAsync();
+            }
+            else
+            {
+                model = await _context.Bookings
+                .Include(b => b.Brochure)
+                .Include(b => b.User)
+                .Include(b => b.Brochure.Accomodation)
+                .Where(b => b.Brochure.Accomodation.UserId == userId)
+                .Where(b => b.Status == "Completed").ToListAsync();
+            }
+            
+
+            return View(model);
         }
 
         // GET: Booking/Details/5
@@ -352,6 +372,7 @@ namespace Walton_Happy_Travel.Controllers
         /// </summary>
         /// <param name="bookingId">id of booking</param>
         /// <returns>Invoice page</returns>
+        [MiddlewareFilter(typeof(JsReportPipeline))]
         public async Task<IActionResult> Invoice(int? bookingId)
         {
             //if booking id is null go to browse brochures
@@ -371,7 +392,7 @@ namespace Walton_Happy_Travel.Controllers
                 return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
             //if users dont match or is not staff, redirect to browse
-            if((!currentUserId.Equals(user.Id) && !User.IsInRole("Staff"))) 
+            if((!currentUserId.Equals(user.Id) && !User.Identity.IsAuthenticated)) 
                 return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
             //gets all data from the database related to the booking
@@ -392,14 +413,16 @@ namespace Walton_Happy_Travel.Controllers
                 Catering = brochure.Catering,
                 TotalPrice = booking.TotalPrice,
                 AmountPaid = booking.AmountPaid,
-                Persons = persons
+                Persons = persons,
+                Image = brochure.ImageLink
             };
             
             //if booking is not complete, redirect to booking confirmation
             if(booking.Status.Equals("IN PROGRESS")) 
                 return RedirectToAction(nameof(BookingController.Confirmation), new { bookingId = bookingId });
 
-            //loads page, inject model
+            //loads page, converts view to pdf
+            HttpContext.JsReportFeature().Recipe(Recipe.ChromePdf);
             return View(model);
         }
 

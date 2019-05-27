@@ -1,5 +1,9 @@
 @model Walton_Happy_Travel.Models.AddNumberOfPeopleViewModel
 
+@{
+    ViewData["Title"] = "Add people to booking";
+}
+
 @using (Html.BeginForm("AddNumberOfPeople", "Person"))
 {
     @Html.HiddenFor(m => m.BookingId)

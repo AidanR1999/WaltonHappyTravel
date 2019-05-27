@@ -213,7 +213,7 @@ namespace Walton_Happy_Travel.Controllers
         public ActionResult AddPeople(int? bookingId, int? numberOfPeople)
         {
             //if bookingId is null, redirect to browse brochures page
-            if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse));
+            if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse), "Booking");
 
             List<Person> peopleToAdd = new List<Person>();
 
@@ -246,21 +246,28 @@ namespace Walton_Happy_Travel.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPeople(AddPeopleToBookingViewModel model)
         {
-            //gets the booking from the database
-            var booking = await _context.Bookings.FindAsync(model.BookingId);
-
-            //convert IList to List as it can be casted as IEnumerable
-            booking.Persons = model.PeopleToAdd.ToList();
-
-            //update the database
-            foreach(var person in booking.Persons)
+            if(ModelState.IsValid)
             {
-                _context.Persons.Add(person);
-            }
-            await _context.SaveChangesAsync();
+                //gets the booking from the database
+                var booking = await _context.Bookings.FindAsync(model.BookingId);
 
-            //redirect to Confirmation page
-            return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = model.BookingId });
+                //convert IList to List as it can be casted as IEnumerable
+                booking.Persons = model.PeopleToAdd.ToList();
+
+                //update the database
+                foreach(var person in booking.Persons)
+                {
+                    _context.Persons.Add(person);
+                }
+                await _context.SaveChangesAsync();
+
+                //redirect to Confirmation page
+                return RedirectToAction(nameof(BookingController.Confirmation), "Booking", new { bookingId = model.BookingId });
+            }
+
+            //on fail, return view
+            model.NumberOfPeople = model.PeopleToAdd.Count();
+            return View(model);
         }
     }
 }
