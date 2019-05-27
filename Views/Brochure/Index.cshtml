@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>All Brochures</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,26 +12,20 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Duration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PricePerPerson)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Catering)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaxPeople)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.Accomodation)
+                @Html.DisplayNameFor(model => model.BrochureId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.DisplayNameFor(model => model.Accomodation.AccomodationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PricePerPerson)
             </th>
             <th></th>
         </tr>
@@ -40,25 +34,20 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PricePerPerson)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Catering)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxPeople)
+                @Html.DisplayFor(modelItem => item.BrochureId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Accomodation.AccomodationName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                £
+                @Html.DisplayFor(modelItem => item.PricePerPerson)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BrochureId">Edit</a> |

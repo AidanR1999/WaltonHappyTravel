@@ -1,71 +1,64 @@
 @model Walton_Happy_Travel.Models.Brochure
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h2>Edit</h2>
+<br/>
 
-<h4>Brochure</h4>
+<h2 class ="text-info">Edit Brochure Number: @Model.BrochureId</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="BrochureId" />
-            <div class="form-group">
-                <label asp-for="DepartureDate" class="control-label"></label>
-                <input asp-for="DepartureDate" class="form-control" />
-                <span asp-validation-for="DepartureDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" />
-                <span asp-validation-for="Duration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PricePerPerson" class="control-label"></label>
-                <input asp-for="PricePerPerson" class="form-control" />
-                <span asp-validation-for="PricePerPerson" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Catering" class="control-label"></label>
-                <select asp-for="Catering" class="form-control"></select>
-                <span asp-validation-for="Catering" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxPeople" class="control-label"></label>
-                <input asp-for="MaxPeople" class="form-control" />
-                <span asp-validation-for="MaxPeople" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxRooms" class="control-label"></label>
-                <input asp-for="MaxRooms" class="form-control" />
-                <span asp-validation-for="MaxRooms" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccomodationId" class="control-label"></label>
-                <select asp-for="AccomodationId" class="form-control" asp-items="ViewBag.AccomodationId"></select>
-                <span asp-validation-for="AccomodationId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<form method="post" enctype="multipart/form-data">
+  <div class="form-row">
+    <input type="hidden" asp-for="BrochureId" />
+    <div class="form-group col-md-8">
+        <label class="control-label">Accomodation</label>
+        <select asp-for="AccomodationId" class="form-control" asp-items="ViewBag.AccomodationId"></select>
+        <span asp-validation-for="Accomodation.AccomodationName" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-4">
+      <label class="control-label">Duration of stay (days)</label>
+        <input asp-for="Duration" class="form-control" placeholder="Duration"/>
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <label class="control-label">Price p / person</label>
+        <input asp-for="PricePerPerson" class="form-control" placeholder="PricePerPerson"/>
+        <span asp-validation-for="PricePerPerson" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label class="control-label">Max People</label>
+        <input asp-for="MaxPeople" class="form-control" placeholder="People"/>
+        <span asp-validation-for="MaxPeople" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label asp-for="Catering" class="control-label"></label>
+        <select asp-for="Catering" class="form-control" asp-items="ViewBag.Catering"></select>
+        <span asp-validation-for="Catering" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label class="control-label">Category</label>
+        @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Category.CategoryName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="ImageLink"></label>
+        </div>
+        <div class="col-md-10">
+            <input type="file" name="files" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        <label class="control-label">Description</label>
+        <input asp-for="Description" class="form-control" placeholder="Description"/>
+    </div>
+  </div>
+  <div class="form-group">
+        <input type="submit" value="Update" class="btn btn-primary" />
+    </div>
+</form>
 

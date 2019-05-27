@@ -41,21 +41,22 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             @if(!User.IsInRole("InvoiceClerk") && !User.IsInRole("Customer"))
             {
-              @Html.ActionLink("Manage Bookings", "Index", "Booking", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })
+              @Html.ActionLink("Manage Bookings", "Index", "Booking", null, new { @class = "dropdown-item" })
             }
           <a class="dropdown-item" href="#">Another action</a>
           @if(User.IsInRole("Admin") || User.IsInRole("ShopManager") || User.IsInRole("AssistantManager"))
           {
             <div class="dropdown-divider"></div>
-            @Html.ActionLink("Manage Brochures", "Index", "Brochure", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Brochures", "Index", "Brochure", null, new { @class = "dropdown-item" })
           }
           @if(User.IsInRole("Admin"))
           {
-            @Html.ActionLink("Manage Customers", "IndexCustomer", "ApplicationUser", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })
-            @Html.ActionLink("Manage Staff", "IndexStaff", "ApplicationUser", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })
-            @Html.ActionLink("Manage Countries", "Index", "Country", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })
-            @Html.ActionLink("Manage Accomodations", "Index", "Accomodation", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })
-            @Html.ActionLink("Manage Categories", "Index", "Category", routeValues: null, htmlAttributes: new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Customers", "IndexCustomer", "ApplicationUser", null, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Staff", "IndexStaff", "ApplicationUser", null, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Countries", "Index", "Country", null, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Hotels", "Index", "Accomodation", new { type = "Hotel" }, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Private Properties", "Index", "Accomodation", new { type = "Private" }, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Categories", "Index", "Category", null, new { @class = "dropdown-item" })
             <div class="dropdown-divider"></div>
           }
           @if(User.IsInRole("ShopManager") || User.IsInRole("InvoiceClerk") || User.IsInRole("Admin"))

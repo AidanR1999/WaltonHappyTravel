@@ -29,12 +29,19 @@ namespace Walton_Happy_Travel.Controllers
         {
             //get the current logged in user
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var model = new List<Booking>();
 
+            //get every completed booking if user is admin
             if(User.IsInRole("Admin"))
             {
-                model = await _context.Bookings.ToListAsync();
+                model = await _context.Bookings
+                .Include(b => b.Brochure)
+                .Include(b => b.User)
+                .Include(b => b.Brochure.Accomodation)
+                .Where(b => b.Status == "Completed").ToListAsync();
             }
+            //only get bookings linked to staff member logged in
             else
             {
                 model = await _context.Bookings
@@ -45,7 +52,7 @@ namespace Walton_Happy_Travel.Controllers
                 .Where(b => b.Status == "Completed").ToListAsync();
             }
             
-
+            //return view
             return View(model);
         }
 

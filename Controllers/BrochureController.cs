@@ -27,7 +27,9 @@ namespace Walton_Happy_Travel.Controllers
         // GET: Brochure
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Brochures.Include(b => b.Accomodation).Include(b => b.Category);
+            var applicationDbContext = _context.Brochures
+                .Include(b => b.Accomodation)
+                .Include(b => b.Category);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -147,13 +149,24 @@ namespace Walton_Happy_Travel.Controllers
                 return NotFound();
             }
 
-            var brochure = await _context.Brochures.SingleOrDefaultAsync(m => m.BrochureId == id);
+            var brochure = await _context.Brochures
+                .Include(b => b.Accomodation)
+                .SingleOrDefaultAsync(m => m.BrochureId == id);
+
             if (brochure == null)
             {
                 return NotFound();
             }
-            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "Discriminator", brochure.AccomodationId);
-            ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryId", brochure.CategoryId);
+
+            ViewData["Catering"] = new SelectList(new List<Catering>
+            {
+                Catering.ALL_INCLUSIVE,
+                Catering.HALF_BOARD,
+                Catering.SELF_CATERING
+            });
+            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationName");
+            ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryName");
+
             return View(brochure);
         }
 
@@ -173,6 +186,29 @@ namespace Walton_Happy_Travel.Controllers
             {
                 try
                 {
+                    //get image from form
+                    string webRootPath = _hosting.WebRootPath;
+                    var files = HttpContext.Request.Form.Files;
+
+                    //if image is uploaded
+                    if(files.Count != 0)
+                    {
+                        //getting the extension and path of the image
+                        var uploads = Path.Combine(webRootPath, SD.ImageFolder);
+                        var extension = Path.GetExtension(files[0].FileName);
+
+                        //using dependency injection to get a filestream using the path of images
+                        using (var filestream = new FileStream(Path.Combine(uploads, brochure.BrochureId + extension), FileMode.Create))
+                        {
+                            //store image in images folder
+                            await files[0].CopyToAsync(filestream);
+                        }
+
+                        //stores image location in object
+                        brochure.ImageLink = @"\" + SD.ImageFolder + @"\" + brochure.BrochureId + extension;
+                    }
+
+                    //update database
                     _context.Update(brochure);
                     await _context.SaveChangesAsync();
                 }

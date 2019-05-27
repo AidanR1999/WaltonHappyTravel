@@ -4,19 +4,11 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Delete Brochure #@Model.BrochureId</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Brochure</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DepartureDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DepartureDate)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Duration)
         </dt>
@@ -48,18 +40,6 @@
             @Html.DisplayFor(model => model.MaxPeople)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MaxRooms)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MaxRooms)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Accomodation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Accomodation.Discriminator)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Category)
         </dt>
         <dd>
@@ -69,7 +49,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="BrochureId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

@@ -20,9 +20,20 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Accomodation
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string type)
         {
-            return View(await _context.Accomodations.ToListAsync());
+            ViewData["Type"] = type;
+            if(type.Equals("Hotel"))
+            {
+                //find all hotels and returns the view
+                return View(await _context.Accomodations.Where(a => a.GetType() == typeof(Hotel)).ToListAsync());
+            }
+            else if(type.Equals("Private"))
+            {
+                //find all private properties and returns the view
+                return View(await _context.Accomodations.Where(a => a.GetType() == typeof(Private)).ToListAsync());
+            }
+            return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
         }
 
         // GET: Accomodation/Details/5
@@ -94,7 +105,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Accomodation/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string type)
         {
             if (id == null)
             {
@@ -106,6 +117,9 @@ namespace Walton_Happy_Travel.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["Type"] = type;
+            ViewBag.Staff = new SelectList(_context.Users.Where(u => u.GetType() == typeof(Staff)), "Id", "Email");
             return View(accomodation);
         }
 
@@ -114,7 +128,7 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AccomodationId,AccomodationName,AccomodationAddress,Description")] Accomodation accomodation)
+        public async Task<IActionResult> Edit(int id, Hotel accomodation, string type)
         {
             if (id != accomodation.AccomodationId)
             {
