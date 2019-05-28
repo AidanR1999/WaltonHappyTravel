@@ -50,8 +50,8 @@
           }
           @if(User.IsInRole("Admin"))
           {
-            @Html.ActionLink("Manage Customers", "IndexCustomer", "ApplicationUser", null, new { @class = "dropdown-item" })
-            @Html.ActionLink("Manage Staff", "IndexStaff", "ApplicationUser", null, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Customers", "Index", "Customer", null, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Staff", "Index", "Staff", null, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Countries", "Index", "Country", null, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Hotels", "Index", "Hotel", new { type = "Hotel" }, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Private Properties", "Index", "Private", new { type = "Private" }, new { @class = "dropdown-item" })
