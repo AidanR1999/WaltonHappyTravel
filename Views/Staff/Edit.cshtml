@@ -1,0 +1,54 @@
+@model Walton_Happy_Travel.Models.EditStaffViewModel
+
+@{
+    ViewData["Title"] = @Model.Forename + " " + @Model.Surname;
+}
+
+<h2>Edit @Model.Forename @Model.Surname </h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            @Html.HiddenFor(m => m.Id)
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Forename" class="control-label"></label>
+                <input asp-for="Forename" class="form-control" />
+                <span asp-validation-for="Forename" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleNames" class="control-label"></label>
+                <input asp-for="MiddleNames" class="form-control" />
+                <span asp-validation-for="MiddleNames" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label>
+                <select asp-for="Role" class="form-control" asp-items="ViewBag.Roles"></select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

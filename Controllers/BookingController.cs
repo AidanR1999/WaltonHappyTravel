@@ -491,7 +491,7 @@ namespace Walton_Happy_Travel.Controllers
             await _context.SaveChangesAsync();
 
             //redirect to my bookings page
-            return RedirectToAction(nameof(ApplicationUserController.UserBookings), "ApplicationUser");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 

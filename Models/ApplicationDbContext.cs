@@ -44,5 +44,9 @@ namespace Walton_Happy_Travel.Data
         public DbSet<Walton_Happy_Travel.Models.Hotel> Hotel { get; set; }
 
         public DbSet<Walton_Happy_Travel.Models.Private> Private { get; set; }
+
+        public DbSet<Walton_Happy_Travel.Models.Customer> Customer { get; set; }
+
+        public DbSet<Walton_Happy_Travel.Models.Staff> Staff { get; set; }
     }
 }

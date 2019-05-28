@@ -13,8 +13,8 @@
                     Hello @UserManager.GetUserName(User)!
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    @Html.ActionLink("View Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
-                    @Html.ActionLink("My Bookings", "UserBookings", "ApplicationUser", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
+                    @Html.ActionLink("View Account", "Index", "Manage", null, new { title = "Manage", @class = "dropdown-item" })
+                    @Html.ActionLink("My Bookings", "UserBookings", "Customer", null, new { title = "Manage", @class = "dropdown-item" })
                 </div>
             </li>
             <li class="nav-item">
