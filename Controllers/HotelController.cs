@@ -22,8 +22,23 @@ namespace Walton_Happy_Travel
         // GET: Hotel
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Accomodations.Include(h => h.Country);
-            return View(await applicationDbContext.ToListAsync());
+            //get all hotels from the database
+            var applicationDbContext = await _context.Accomodations
+                .Where(h => h.GetType() == typeof(Hotel))
+                .Include(h => h.Country)
+                .Include(h => h.StaffAssigned)
+                .ToListAsync();
+
+            //convert accomodations found to hotel objects
+            List<Hotel> model = new List<Hotel>();
+            foreach(var accomodation in applicationDbContext)
+            {
+                var hotel = (Hotel) accomodation;
+                model.Add(hotel);
+            }
+            
+            //load page
+            return View(model);
         }
 
         // GET: Hotel/Details/5
@@ -48,6 +63,7 @@ namespace Walton_Happy_Travel
         // GET: Hotel/Create
         public IActionResult Create()
         {
+            ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
             ViewData["CountryId"] = new SelectList(_context.Countrys, "CountryId", "CountryName");
             return View();
         }
@@ -65,6 +81,7 @@ namespace Walton_Happy_Travel
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
             ViewData["CountryId"] = new SelectList(_context.Countrys, "CountryId", "CountryName", hotel.CountryId);
             return View(hotel);
         }
@@ -82,6 +99,7 @@ namespace Walton_Happy_Travel
             {
                 return NotFound();
             }
+            ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
             ViewData["CountryId"] = new SelectList(_context.Countrys, "CountryId", "CountryName", hotel.CountryId);
             return View(hotel);
         }
@@ -118,6 +136,7 @@ namespace Walton_Happy_Travel
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
             ViewData["CountryId"] = new SelectList(_context.Countrys, "CountryId", "CountryName", hotel.CountryId);
             return View(hotel);
         }
@@ -132,6 +151,7 @@ namespace Walton_Happy_Travel
 
             var hotel = await _context.Accomodations
                 .Include(h => h.Country)
+                .Include(h => h.StaffAssigned)
                 .SingleOrDefaultAsync(m => m.AccomodationId == id);
             if (hotel == null)
             {
@@ -154,7 +174,7 @@ namespace Walton_Happy_Travel
 
         private bool HotelExists(int id)
         {
-            return _context.Accomodations.Any(e => e.AccomodationId == id);
+            return _context.Accomodations.Any(e => e.AccomodationId == id && e.GetType() == typeof(Private));
         }
     }
 }

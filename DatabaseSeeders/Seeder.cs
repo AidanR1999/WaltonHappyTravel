@@ -258,12 +258,18 @@ namespace Walton_Happy_Travel.DatabaseSeeders
             //convert data from file
             var privateAccomodations = JsonConvert.DeserializeObject<List<Private>>(file);
 
+            //find the travel assistant
+            var user = await _userManager.FindByEmailAsync("travelassistant@whtravel.com");
+
             //for every accomodation in file
             foreach(var privateAccomodation in privateAccomodations)
             {
                 //if accomodation doesnt exist
                 if(await _context.Accomodations.Where(h => h.AccomodationName.Equals(privateAccomodation.AccomodationName)).FirstOrDefaultAsync() == null)
                 {
+                    //assign travel assistant to accomodation
+                    privateAccomodation.UserId = user.Id;
+
                     //add accomodation to database
                     await _context.Accomodations.AddAsync(privateAccomodation);
                 }

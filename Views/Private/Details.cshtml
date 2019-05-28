@@ -1,13 +1,12 @@
 @model Walton_Happy_Travel.Models.Private
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @Model.AccomodationName;
 }
 
 <h2>Details</h2>
 
 <div>
-    <h4>Private</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -29,10 +28,10 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayName("Staff")
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.UserId)
+            @Html.DisplayFor(model => model.StaffAssigned.Email)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Country)

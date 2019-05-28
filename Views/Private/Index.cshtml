@@ -1,10 +1,10 @@
 @model IEnumerable<Walton_Happy_Travel.Models.Private>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Private Properties";
 }
 
-<h2>Index</h2>
+<h2>Private Properties</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -22,7 +22,7 @@
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.UserId)
+                    @Html.DisplayName("Staff Assigned")
                 </th>
             <th>
                 @Html.DisplayNameFor(model => model.Country)
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @Html.DisplayFor(modelItem => item.StaffAssigned.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Country.CountryName)

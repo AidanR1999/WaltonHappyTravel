@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,23 @@ namespace Walton_Happy_Travel
         // GET: Private
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Accomodations.Include(p => p.Country);
-            return View(await applicationDbContext.ToListAsync());
+            //get all private properties from the database
+            var applicationDbContext = await _context.Accomodations
+                .Where(a => a.GetType() == typeof(Private))
+                .Include(p => p.Country)
+                .Include(p => p.StaffAssigned)
+                .ToListAsync();
+
+            //convert every accomodation found into private objects
+            List<Private> model = new List<Private>();
+            foreach(var accomodation in applicationDbContext)
+            {
+                var @private = (Private) accomodation;
+                model.Add(@private);
+            }
+            
+            //load page
+            return View(model);
         }
 
         // GET: Private/Details/5
@@ -36,6 +52,7 @@ namespace Walton_Happy_Travel
 
             var @private = await _context.Accomodations
                 .Include(p => p.Country)
+                .Include(p => p.StaffAssigned)
                 .SingleOrDefaultAsync(m => m.AccomodationId == id);
             if (@private == null)
             {
@@ -48,6 +65,7 @@ namespace Walton_Happy_Travel
         // GET: Private/Create
         public IActionResult Create()
         {
+            ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
             ViewData["CountryId"] = new SelectList(_context.Countrys, "CountryId", "CountryName");
             return View();
         }
@@ -65,6 +83,8 @@ namespace Walton_Happy_Travel
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
             ViewData["CountryId"] = new SelectList(_context.Countrys, "CountryId", "CountryName", @private.CountryId);
             return View(@private);
         }
@@ -82,6 +102,8 @@ namespace Walton_Happy_Travel
             {
                 return NotFound();
             }
+
+            ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
             ViewData["CountryId"] = new SelectList(_context.Countrys, "CountryId", "CountryName", @private.CountryId);
             return View(@private);
         }
@@ -118,6 +140,8 @@ namespace Walton_Happy_Travel
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
             ViewData["CountryId"] = new SelectList(_context.Countrys, "CountryId", "CountryName", @private.CountryId);
             return View(@private);
         }
@@ -132,6 +156,7 @@ namespace Walton_Happy_Travel
 
             var @private = await _context.Accomodations
                 .Include(p => p.Country)
+                .Include(p => p.StaffAssigned)
                 .SingleOrDefaultAsync(m => m.AccomodationId == id);
             if (@private == null)
             {
@@ -154,7 +179,7 @@ namespace Walton_Happy_Travel
 
         private bool PrivateExists(int id)
         {
-            return _context.Accomodations.Any(e => e.AccomodationId == id);
+            return _context.Accomodations.Any(e => e.AccomodationId == id && e.GetType() == typeof(Private));
         }
     }
 }
