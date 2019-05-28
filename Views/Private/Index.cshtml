@@ -1,8 +1,7 @@
-@model IEnumerable<Walton_Happy_Travel.Models.Accomodation>
+@model IEnumerable<Walton_Happy_Travel.Models.Private>
 
 @{
-    var type = ViewData["Type"].ToString();
-    ViewData["Title"] = "All " + type + "s";
+    ViewData["Title"] = "Index";
 }
 
 <h2>Index</h2>
@@ -22,6 +21,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -38,7 +43,13 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AccomodationId" asp-route-type="@ViewData["Type"]">Edit</a> |
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country.CountryName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AccomodationId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.AccomodationId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.AccomodationId">Delete</a>
             </td>

@@ -1,4 +1,4 @@
-@model Walton_Happy_Travel.Models.Accomodation
+@model Walton_Happy_Travel.Models.Hotel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,9 +7,15 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Accomodation</h4>
+    <h4>Hotel</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.AccomodationName)
         </dt>
@@ -27,6 +33,18 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Country.CountryName)
         </dd>
     </dl>
 </div>
