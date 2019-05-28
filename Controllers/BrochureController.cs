@@ -51,6 +51,7 @@ namespace Walton_Happy_Travel.Controllers
             var brochure = await _context.Brochures
                 .Include(b => b.Accomodation)
                 .Include(b => b.Category)
+                .Include(b => b.Accomodation.Country)
                 .SingleOrDefaultAsync(m => m.BrochureId == id);
 
             //if brochure doesnt exist, return error
@@ -270,13 +271,15 @@ namespace Walton_Happy_Travel.Controllers
         /// loads the browse brochures page with all brochures available to book
         /// </summary>
         /// <returns>Browse page</returns>
-        public async Task<IActionResult> Browse()
+        public async Task<IActionResult> Browse(string filter)
         {
             //populate the model and inject into page
             ViewBrochuresViewModel model = new ViewBrochuresViewModel()
             {
                 //get all brochures from database
-                Brochures = await _context.Brochures.Include(b=> b.Accomodation).ToListAsync(),
+                Brochures = await _context.Brochures.Include(b=> b.Accomodation)
+                    .Include(b => b.Accomodation.Country)
+                    .ToListAsync(),
 
                 //get all categories of brochures from database
                 Categories = await _context.Categorys.ToListAsync()

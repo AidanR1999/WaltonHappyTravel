@@ -16,6 +16,8 @@
                             <h4 class="my-0 font-weight-normal">
                                 <label style="font-size:23px;color:steelblue;">@brochure.Accomodation.AccomodationName</label>
                             </h4>
+                            <label style="font-size:23px;color:#a51313;">@brochure.Accomodation.Country.CountryName</label>
+                            <label style="font-size:15px; color:steelblue;"><b>@brochure.Catering</b></label>
                         </div>
 
                         <img class="card-img-top" style="height:100%;" src="@brochure.ImageLink" alt="Card Image" />
@@ -26,6 +28,8 @@
                                 </div>
                                 <a asp-action="Details" asp-controller="Brochure" class="btn pull-right btn-outline-info fas fa-plane-departure" asp-route-id="@brochure.BrochureId"> View Details</a>
                             </div>
+                            <label style="font-size:15px; color:#fffff"><b>@brochure.Duration</b> Days</label> <br />
+                            <label style="font-size:15px; color:#fffff"><b>@brochure.Category.CategoryName</b></label>
                                 <div class="d-flex justify-content-between align-items-center">
                             </div>
                         </div>
