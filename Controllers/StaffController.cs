@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace Walton_Happy_Travel
     public class StaffController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public StaffController(ApplicationDbContext context)
+        public StaffController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Staff
@@ -59,7 +62,8 @@ namespace Walton_Happy_Travel
         // GET: Staff/Create
         public IActionResult Create()
         {
-            return View();
+            ViewData["Roles"] = new SelectList(_context.Roles.Where(r => !r.Name.Equals("Customer")), "Name", "Name");
+            return View(new CreateStaffViewModel());
         }
 
         // POST: Staff/Create
@@ -67,15 +71,29 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Forename,MiddleNames,Surname,DateOfBirth,TimeOfRegistration,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Staff staff)
+        public async Task<IActionResult> Create(CreateStaffViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(staff);
+                var staff = new Staff()
+                {
+                    Forename = model.Forename,
+                    MiddleNames = model.MiddleNames,
+                    Surname = model.Surname,
+                    Email = model.Email,
+                    UserName = model.Email,
+                    DateOfBirth = model.DateOfBirth,
+                    TimeOfRegistration = DateTime.Now,
+                    EmailConfirmed = true
+                };
+
+                await _userManager.CreateAsync(staff, model.Password);
+                await _userManager.AddToRoleAsync(staff, model.Role);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(staff);
+            return View(model);
         }
 
         // GET: Staff/Edit/5
@@ -91,7 +109,27 @@ namespace Walton_Happy_Travel
             {
                 return NotFound();
             }
-            return View(staff);
+
+            var roles = await _userManager.GetRolesAsync(staff);
+            string role = "";
+
+            foreach(var foundRoles in roles)
+            {
+                role = foundRoles;
+            }
+
+            var model = new EditStaffViewModel
+            {
+                Forename = staff.Forename,
+                MiddleNames = staff.MiddleNames,
+                Surname = staff.Surname,
+                Email = staff.Email,
+                DateOfBirth = staff.DateOfBirth,
+                Role = role
+            };
+
+            ViewData["Roles"] = new SelectList(_context.Roles.Where(r => !r.Name.Equals("Customer")), "Name", "Name");
+            return View(model);
         }
 
         // POST: Staff/Edit/5
@@ -99,9 +137,9 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Forename,MiddleNames,Surname,DateOfBirth,TimeOfRegistration,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Staff staff)
+        public async Task<IActionResult> Edit(string id, EditStaffViewModel model)
         {
-            if (id != staff.Id)
+            if (id != model.Id)
             {
                 return NotFound();
             }
@@ -110,12 +148,25 @@ namespace Walton_Happy_Travel
             {
                 try
                 {
+                    var staff = await _userManager.FindByIdAsync(model.Id);
+
+                    staff.Forename = model.Forename;
+                    staff.MiddleNames = model.MiddleNames;
+                    staff.Surname = model.Surname;
+                    staff.Email = model.Email;
+                    staff.DateOfBirth = model.DateOfBirth;
+                    
                     _context.Update(staff);
+
+                    var roles = await _userManager.GetRolesAsync(staff);
+                    await _userManager.RemoveFromRolesAsync(staff, roles);
+                    await _userManager.AddToRoleAsync(staff, model.Role);
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StaffExists(staff.Id))
+                    if (!StaffExists(model.Id))
                     {
                         return NotFound();
                     }
@@ -126,7 +177,7 @@ namespace Walton_Happy_Travel
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(staff);
+            return View(model);
         }
 
         // GET: Staff/Delete/5
