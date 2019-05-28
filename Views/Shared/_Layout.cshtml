@@ -43,7 +43,6 @@
             {
               @Html.ActionLink("Manage Bookings", "Index", "Booking", null, new { @class = "dropdown-item" })
             }
-          <a class="dropdown-item" href="#">Another action</a>
           @if(User.IsInRole("Admin") || User.IsInRole("ShopManager") || User.IsInRole("AssistantManager"))
           {
             <div class="dropdown-divider"></div>
@@ -54,8 +53,8 @@
             @Html.ActionLink("Manage Customers", "IndexCustomer", "ApplicationUser", null, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Staff", "IndexStaff", "ApplicationUser", null, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Countries", "Index", "Country", null, new { @class = "dropdown-item" })
-            @Html.ActionLink("Manage Hotels", "Index", "Accomodation", new { type = "Hotel" }, new { @class = "dropdown-item" })
-            @Html.ActionLink("Manage Private Properties", "Index", "Accomodation", new { type = "Private" }, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Hotels", "Index", "Hotel", new { type = "Hotel" }, new { @class = "dropdown-item" })
+            @Html.ActionLink("Manage Private Properties", "Index", "Private", new { type = "Private" }, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Categories", "Index", "Category", null, new { @class = "dropdown-item" })
             <div class="dropdown-divider"></div>
           }
