@@ -73,8 +73,6 @@ namespace Walton_Happy_Travel.Controllers
                 Catering.HALF_BOARD,
                 Catering.SELF_CATERING
             });
-            
-
             ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationName");
             ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryName");
             return View();

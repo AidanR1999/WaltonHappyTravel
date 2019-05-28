@@ -1,0 +1,55 @@
+@model Walton_Happy_Travel.Models.Staff
+
+@{
+    ViewData["Title"] = @Model.Forename + " " + @Model.Surname;
+}
+
+<h2>Delete</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Forename)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Forename)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MiddleNames)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MiddleNames)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeOfRegistration)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeOfRegistration)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

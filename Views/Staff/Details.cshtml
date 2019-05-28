@@ -1,0 +1,54 @@
+@model Walton_Happy_Travel.Models.Staff
+
+@{
+    ViewData["Title"] = @Model.Forename + " " + @Model.Surname;
+}
+
+<h2>Details</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Forename)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Forename)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MiddleNames)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MiddleNames)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeOfRegistration)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeOfRegistration)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

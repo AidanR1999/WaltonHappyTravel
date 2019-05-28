@@ -1,14 +1,12 @@
-@model Walton_Happy_Travel.Models.Accomodation
+@model Walton_Happy_Travel.Models.Hotel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Hotel";
 }
-<head>
-    
-</head>
+
 <h2>Create</h2>
 
-<h4>Accomodation</h4>
+<h4>Hotel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -30,17 +28,20 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
-                <input asp-for="CountryId" class="form-control" />
-                <span asp-validation-for="CountryId" class="text-danger"></span>
+                <label class="control-label">Country</label>
+                <select asp-for="CountryId" class ="form-control" asp-items="ViewBag.CountryId"></select>
             </div>
             <div class="form-group">
-                @Html.Label("type")
-                @Html.Editor("type", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage("password", "", new { @class = "text-danger" })
+                <label class="control-label">Staff</label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.Staff"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label asp-for="Rating" class="control-label"></label>
+                <input asp-for="Rating" class="form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </form>
     </div>

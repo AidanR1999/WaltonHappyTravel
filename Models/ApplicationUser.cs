@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 
 namespace Walton_Happy_Travel.Models
 {
@@ -66,5 +67,6 @@ namespace Walton_Happy_Travel.Models
         /// </summary>
         /// <value>Enumerable of bookings</value>
         public virtual IEnumerable<Booking> Bookings { get; set; }
+        
     }
 }
