@@ -300,11 +300,13 @@ namespace Walton_Happy_Travel.Controllers
             if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
             //gets all data from the database related to the booking
-            Booking booking = await _context.Bookings.FindAsync(bookingId);
-            Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
-            Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
-            Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
-            List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
+            var booking = await _context.Bookings
+                .Where(b => b.BookingId == bookingId)
+                .Include(b => b.Brochure)
+                .Include(b => b.Brochure.Accomodation)
+                .Include(b => b.Brochure.Accomodation.Country)
+                .Include(b => b.Persons)
+                .FirstOrDefaultAsync();
 
             //updates the total price of the booking in the database
             booking.TotalPrice = booking.Brochure.PricePerPerson * booking.Persons.Count();
@@ -315,8 +317,8 @@ namespace Walton_Happy_Travel.Controllers
             BookingConfirmationViewModel model = new BookingConfirmationViewModel
             {
                 BookingId = (int) bookingId,
-                AccomodationName = accomodation.AccomodationName,
-                CountryName = country.CountryName,
+                AccomodationName = booking.Brochure.Accomodation.AccomodationName,
+                CountryName = booking.Brochure.Accomodation.Country.CountryName,
                 DepartureDate = booking.DepartureDate,
                 Duration = booking.Brochure.Duration,
                 Catering = booking.Brochure.Catering,
@@ -386,10 +388,14 @@ namespace Walton_Happy_Travel.Controllers
             if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
             //get booking from database
-            Booking booking = await _context.Bookings.FindAsync(bookingId);
-
-            //get user of booking
-            var user = await _context.Users.FindAsync(booking.UserId);
+            var booking = await _context.Bookings
+                .Where(b => b.BookingId == bookingId)
+                .Include(b => b.Brochure)
+                .Include(b => b.Brochure.Accomodation)
+                .Include(b => b.Brochure.Accomodation.Country)
+                .Include(b => b.Persons)
+                .Include(b => b.User)
+                .FirstOrDefaultAsync();
 
             //get current user
             var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -399,29 +405,23 @@ namespace Walton_Happy_Travel.Controllers
                 return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
             //if users dont match or is not staff, redirect to browse
-            if((!currentUserId.Equals(user.Id) && !User.Identity.IsAuthenticated)) 
+            if((!currentUserId.Equals(booking.User.Id) && !User.Identity.IsAuthenticated)) 
                 return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
-
-            //gets all data from the database related to the booking
-            Brochure brochure = await _context.Brochures.FindAsync(booking.BrochureId);
-            Accomodation accomodation = await _context.Accomodations.FindAsync(brochure.AccomodationId);
-            Country country = await _context.Countrys.FindAsync(accomodation.CountryId);
-            List<Models.Person> persons = await _context.Persons.Where(p => p.BookingId == (int) bookingId).ToListAsync();
 
             //populate the model with the necessary data
             BookingInvoiceViewModel model = new BookingInvoiceViewModel
             {
                 BookingId = (int) bookingId,
                 BookingStatus = booking.Status,
-                AccomodationName = accomodation.AccomodationName,
-                CountryName = country.CountryName,
+                AccomodationName = booking.Brochure.Accomodation.AccomodationName,
+                CountryName = booking.Brochure.Accomodation.Country.CountryName,
                 DepartureDate = booking.DepartureDate,
-                Duration = brochure.Duration,
-                Catering = brochure.Catering,
+                Duration = booking.Brochure.Duration,
+                Catering = booking.Brochure.Catering,
                 TotalPrice = booking.TotalPrice,
                 AmountPaid = booking.AmountPaid,
-                Persons = persons,
-                Image = brochure.ImageLink
+                Persons = booking.Persons,
+                Image = booking.Brochure.ImageLink
             };
             
             //if booking is not complete, redirect to booking confirmation
@@ -433,9 +433,21 @@ namespace Walton_Happy_Travel.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// allows users to cancel a booking
+        /// </summary>
+        /// <param name="bookingId">identification for the booking</param>
+        /// <returns>Cancel page</returns>
         public async Task<IActionResult> Cancel(int? bookingId)
         {
-            var model = await _context.Bookings.Where(b => b.BookingId == bookingId).Include(b => b.Brochure).Include(b => b.Brochure.Accomodation).FirstOrDefaultAsync();
+            //get the booking from the database
+            var model = await _context.Bookings
+                .Where(b => b.BookingId == bookingId)
+                .Include(b => b.Brochure)
+                .Include(b => b.Brochure.Accomodation)
+                .FirstOrDefaultAsync();
+
+            //load page
             return View(model);
         }
 

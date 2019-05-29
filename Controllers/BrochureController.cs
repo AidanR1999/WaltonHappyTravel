@@ -278,10 +278,86 @@ namespace Walton_Happy_Travel.Controllers
                 Brochures = await _context.Brochures.Include(b=> b.Accomodation)
                     .Include(b => b.Accomodation.Country)
                     .ToListAsync(),
-
-                //get all categories of brochures from database
-                Categories = await _context.Categorys.ToListAsync()
             };
+
+            //populate catering data for filtering
+            ViewData["Catering"] = new SelectList(new List<string>
+            {
+                "",
+                Catering.ALL_INCLUSIVE.ToString(),
+                Catering.HALF_BOARD.ToString(),
+                Catering.SELF_CATERING.ToString()
+            });
+
+            //populate accomodation data for filtering
+            ViewData["Accomodation"] = new SelectList(new List<string>
+            {
+                "",
+                "Hotel",
+                "Private"
+            });
+
+            //populate categories data for filtering from the database
+            var allCategories = await _context.Categorys.ToListAsync();
+            var categories = new List<string>{""};
+            foreach(var category in allCategories)
+            {
+                categories.Add(category.CategoryName);
+            }
+            ViewData["Category"] = new SelectList(categories);
+            
+            //populate countries data for filtering from the database
+            var allCountries = await _context.Countrys.ToListAsync();
+            var countries = new List<string>{""};
+            foreach(var country in allCountries)
+            {
+                countries.Add(country.CountryName);
+            }
+            ViewData["Country"] = new SelectList(countries);
+
+            //load page
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Browse(ViewBrochuresViewModel model)
+        {
+            //populate catering data for filtering
+            ViewData["Catering"] = new SelectList(new List<string>
+            {
+                "",
+                Catering.ALL_INCLUSIVE.ToString(),
+                Catering.HALF_BOARD.ToString(),
+                Catering.SELF_CATERING.ToString()
+            });
+
+            //populate accomodation data for filtering
+            ViewData["Accomodation"] = new SelectList(new List<string>
+            {
+                "",
+                "Hotel",
+                "Private"
+            });
+
+            //populate categories data for filtering from the database
+            var allCategories = await _context.Categorys.ToListAsync();
+            var categories = new List<string>{""};
+            foreach(var category in allCategories)
+            {
+                categories.Add(category.CategoryName);
+            }
+            ViewData["Category"] = new SelectList(categories);
+            
+            //populate countries data for filtering from the database
+            var allCountries = await _context.Countrys.ToListAsync();
+            var countries = new List<string>{""};
+            foreach(var country in allCountries)
+            {
+                countries.Add(country.CountryName);
+            }
+            ViewData["Country"] = new SelectList(countries);
+
+            //load page
             return View(model);
         }
     }

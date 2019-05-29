@@ -2,35 +2,65 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Browse";
+    ViewData["Title"] = "Browse Brochures";
 }
 
 <h2>Brochures</h2>
 
-<div class="row">
+<form style="border:2px solid aliceblue; background: aliceblue; padding: 4px" method="Post" asp-action="Browse">
+    <h4>Filter</h4>
+    @Html.HiddenFor(m => m.Brochures)
+    <div asp-for="Category" class="form-group row">
+        <div asp-for="Category" class="col-3">
+            <label>Country:</label>
+            <select asp-for="Country" class="form-control" asp-items="ViewBag.Country"></select>
+        </div>
+        <div asp-for="Category" class="col-2">
+            <label>Accomodation:</label>
+            <select asp-for="Accomodation" class="form-control" asp-items="ViewBag.Accomodation"></select>
+        </div>
+        <div asp-for="Category" class="col-2">
+            <label>Catering:</label>
+            <select asp-for="Catering" class="form-control" asp-items="ViewBag.Catering"></select>
+        </div>
+        <div asp-for="Category" class="col-3">
+            <label>Category:</label>
+            <select asp-for="Category" asp-for="Category" class="form-control" asp-items="ViewBag.Category"></select>
+        </div>
+        <div asp-for="Category" class="form-group col-1 align-bassline" style="margin-top: 2.5%;">
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<br/>
+
+<div asp-for="Category" class="row">
     @foreach(var brochure in Model.Brochures)
     {
-        <div class="col-4">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">
+        <div asp-for="Category" class="col-4">
+                    <div asp-for="Category" class="card mb-4">
+                        <div asp-for="Category" class="card-header">
+                            <h4 asp-for="Category" class="my-0 font-weight-normal">
                                 <label style="font-size:23px;color:steelblue;">@brochure.Accomodation.AccomodationName</label>
                             </h4>
                             <label style="font-size:23px;color:#a51313;">@brochure.Accomodation.Country.CountryName</label>
                             <label style="font-size:15px; color:steelblue;"><b>@brochure.Catering</b></label>
                         </div>
 
-                        <img class="card-img-top" style="height:100%;" src="@brochure.ImageLink" alt="Card Image" />
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
+                        <img asp-for="Category" class="card-img-top" style="height:100%;" src="@brochure.ImageLink" alt="Card Image" />
+                        <div asp-for="Category" class="card-body">
+                            <div asp-for="Category" class="d-flex justify-content-between align-items-center">
+                                <div asp-for="Category" class="btn-group">
                                     <label style="font-size:20px; color:#a51313"><b>£@brochure.PricePerPerson</b> per/person</label>
                                 </div>
-                                <a asp-action="Details" asp-controller="Brochure" class="btn pull-right btn-outline-info fas fa-plane-departure" asp-route-id="@brochure.BrochureId"> View Details</a>
+                                <a asp-action="Details" asp-controller="Brochure" asp-for="Category" class="btn pull-right btn-outline-info fas fa-plane-departure" asp-route-id="@brochure.BrochureId"> View Details</a>
                             </div>
                             <label style="font-size:15px; color:#fffff"><b>@brochure.Duration</b> Days</label> <br />
                             <label style="font-size:15px; color:#fffff"><b>@brochure.Category.CategoryName</b></label>
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div asp-for="Category" class="d-flex justify-content-between align-items-center">
                             </div>
                         </div>
 

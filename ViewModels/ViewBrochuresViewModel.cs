@@ -12,12 +12,16 @@ namespace Walton_Happy_Travel.Models
     public class ViewBrochuresViewModel
     {
         public IEnumerable<Brochure> Brochures { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
 
         public ViewBrochuresViewModel()
         {
             Brochures = new List<Brochure>();
-            Categories = new List<Category>();
         }
+
+        //filtering data
+        public string Accomodation { get; set; }
+        public string Country { get; set; }
+        public string Catering { get; set; }
+        public string Category { get; set; }
     }
 }
