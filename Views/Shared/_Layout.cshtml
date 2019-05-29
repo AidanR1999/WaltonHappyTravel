@@ -52,12 +52,16 @@
           {
             @Html.ActionLink("Manage Customers", "Index", "Customer", null, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Staff", "Index", "Staff", null, new { @class = "dropdown-item" })
+          }
+          @if(User.IsInRole("Admin") || User.IsInRole("ShopManager"))
+          {
             @Html.ActionLink("Manage Countries", "Index", "Country", null, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Hotels", "Index", "Hotel", new { type = "Hotel" }, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Private Properties", "Index", "Private", new { type = "Private" }, new { @class = "dropdown-item" })
             @Html.ActionLink("Manage Categories", "Index", "Category", null, new { @class = "dropdown-item" })
             <div class="dropdown-divider"></div>
           }
+          
           @if(User.IsInRole("ShopManager") || User.IsInRole("InvoiceClerk") || User.IsInRole("Admin"))
           {
             <a class="dropdown-item" href="#">Invoices</a>
