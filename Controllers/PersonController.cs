@@ -190,7 +190,11 @@ namespace Walton_Happy_Travel.Controllers
             //if booking is not empty
             if(booking != null)
             {
+                //get brochure from database
                 var brochure = await _context.Brochures.FindAsync(booking.BrochureId);
+
+                if(model.PeopleAdded < 1 || model.PeopleAdded > brochure.MaxPeople)
+                    return View(model);
 
                 //updating the total price of the booking
                 booking.TotalPrice = brochure.PricePerPerson * model.PeopleAdded;
