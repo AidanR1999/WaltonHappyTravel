@@ -213,5 +213,14 @@ namespace Walton_Happy_Travel
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        /// <summary>
+        /// loads the page which allows for sales reports to be generated
+        /// </summary>
+        /// <returns>Reports page</returns>
+        public async Task<IActionResult> Reports()
+        {
+            return View();
+        }
     }
 }
