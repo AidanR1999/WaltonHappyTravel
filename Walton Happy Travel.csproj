@@ -4,9 +4,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-Walton_Happy_Travel-7FA13367-9AF8-4905-9F8E-675534D1CED8</UserSecretsId>
   </PropertyGroup>
-  <ItemGroup>
-    <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="jsreport.AspNetCore" Version="2.0.1" />

@@ -13524,11 +13524,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\WaltonHappyTravel\\Walton Happy Travel.csproj",
+      "projectUniqueName": "D:\\Walton Happy Travel\\Walton Happy Travel.csproj",
       "projectName": "Walton Happy Travel",
-      "projectPath": "D:\\WaltonHappyTravel\\Walton Happy Travel.csproj",
+      "projectPath": "D:\\Walton Happy Travel\\Walton Happy Travel.csproj",
       "packagesPath": "C:\\Users\\Snipe\\.nuget\\packages\\",
-      "outputPath": "D:\\WaltonHappyTravel\\obj\\",
+      "outputPath": "D:\\Walton Happy Travel\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
