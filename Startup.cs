@@ -49,7 +49,13 @@ namespace Walton_Happy_Travel
             {
                 options.ClientId = "816410532546-pi1a2h38i0lspipv9cq4im7bd7jcn614.apps.googleusercontent.com";
                 options.ClientSecret = "L6fQlpWlEPKslTkgeFFMzKr0";
+            })
+            .AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "1163579840488666";
+                facebookOptions.AppSecret = "8439198806a6fd28770b711210122e57";
             });
+
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.AddTransient<Seeder>();
             services.AddMvc();
@@ -82,7 +88,7 @@ namespace Walton_Happy_Travel
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
+            
             Seeder.Initialise().Wait();
         }
     }
