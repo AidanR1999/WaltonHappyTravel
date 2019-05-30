@@ -64,7 +64,7 @@
           
           @if(User.IsInRole("ShopManager") || User.IsInRole("InvoiceClerk") || User.IsInRole("Admin"))
           {
-            <a class="dropdown-item" href="#">Invoices</a>
+            @Html.ActionLink("Sales Reports", "Reports", "Staff", null, new { @class = "dropdown-item" })
           }
           
           </div>
