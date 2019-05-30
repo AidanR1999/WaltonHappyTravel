@@ -205,7 +205,7 @@ namespace Walton_Happy_Travel.Controllers
             if(!User.Identity.IsAuthenticated) return RedirectToAction(nameof(AccountController.Login), "Account");
 
             //if brochureId is null, redirect to browse brochures page
-            if (brochureId == null) return RedirectToAction(nameof(BrochureController.Browse));
+            if (brochureId == null) return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
             //get all the bookings from the database where it shares the same brochure
             var bookings = _context.Bookings.Where(b => b.BrochureId == brochureId).Include(b => b.Brochure);

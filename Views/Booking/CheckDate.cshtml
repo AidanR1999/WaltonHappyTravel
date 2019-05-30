@@ -36,8 +36,9 @@
         }
 
         $('input').datepicker({
+            minDate: +1,
             beforeShowDay: function(date){
-                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                var string = jQuery.datepicker.formatDate('mm/dd/yy', date);
                     return [ disableddates.indexOf(string) == -1 ]
             }
         });

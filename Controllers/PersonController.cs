@@ -250,6 +250,8 @@ namespace Walton_Happy_Travel.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPeople(AddPeopleToBookingViewModel model)
         {
+            model.NumberOfPeople = model.PeopleToAdd.Count();
+            
             if(ModelState.IsValid)
             {
                 //gets the booking from the database
