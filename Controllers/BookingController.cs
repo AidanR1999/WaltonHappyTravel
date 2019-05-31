@@ -273,12 +273,13 @@ namespace Walton_Happy_Travel.Controllers
                 BrochureId = model.BrochureId,
                 Brochure = await _context.Brochures.FindAsync(model.BrochureId),
                 DepartureDate = (DateTime) model.DepartureDate,
-                PaymentType = PaymentType.STRIPE,
+                PaymentType = PaymentType.FULL,
                 TotalPrice = brochure.PricePerPerson,
                 AmountPaid = 0,
                 SpecialRequirements = "",
                 Status = "IN_PROGRESS",
-                UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                DateCompleted = DateTime.Now
             };
 
             //add booking to database
@@ -367,6 +368,9 @@ namespace Walton_Happy_Travel.Controllers
 
             //update the amount paid
             booking.AmountPaid = booking.TotalPrice;
+
+            //set the date when booking was complete
+            booking.DateCompleted = DateTime.Now;
 
             //update the booking in the database
             _context.Bookings.Update(booking);

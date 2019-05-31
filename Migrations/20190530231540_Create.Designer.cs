@@ -13,8 +13,8 @@ using Walton_Happy_Travel.Models;
 namespace WaltonHappyTravel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190530121943_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190530231540_Create")]
+    partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,6 +237,8 @@ namespace WaltonHappyTravel.Migrations
                     b.Property<double>("AmountPaid");
 
                     b.Property<int>("BrochureId");
+
+                    b.Property<DateTime>("DateCompleted");
 
                     b.Property<DateTime>("DepartureDate");
 

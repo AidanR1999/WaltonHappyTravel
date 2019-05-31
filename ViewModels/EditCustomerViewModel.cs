@@ -27,6 +27,7 @@ namespace Walton_Happy_Travel.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date of Birth")]
         public DateTime DateOfBirth { get; set; }
 

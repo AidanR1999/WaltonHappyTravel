@@ -41,7 +41,8 @@ namespace Walton_Happy_Travel.Models
         /// </summary>
         /// <value>DateTime</value>
         [Required]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date of birth")]
         public DateTime DateOfBirth { get; set; }
 
@@ -50,6 +51,9 @@ namespace Walton_Happy_Travel.Models
         /// </summary>
         /// <value>DateTime</value>
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Time of Registration")]
         public DateTime TimeOfRegistration { get; set; }
 
         /// <summary>

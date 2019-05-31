@@ -237,6 +237,8 @@ namespace WaltonHappyTravel.Migrations
 
                     b.Property<int>("BrochureId");
 
+                    b.Property<DateTime>("DateCompleted");
+
                     b.Property<DateTime>("DepartureDate");
 
                     b.Property<int>("PaymentType");
