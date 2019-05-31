@@ -17,10 +17,13 @@ namespace Walton_Happy_Travel.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DepartureDate { get; set; }
+        
         public int Duration { get; set; }
         public Catering Catering { get; set; }
         public double TotalPrice { get; set; }
         public IEnumerable<Person> Persons { get; set; }
         public string Status { get; set; }
+        public string SpecialRequirements { get; set; }
+        public PaymentType PaymentType { get; set; }
     }
 }

@@ -24,5 +24,6 @@ namespace Walton_Happy_Travel.Models
         public double AmountPaid { get; set; }
         public IEnumerable<Person> Persons { get; set; }
         public string Image { get; set; }
+        public string SpecialRequirements { get; set; }
     }
 }

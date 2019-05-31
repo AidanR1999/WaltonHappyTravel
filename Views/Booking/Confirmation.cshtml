@@ -75,32 +75,38 @@
         
     </tr>
     </table>
+
     if(!Model.Status.Equals("Completed"))
     {
         <p align="right">@Html.ActionLink("+ Add Person", "Create", "Person", new { bookingId = Model.BookingId })</p>
     }
+
+    <hr>
+
+    <h4><b>Special Requirements</b></h4>
+    @Html.DisplayFor(m => m.SpecialRequirements)
+    
 }
 
 @if(!Model.Status.Equals("Completed") && Model.Persons.Count() > 0)
 {
     <hr>
-    @using (Html.BeginForm("MakePayment", "Booking", new { bookingId = Model.BookingId }, FormMethod.Post))
+    @using (Html.BeginForm("Confirmation", "Booking", null, FormMethod.Post))
     {
-        var newPrice = Model.TotalPrice * 100;
-        <div align="center">
-            <script
-                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="@Stripe.Value.PublishableKey"
-                data-amount="@newPrice"
-                data-name="Walton Happy Travel"
-                data-label="Make Payment"
-                data-description="Full payment"
-                data-locale="gb"
-                data-currency="GBP"
-                data-zip-code="false"
-                data-allow-remember-me ="false"
-                data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
-            </script>
+        @Html.HiddenFor(m => m.BookingId)
+        <h5>What payment method would you prefer?</h5>
+
+        <div class="form" align="center">
+            @foreach (var value in PaymentType.GetValues(typeof(PaymentType)))
+            {
+                @Html.RadioButtonFor(m => m.PaymentType, value)
+                @Html.Label(value.ToString())
+                <br/>
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Confirm" class="btn btn-primary" />
+            </div>
         </div>
     }
 }

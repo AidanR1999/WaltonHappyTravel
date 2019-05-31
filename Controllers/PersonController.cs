@@ -237,7 +237,8 @@ namespace Walton_Happy_Travel.Controllers
             {
                 BookingId = (int) bookingId,
                 NumberOfPeople = (int) numberOfPeople,
-                PeopleToAdd = peopleToAdd
+                PeopleToAdd = peopleToAdd,
+                SpecialRequirements = ""
             };
             return View(model);
         }
@@ -259,6 +260,9 @@ namespace Walton_Happy_Travel.Controllers
 
                 //convert IList to List as it can be casted as IEnumerable
                 booking.Persons = model.PeopleToAdd.ToList();
+
+                //update special requirements
+                booking.SpecialRequirements = model.SpecialRequirements;
 
                 //update the database
                 foreach(var person in booking.Persons)

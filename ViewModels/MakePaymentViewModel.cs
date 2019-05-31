@@ -8,16 +8,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
-    public class AddPeopleToBookingViewModel
+    public class MakePaymentViewModel
     {
         public int BookingId { get; set; }
-        public int NumberOfPeople { get; set; }
-        public IList<Person> PeopleToAdd { get; set; }
-        public string SpecialRequirements { get; set; }
-
-        public AddPeopleToBookingViewModel()
-        {
-            PeopleToAdd = new List<Person>();
-        }
+        public double TotalPrice { get; set; }
+        public double InitialPay { get; set; }
+        public PaymentType PaymentType { get; set; }
+        public Dictionary<DateTime, double> FuturePayments { get; set; }
     }
 }

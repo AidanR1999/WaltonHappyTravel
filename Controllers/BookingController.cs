@@ -324,6 +324,9 @@ namespace Walton_Happy_Travel.Controllers
                 .Include(b => b.Persons)
                 .FirstOrDefaultAsync();
 
+            //if booking doesnt exist, redirect to browse brochures
+            if(booking == null) return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
+
             //updates the total price of the booking in the database
             booking.TotalPrice = booking.Brochure.PricePerPerson * booking.Persons.Count();
             _context.Bookings.Update(booking);
@@ -340,8 +343,86 @@ namespace Walton_Happy_Travel.Controllers
                 Catering = booking.Brochure.Catering,
                 TotalPrice = booking.TotalPrice,
                 Persons = booking.Persons,
-                Status = booking.Status
+                Status = booking.Status,
+                SpecialRequirements = booking.SpecialRequirements
             };
+            return View(model);
+        }
+
+        /// <summary>
+        /// checks what payment method the user wishes to use
+        /// </summary>
+        /// <param name="model">View model for the page</param>
+        /// <returns>Redirects to make payment page</returns>
+        [HttpPost]
+        public async Task<IActionResult> Confirmation(BookingConfirmationViewModel model)
+        {
+            //get booking from the database
+            var booking = await _context.Bookings.FindAsync(model.BookingId);
+
+            //if booking doesnt exist redirect to the previous page
+            if(booking == null) return RedirectToAction(nameof(BookingController.Confirmation), new { bookingId = model.BookingId });
+
+            //update payment method in the database
+            booking.PaymentType = model.PaymentType;
+            _context.Update(booking);
+            await _context.SaveChangesAsync();
+
+            //redirect to make payment page
+            return RedirectToAction(nameof(BookingController.MakePayment), new { bookingId = model.BookingId });
+        }
+
+        public async Task<IActionResult> MakePayment(int? bookingId)
+        {
+            //get booking from database
+            var booking = await _context.Bookings
+                .Where(b => b.BookingId == bookingId)
+                .Include(b => b.Persons).FirstOrDefaultAsync();
+
+            double initialPay;
+            Dictionary<DateTime, double> futurePayments = new Dictionary<DateTime, double>();
+
+            //if paying in full, set initial pay to booking total
+            if(booking.PaymentType.Equals(PaymentType.FULL))
+                initialPay = booking.TotalPrice;
+
+            //if low deposit, charge £25 per person
+            else if(booking.PaymentType.Equals(PaymentType.LOW))
+            {
+                initialPay = (booking.Persons.Count() * 25);
+                futurePayments = findLowDeposit(booking, initialPay);
+            }
+                
+            //if standard deposit, charge half of the total booking
+            else if(booking.PaymentType.Equals(PaymentType.STANDARD)) 
+            {
+                initialPay = (booking.TotalPrice / 2);
+                futurePayments = findStandardDeposit(booking, initialPay);
+            }
+                
+            //if pay monthly, charge £25 per person
+            else if(booking.PaymentType.Equals(PaymentType.MONTHLY))
+            {
+                initialPay = (booking.Persons.Count() * 25);
+                futurePayments = findMonthlyPayments(booking, initialPay);
+            }
+            //else return error
+            else
+            {
+                return NotFound();
+            }
+
+            //populate model
+            var model = new MakePaymentViewModel
+            {
+                BookingId = booking.BookingId,
+                TotalPrice = booking.TotalPrice,
+                PaymentType = booking.PaymentType,
+                InitialPay = initialPay,
+                FuturePayments = futurePayments
+            };
+
+            //load make payment page
             return View(model);
         }
 
@@ -353,7 +434,7 @@ namespace Walton_Happy_Travel.Controllers
         /// <param name="stripeToken">the token of payment details</param>
         /// <returns>Invoice page</returns>
         [HttpPost]
-        public async Task<IActionResult> MakePayment(int? bookingId, string stripeEmail, string stripeToken)
+        public async Task<IActionResult> MakePayment(int? bookingId, double initialPay, string stripeEmail, string stripeToken)
         {
             //gets the booking from the database
             var booking = await _context.Bookings.FindAsync(bookingId);
@@ -440,7 +521,8 @@ namespace Walton_Happy_Travel.Controllers
                 TotalPrice = booking.TotalPrice,
                 AmountPaid = booking.AmountPaid,
                 Persons = booking.Persons,
-                Image = booking.Brochure.ImageLink
+                Image = booking.Brochure.ImageLink,
+                SpecialRequirements = booking.SpecialRequirements
             };
             
             //if booking is not complete, redirect to booking confirmation
@@ -469,7 +551,6 @@ namespace Walton_Happy_Travel.Controllers
             //load page
             return View(model);
         }
-
 
         /// <summary>
         /// confirms cancellation of booking and charges customer
@@ -524,7 +605,47 @@ namespace Walton_Happy_Travel.Controllers
             //redirect to my bookings page
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-    }
-
     
+        private Dictionary<DateTime, double> findMonthlyPayments(Booking booking, double initialPay)
+        {
+            var futurePayments = new Dictionary<DateTime, double>();
+            
+            int monthsBetween = ((booking.DepartureDate.Year - DateTime.Now.Year) * 12) + booking.DepartureDate.Month - DateTime.Now.Month;
+
+            var price = (booking.TotalPrice - initialPay) / monthsBetween;
+
+            for(int i = 1; i < monthsBetween + 1; i++)
+            {
+                futurePayments.Add(DateTime.Now.AddMonths(i), price);
+            }
+
+            return futurePayments;
+        }
+
+        private Dictionary<DateTime, double> findStandardDeposit(Booking booking, double initialPay)
+        {
+            var futurePayments = new Dictionary<DateTime, double>();
+
+            var price = booking.TotalPrice / 2;
+
+            futurePayments.Add(booking.DepartureDate.AddDays(-14), price);
+
+            return futurePayments;
+        }
+
+        private Dictionary<DateTime, double> findLowDeposit(Booking booking, double initialPay)
+        {
+            var futurePayments = new Dictionary<DateTime, double>();
+
+            var price = (booking.TotalPrice - initialPay) / 3;
+            
+            for(var i = 1; i < 3; i++)
+            {
+                futurePayments.Add(DateTime.Now.AddMonths(i), price);
+            }
+            futurePayments.Add(booking.DepartureDate.AddDays(-14), price);
+
+            return futurePayments;
+        }
+    }
 }

@@ -1,0 +1,84 @@
+@using Microsoft.Extensions.Options;
+@inject IOptions<StripeSettings> Stripe;
+@model Walton_Happy_Travel.Models.MakePaymentViewModel
+
+@{
+    ViewData["Title"] = "Make Payment";
+}
+
+<h2>Make Payment</h2>
+
+ <table style="width:100%">
+  <tr>
+    <tr>
+        <th>Booking Reference</th>
+        <td>@Model.BookingId</td>
+    </tr>
+    <tr>
+        <th>Payment Type</th>
+        <td>@Model.PaymentType</td>
+    </tr>
+    <tr>
+        <th>Total Price</th>
+        <td>£@Model.TotalPrice</td>
+    </tr>
+    <tr>
+        <th>Initial Payment</th>
+        <td>£@Model.InitialPay</td>
+    </tr>
+  </tr>
+</table>
+
+<hr>
+
+@{  int i = 1; 
+<table style="width:100%">
+    <tr>
+        <tr>
+            <th>Payments</th>
+            <th>Date</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+                <th>Payment #@i</th>
+                <td>@DateTime.Now.Date</td>
+                <td>£@Model.InitialPay</td>
+                @{i++;}
+        </tr>
+        @foreach (var payment in Model.FuturePayments)
+        {
+            <tr>
+                <th>Payment #@i</th>
+                <td>@payment.Key</td>
+                <td>£@payment.Value</td>
+                <td>
+                @{i++;}
+            </tr>
+        }
+        
+        </tr>
+    </table>
+}
+
+<hr/>
+
+@using (Html.BeginForm("MakePayment", "Booking", new { bookingId = Model.BookingId, initialPay = Model.InitialPay }, FormMethod.Post))
+{
+    {var newPrice = Model.InitialPay * 100;
+        <div align="center">
+            <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="@Stripe.Value.PublishableKey"
+                data-amount="@newPrice"
+                data-name="Walton Happy Travel"
+                data-label="Make Payment"
+                data-description="@Model.PaymentType.ToString() payment"
+                data-locale="gb"
+                data-currency="GBP"
+                data-zip-code="false"
+                data-allow-remember-me ="false"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+            </script>
+        </div>
+    }
+}
