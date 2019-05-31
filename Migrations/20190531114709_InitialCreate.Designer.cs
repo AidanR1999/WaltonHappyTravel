@@ -13,8 +13,8 @@ using Walton_Happy_Travel.Models;
 namespace WaltonHappyTravel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190530231540_Create")]
-    partial class Create
+    [Migration("20190531114709_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

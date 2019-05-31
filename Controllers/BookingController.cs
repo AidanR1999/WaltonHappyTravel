@@ -207,31 +207,12 @@ namespace Walton_Happy_Travel.Controllers
             //if brochureId is null, redirect to browse brochures page
             if (brochureId == null) return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
-            //get all the bookings from the database where it shares the same brochure
-            var bookings = _context.Bookings.Where(b => b.BrochureId == brochureId).Include(b => b.Brochure);
-            List<DateTime> unavailableDates = new List<DateTime>();
-
-            //store the dates for every booking
-            foreach(var booking in bookings)
-            {
-                //store departure date
-                unavailableDates.Add(booking.DepartureDate);
-
-                //store the dates included in the duration after departure
-                var duration = booking.Brochure.Duration;
-                while(duration > 0)
-                {
-                    unavailableDates.Add(booking.DepartureDate.AddDays(duration));
-                    duration--;
-                }
-            }
-
             //populate the model and inject into the page
             CheckDateViewModel model = new CheckDateViewModel
             {
                 BrochureId = (int) brochureId,
                 DepartureDate = DateTime.Now.Date,
-                UnavailableDates = unavailableDates
+                ErrorMessage = ""
             };
             return View(model);
         }
@@ -247,6 +228,40 @@ namespace Walton_Happy_Travel.Controllers
             //if date is in the past, reload page
             if(model.DepartureDate < DateTime.Now || model.DepartureDate == null)
             {
+                return View(model);
+            }
+
+            //get all the bookings from the database where it shares the same brochure
+            var bookings = _context.Bookings.Where(b => b.BrochureId == model.BrochureId && b.Status.Equals("Completed")).Include(b => b.Brochure);
+            List<DateTime> unavailableDates = new List<DateTime>();
+
+            //store the dates for every booking
+            foreach(var oldBooking in bookings)
+            {
+                //store departure date
+                unavailableDates.Add(oldBooking.DepartureDate);
+
+                //store the dates included in the duration after departure
+                var duration = oldBooking.Brochure.Duration;
+                var daysBefore = duration - 1;
+
+                while(duration > 0)
+                {
+                    unavailableDates.Add(oldBooking.DepartureDate.AddDays(duration));
+                    duration--;
+                }
+
+                //store the dates included in the lead upto the departure so bookings dont overlap
+                while(daysBefore > 0)
+                {
+                    unavailableDates.Add(oldBooking.DepartureDate.AddDays(-daysBefore));
+                    daysBefore--;
+                }
+            }
+
+            if(unavailableDates.Contains(model.DepartureDate))
+            {
+                model.ErrorMessage = "Date is already booked";
                 return View(model);
             }
 

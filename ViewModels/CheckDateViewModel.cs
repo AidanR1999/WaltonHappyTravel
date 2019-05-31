@@ -12,10 +12,9 @@ namespace Walton_Happy_Travel.Models
     {
         public int BrochureId { get; set; }
 
-        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DepartureDate { get; set; }
-        
-        public IEnumerable<DateTime> UnavailableDates { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }
