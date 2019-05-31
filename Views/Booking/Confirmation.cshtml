@@ -83,8 +83,12 @@
 
     <hr>
 
-    <h4><b>Special Requirements</b></h4>
-    @Html.DisplayFor(m => m.SpecialRequirements)
+    @if(Model.SpecialRequirements.Length > 0)
+    {
+        <h4><b>Special Requirements</b></h4>
+        @Html.DisplayFor(m => m.SpecialRequirements)
+    }
+    
     
 }
 

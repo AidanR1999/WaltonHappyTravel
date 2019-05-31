@@ -41,6 +41,10 @@
         <th>Status</th>
         <td>@Model.BookingStatus</td>
     </tr>
+    <tr>
+        <th>Payment Type</th>
+        <td>@Model.PaymentType.ToString()</td>
+    </tr>
   </tr>
 </table>
 
@@ -74,9 +78,44 @@
 
 <hr>
 
-    <h4><b>Special Requirements</b></h4>
-    @Html.DisplayFor(m => m.SpecialRequirements)
+    @if(Model.SpecialRequirements.Length > 0)
+    {
+        <h4><b>Special Requirements</b></h4>
+        @Html.DisplayFor(m => m.SpecialRequirements)
+        <hr>
+    }
     
+
+
+@{  int x = 1; 
+<table style="width:100%">
+    <tr>
+        <tr>
+            <th>Payments</th>
+            <th>Date</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+                <th>Payment #@x</th>
+                <td>@DateTime.Now.Date</td>
+                <td>£@Model.InitialPay</td>
+                @{x++;}
+        </tr>
+        @foreach (var payment in Model.FuturePayments)
+        {
+            <tr>
+                <th>Payment #@x</th>
+                <td>@payment.Key</td>
+                <td>£@payment.Value</td>
+                <td>
+                @{x++;}
+            </tr>
+        }
+        
+        </tr>
+    </table>
+}
+
 <hr>
 
 <img src="@Model.Image" width="100%"/>

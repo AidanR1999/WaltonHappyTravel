@@ -379,6 +379,7 @@ namespace Walton_Happy_Travel.Controllers
                 .Where(b => b.BookingId == bookingId)
                 .Include(b => b.Persons).FirstOrDefaultAsync();
 
+            //instatiate the fields required to load future payments
             double initialPay;
             Dictionary<DateTime, double> futurePayments = new Dictionary<DateTime, double>();
 
@@ -437,7 +438,9 @@ namespace Walton_Happy_Travel.Controllers
         public async Task<IActionResult> MakePayment(int? bookingId, double initialPay, string stripeEmail, string stripeToken)
         {
             //gets the booking from the database
-            var booking = await _context.Bookings.FindAsync(bookingId);
+            var booking = await _context.Bookings
+                .Where(b => b.BookingId == bookingId)
+                .Include(b => b.Persons).FirstOrDefaultAsync();
 
             //creates new objects required from the stripe API
             var customerService = new CustomerService();
@@ -453,7 +456,7 @@ namespace Walton_Happy_Travel.Controllers
             //charging the customer using the details from the booking
             var charge = await chargeService.CreateAsync(new ChargeCreateOptions
             {
-                Amount = Convert.ToInt32(booking.TotalPrice * 100),
+                Amount = Convert.ToInt32(initialPay * 100),
                 Description = "Booking Id: " + booking.BookingId,
                 Currency = "gbp",
                 CustomerId = customer.Id
@@ -463,7 +466,7 @@ namespace Walton_Happy_Travel.Controllers
             booking.Status = "Completed";
 
             //update the amount paid
-            booking.AmountPaid = booking.TotalPrice;
+            booking.AmountPaid = initialPay;
 
             //set the date when booking was complete
             booking.DateCompleted = DateTime.Now;
@@ -508,6 +511,45 @@ namespace Walton_Happy_Travel.Controllers
             if((!currentUserId.Equals(booking.User.Id) && !User.Identity.IsAuthenticated)) 
                 return RedirectToAction(nameof(BrochureController.Browse), "Brochure");
 
+            //instantiate fields for loading payments
+            double initialPay;
+            Dictionary<DateTime, double> futurePayments = new Dictionary<DateTime, double>();
+
+            //if paying in full, set initial pay to booking total
+            if(booking.PaymentType.Equals(PaymentType.FULL))
+                initialPay = booking.TotalPrice;
+
+            //if low deposit, charge £25 per person
+            else if(booking.PaymentType.Equals(PaymentType.LOW))
+            {
+                initialPay = (booking.Persons.Count() * 25);
+                futurePayments = findLowDeposit(booking, initialPay);
+            }
+                
+            //if standard deposit, charge half of the total booking
+            else if(booking.PaymentType.Equals(PaymentType.STANDARD)) 
+            {
+                initialPay = (booking.TotalPrice / 2);
+                futurePayments = findStandardDeposit(booking, initialPay);
+            }
+                
+            //if pay monthly, charge £25 per person
+            else if(booking.PaymentType.Equals(PaymentType.MONTHLY))
+            {
+                initialPay = (booking.Persons.Count() * 25);
+                futurePayments = findMonthlyPayments(booking, initialPay);
+            }
+            //else return error
+            else
+            {
+                return NotFound();
+            }
+
+            if(booking.SpecialRequirements == null)
+            {
+                booking.SpecialRequirements = "";
+            }
+
             //populate the model with the necessary data
             BookingInvoiceViewModel model = new BookingInvoiceViewModel
             {
@@ -522,7 +564,10 @@ namespace Walton_Happy_Travel.Controllers
                 AmountPaid = booking.AmountPaid,
                 Persons = booking.Persons,
                 Image = booking.Brochure.ImageLink,
-                SpecialRequirements = booking.SpecialRequirements
+                SpecialRequirements = booking.SpecialRequirements,
+                PaymentType = booking.PaymentType,
+                InitialPay = initialPay,
+                FuturePayments = futurePayments
             };
             
             //if booking is not complete, redirect to booking confirmation
