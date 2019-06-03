@@ -651,45 +651,78 @@ namespace Walton_Happy_Travel.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     
+        /// <summary>
+        /// calculation for finding the dates and price of monthly payments
+        /// </summary>
+        /// <param name="booking">booking object</param>
+        /// <param name="initialPay">the deposit user has to pay</param>
+        /// <returns>a dictionary of dates and prices</returns>
         private Dictionary<DateTime, double> findMonthlyPayments(Booking booking, double initialPay)
         {
+            //create new dictionary
             var futurePayments = new Dictionary<DateTime, double>();
             
+            //get months between current date and date of departure
             int monthsBetween = ((booking.DepartureDate.Year - DateTime.Now.Year) * 12) + booking.DepartureDate.Month - DateTime.Now.Month;
 
+            //find the price to spread equally
             var price = (booking.TotalPrice - initialPay) / monthsBetween;
 
+            //for every month between, add the date and price to the dictionary
             for(int i = 1; i < monthsBetween + 1; i++)
             {
                 futurePayments.Add(DateTime.Now.AddMonths(i), price);
             }
 
+            //return dictionary of payments
             return futurePayments;
         }
 
+        /// <summary>
+        /// calculation for finding the dates and price of a standard deposit
+        /// </summary>
+        /// <param name="booking">booking object</param>
+        /// <param name="initialPay">the deposit user has to pay</param>
+        /// <returns>a dictionary of dates and prices</returns>
         private Dictionary<DateTime, double> findStandardDeposit(Booking booking, double initialPay)
         {
+            //create a dictionary
             var futurePayments = new Dictionary<DateTime, double>();
 
+            //half the total price
             var price = booking.TotalPrice / 2;
 
+            //add the payment 14 days before departure
             futurePayments.Add(booking.DepartureDate.AddDays(-14), price);
 
+            //return dictionary of payments
             return futurePayments;
         }
 
+        /// <summary>
+        /// calculation for finding the dates and price of a low deposit payment
+        /// </summary>
+        /// <param name="booking">booking object</param>
+        /// <param name="initialPay">the deposit user has to pay</param>
+        /// <returns>a dictionary of dates and prices</returns>
         private Dictionary<DateTime, double> findLowDeposit(Booking booking, double initialPay)
         {
+            //create a dictionary
             var futurePayments = new Dictionary<DateTime, double>();
 
+            //find the price of each payment
             var price = (booking.TotalPrice - initialPay) / 3;
             
+            //add payment for the next 2 months
             for(var i = 1; i < 3; i++)
             {
                 futurePayments.Add(DateTime.Now.AddMonths(i), price);
             }
+
+            //add a payment 14 days before departure
             futurePayments.Add(booking.DepartureDate.AddDays(-14), price);
 
+            //return dictionary of payments
             return futurePayments;
         }
     }
