@@ -61,7 +61,11 @@ namespace Walton_Happy_Travel.Controllers
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage,
+                Forename = user.Forename,
+                MiddleNames = user.MiddleNames,
+                Surname = user.Surname,
+                DateOfBirth = user.DateOfBirth
             };
 
             return View(model);
@@ -101,6 +105,13 @@ namespace Walton_Happy_Travel.Controllers
                     throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
             }
+
+            user.Forename = model.Forename;
+            user.MiddleNames = model.MiddleNames;
+            user.Surname = model.Surname;
+            user.DateOfBirth = model.DateOfBirth;
+
+            await _userManager.UpdateAsync(user);
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));

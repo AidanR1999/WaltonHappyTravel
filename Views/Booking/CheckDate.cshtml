@@ -9,7 +9,11 @@
 @using (Html.BeginForm("CheckDate", "Booking", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.BrochureId)
-    @Html.HiddenFor(m => m.UnavailableDates)
+
+    if(Model.ErrorMessage.Length > 1)
+    {
+        <p class="text-danger">@Model.ErrorMessage</p>
+    }
 
     <label class="control-label">Departure Date</label>
     @Html.EditorFor(model => model.DepartureDate, new { htmlAttributes = new { @id = "datepicker", @class = "control-form", @Name = "inputDate", @PlaceHolder = "mm/dd/yyyy" } })
@@ -21,28 +25,12 @@
 
 @section Scripts
 {
-    
     <script>
-        var disableddates = [];
-        @foreach (DateTime date in Model.UnavailableDates)
-        {
-            Console.WriteLine(date.ToString());
-            @:disableddates.push(new Date(@date.Year, @date.Month-1, @date.Day))
-        }
-
-        function DisableSpecificDates(date) {
-            var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
-            return [disableddates.indexOf(string) == -1];
-        }
-
-        $(function() {
-            $("#datepicker").datepicker({
-                minDate: +1,
-                beforeShowDay: DisableSpecificDates,
-                dateFormat: "dd/mm/yy"
-            });
-        });
-        
-    </script>  
-
+          $( function() {
+                $( "#datepicker" ).datepicker({
+                    minDate: +1,
+                    dateFormat: "dd/mm/yy"
+                });
+            } );
+  </script>
 }

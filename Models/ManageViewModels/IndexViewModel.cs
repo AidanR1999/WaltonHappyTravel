@@ -21,5 +21,19 @@ namespace Walton_Happy_Travel.Models.ManageViewModels
         public string PhoneNumber { get; set; }
 
         public string StatusMessage { get; set; }
+
+        [Required]
+        public string Forename { get; set; }
+
+        [Display(Name = "Middle Name(s)")]
+        public string MiddleNames { get; set; }
+
+        [Required]
+        public string Surname { get; set; }
+
+        [Required]
+        [Display(Name = "Date of Birth")]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
     }
 }

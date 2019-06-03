@@ -12,31 +12,40 @@
 
 <p>Are you sure you wish to cancel this booking to <b> @Model.Brochure.Accomodation.AccomodationName </b> on <b>@Model.DepartureDate</b>?</p>
     @{  var charge = 1.00;
-        if(((Model.DepartureDate - DateTime.Now).TotalDays) < 7)
+        if(((Model.DepartureDate - DateTime.Now).TotalDays) > 7)
         {
             charge = Model.TotalPrice * 0.75;
             <p>Since this booking is less than 7 days from departure, you will be charged £@Math.Round(charge, 2)</p>
         }
         else
         {
-            <p>Please enter payment details below in order to confirm cancellation. <b>You WILL be charged £1.00</b> </p>
+            <p>Please enter payment details below in order to confirm cancellation. <b>You WILL be charged the outstanding balance left of the payment</b> </p>
         }
         <form asp-action="Cancel" asp-route-bookingId="@Model.BookingId">
-            @{charge *= 100;}
-            <div align="center">
-                <script
-                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="@Stripe.Value.PublishableKey"
-                    data-amount="@charge"
-                    data-name="Walton Happy Travel"
-                    data-label="Confirm Cancellation"
-                    data-description="Full payment"
-                    data-locale="gb"
-                    data-currency="GBP"
-                    data-zip-code="false"
-                    data-allow-remember-me ="false"
-                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
-                </script>
+            @if(!Model.PaymentType.ToString().Equals("FULL"))
+            {
+                {charge *= 100;}
+                <div align="center">
+                    <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="@Stripe.Value.PublishableKey"
+                        data-amount="@charge"
+                        data-name="Walton Happy Travel"
+                        data-label="Confirm Cancellation"
+                        data-description="Full payment"
+                        data-locale="gb"
+                        data-currency="GBP"
+                        data-zip-code="false"
+                        data-allow-remember-me ="false"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+                    </script>
             </div>
+            }
+            else 
+            {
+                <div class="form-control">
+                    <input type="button" class="btn btn-danger">
+                </div>
+            }
         </form>
     }

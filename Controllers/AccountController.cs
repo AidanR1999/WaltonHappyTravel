@@ -327,7 +327,7 @@ namespace Walton_Happy_Travel.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new Customer { UserName = model.Email, Email = model.Email, Forename = model.Forename, Surname = model.Surname, DateOfBirth = model.DateOfBirth };
+                var user = new Customer { UserName = model.Email, Email = model.Email, Forename = model.Forename, Surname = model.Surname, DateOfBirth = model.DateOfBirth, TimeOfRegistration = DateTime.Now };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

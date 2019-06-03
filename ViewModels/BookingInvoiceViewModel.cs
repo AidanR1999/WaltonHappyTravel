@@ -14,6 +14,9 @@ namespace Walton_Happy_Travel.Models
         public string BookingStatus { get; set; }
         public string AccomodationName { get; set; }
         public string CountryName { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DepartureDate { get; set; }
         public int Duration { get; set; }
         public Catering Catering { get; set; }
@@ -21,5 +24,9 @@ namespace Walton_Happy_Travel.Models
         public double AmountPaid { get; set; }
         public IEnumerable<Person> Persons { get; set; }
         public string Image { get; set; }
+        public string SpecialRequirements { get; set; }
+        public double InitialPay { get; set; }
+        public PaymentType PaymentType { get; set; }
+        public Dictionary<DateTime, double> FuturePayments { get; set; }
     }
 }

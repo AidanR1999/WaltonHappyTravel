@@ -8,13 +8,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
-    public class CheckDateViewModel
+    public class StaffReportsViewModel
     {
-        public int BrochureId { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime DepartureDate { get; set; }
-
-        public string ErrorMessage { get; set; }
+        public string Report { get; set; }
     }
 }

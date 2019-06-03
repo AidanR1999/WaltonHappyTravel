@@ -29,6 +29,10 @@
         <br />    
     }
     
+    <div class="form-group">
+        <label asp-for="SpecialRequirements" class="control-label"></label>
+        @Html.TextAreaFor(m => m.SpecialRequirements, new { @class = "form-control" })
+    </div>
     
     <div class="form-group">
         <input type="submit" value="Add People" name="AddPeople" class="btn btn-primary" />
@@ -37,14 +41,14 @@
 }
 
 @section Scripts{
-    <script>
-        $('body').on('focus',".datepicker_recurring_start", function(){
-            $(this).datepicker({
-                maxDate: 0,
-                showMonthAfterYear: true,
-                changeYear: true,
-                changeMonth: true
-            });
-        });
-    </script>  
+    //<!-- <script>
+    //    $('body').on('focus',".datepicker_recurring_start", function(){
+    //        $(this).datepicker({
+    //            maxDate: 0,
+    //            showMonthAfterYear: true,
+    //            changeYear: true,
+    //            changeMonth: true
+    //        });
+    //    });
+    //</script>   -->
 }
