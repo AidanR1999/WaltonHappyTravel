@@ -102,6 +102,7 @@ namespace Walton_Happy_Travel
 
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Roles"] = new SelectList(_context.Roles.Where(r => !r.Name.Equals("Customer")), "Name", "Name");
             return View(model);
         }
 
