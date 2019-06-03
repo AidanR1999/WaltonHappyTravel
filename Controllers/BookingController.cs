@@ -12,6 +12,8 @@ using System.Security.Claims;
 using Stripe;
 using jsreport.AspNetCore;
 using jsreport.Types;
+using Walton_Happy_Travel.Services;
+using System.Text.Encodings.Web;
 
 namespace Walton_Happy_Travel.Controllers
 {
@@ -19,9 +21,14 @@ namespace Walton_Happy_Travel.Controllers
     {
         private readonly ApplicationDbContext _context;
         private UserManager<IdentityUser> _userManager;
-        public BookingController(ApplicationDbContext context)
+        private readonly IEmailSender _emailSender;
+
+
+        public BookingController(ApplicationDbContext context,
+                                IEmailSender emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
 
         // GET: Booking
@@ -461,6 +468,20 @@ namespace Walton_Happy_Travel.Controllers
                 Currency = "gbp",
                 CustomerId = customer.Id
             });
+
+            //get the url of the invoice
+            var callbackUrl = Url.Action(
+                "Invoice",
+                "Booking",
+                new
+                {
+                    bookingId = bookingId
+                },
+                protocol: Request.Scheme);
+
+            //send email to address entered in stripe payment
+            await _emailSender.SendEmailAsync(stripeEmail, "Invoice for booking",
+                $"Please see your booking invoice by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             //set the status of the booking to complete
             booking.Status = "Completed";
