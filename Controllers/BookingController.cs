@@ -634,35 +634,37 @@ namespace Walton_Happy_Travel.Controllers
 
             //finds out how many days are between the booking and cancelling
             var daysBetween = (booking.DepartureDate - DateTime.Now).TotalDays;
-            var price = 1.00;
+            var price = booking.TotalPrice - booking.AmountPaid;
 
             //if its less than 7 days before departure, charge a 75% fee of the initial payment
-            if(daysBetween < 7)
+            if(daysBetween > 7)
             {
                 price *= 0.75;
             }
-
-            //charge the customer £1.00 if cancelling ahead of time
+            
             //creates new objects required from the stripe API
-            var customerService = new CustomerService();
-            var chargeService = new ChargeService();
-
-            //creating a customer using the API
-            var customer = customerService.Create(new CustomerCreateOptions
+            if(!booking.PaymentType.ToString().Equals("FULL"))
             {
-                Email = stripeEmail,
-                SourceToken = stripeToken
-            });
+                var customerService = new CustomerService();
+                var chargeService = new ChargeService();
 
-            //charging the customer using the details from the booking
-            var charge = await chargeService.CreateAsync(new ChargeCreateOptions
-            {
-                Amount = Convert.ToInt32(price * 100),
-                Description = "Booking Id: " + booking.BookingId,
-                Currency = "gbp",
-                CustomerId = customer.Id
-            });
+                //creating a customer using the API
+                var customer = customerService.Create(new CustomerCreateOptions
+                {
+                    Email = stripeEmail,
+                    SourceToken = stripeToken
+                });
 
+                //charging the customer using the details from the booking
+                var charge = await chargeService.CreateAsync(new ChargeCreateOptions
+                {
+                    Amount = Convert.ToInt32(price * 100),
+                    Description = "Booking Id: " + booking.BookingId,
+                    Currency = "gbp",
+                    CustomerId = customer.Id
+                });
+            }
+            
             //update booking in the database
             booking.Status = "Cancelled";
             _context.Update(booking);
