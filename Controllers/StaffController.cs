@@ -218,9 +218,47 @@ namespace Walton_Happy_Travel
         /// loads the page which allows for sales reports to be generated
         /// </summary>
         /// <returns>Reports page</returns>
-        public async Task<IActionResult> Reports()
+        public ActionResult Reports()
         {
-            return View();
+            //create the model
+            var model = new StaffReportsViewModel()
+            {
+                Report = ""
+            };
+
+            //get the types of reports into the view
+            ViewData["Reports"] = new SelectList(new List<string>
+            {
+                "",
+                "Daily Booking Report",
+                "Monthly Booking Report"
+            });
+
+            //load page
+            return View(model);
+        }
+
+        /// <summary>
+        /// gets the user's choice of report and generates the report
+        /// </summary>
+        /// <param name="model">View model for page</param>
+        /// <returns>Generates report and reloads reports page</returns>
+        [HttpPost]
+        public async Task<IActionResult> Reports(StaffReportsViewModel model)
+        {
+            //get the types of reports into the view
+            ViewData["Reports"] = new SelectList(new List<string>
+            {
+                "",
+                "Daily Booking Report",
+                "Monthly Booking Report"
+            });
+
+            //if no report has been selected, reload the page
+            if(model.Report == null) return View(model);
+
+
+            return View(model);
         }
     }
 }
