@@ -14,5 +14,9 @@ namespace Walton_Happy_Travel.Models
 
         [Display(Name = "How many people on the booking?")]
         public int PeopleAdded { get; set; }
+
+        public string ErrorMessage { get; set; }
+
+        public int MaxPeople { get; set; }
     }
 }

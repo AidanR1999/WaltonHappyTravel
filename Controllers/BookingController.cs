@@ -235,6 +235,7 @@ namespace Walton_Happy_Travel.Controllers
             //if date is in the past, reload page
             if(model.DepartureDate < DateTime.Now || model.DepartureDate == null)
             {
+                model.ErrorMessage = "Date not allowed";
                 return View(model);
             }
 
@@ -353,6 +354,12 @@ namespace Walton_Happy_Travel.Controllers
                 Status = booking.Status,
                 SpecialRequirements = booking.SpecialRequirements
             };
+
+            //if special requirements are returned null, initialize it
+            if(model.SpecialRequirements == null)
+            {
+                model.SpecialRequirements = "";
+            }
             return View(model);
         }
 

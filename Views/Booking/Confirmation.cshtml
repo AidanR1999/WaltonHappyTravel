@@ -81,10 +81,10 @@
         <p align="right">@Html.ActionLink("+ Add Person", "Create", "Person", new { bookingId = Model.BookingId })</p>
     }
 
-    <hr>
 
     @if(Model.SpecialRequirements.Length > 0)
     {
+        <hr>
         <h4><b>Special Requirements</b></h4>
         @Html.DisplayFor(m => m.SpecialRequirements)
     }

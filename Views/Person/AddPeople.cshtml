@@ -28,6 +28,11 @@
         </div>
         <br />    
     }
+
+    @if(Model.ErrorMessage.Length > 0)
+    {
+        <label class="text-danger">Error: @Model.ErrorMessage</label>
+    }
     
     <div class="form-group">
         <label asp-for="SpecialRequirements" class="control-label"></label>

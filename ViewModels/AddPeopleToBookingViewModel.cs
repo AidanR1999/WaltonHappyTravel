@@ -14,6 +14,8 @@ namespace Walton_Happy_Travel.Models
         public int NumberOfPeople { get; set; }
         public IList<Person> PeopleToAdd { get; set; }
         public string SpecialRequirements { get; set; }
+        public string ErrorMessage { get; set; }
+        
 
         public AddPeopleToBookingViewModel()
         {

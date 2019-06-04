@@ -8,8 +8,16 @@
 {
     @Html.HiddenFor(m => m.BookingId)
 
-    <label asp-for="PeopleAdded" class="control-label"></label>
+    <div class="form-control">
+        <label asp-for="PeopleAdded" class="control-label"></label>
+        <label class="text-muted">Maximum Number of People: @Model.MaxPeople</label>
+    </div>
     <input asp-for="PeopleAdded" class="form-control" />
+
+    if(Model.ErrorMessage.Length > 0)
+    {
+        <label class="text-danger">Error: @Model.ErrorMessage</label>
+    }
 
     <div class="form-group">
         <input type="submit" value="Add People" name="AddNumberOfPeople" class="btn btn-primary" />

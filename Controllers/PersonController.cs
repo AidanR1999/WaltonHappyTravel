@@ -162,16 +162,24 @@ namespace Walton_Happy_Travel.Controllers
         /// </summary>
         /// <param name="bookingId">bookingId for booking</param>
         /// <returns>AddNumberOfPeople page</returns>
-        public IActionResult AddNumberOfPeople(int? bookingId)
+        public async Task<IActionResult> AddNumberOfPeople(int? bookingId)
         {
             //if brochureId is null, redirect to browse brochures page
             if(bookingId == null) return RedirectToAction(nameof(BrochureController.Browse));
+
+            //get the booking from the database
+            var booking = await _context.Bookings
+                .Where(b => b.BookingId == bookingId)
+                .Include(b => b.Brochure)
+                .FirstOrDefaultAsync();
 
             //populate the model and inject into the page
             AddNumberOfPeopleViewModel model = new AddNumberOfPeopleViewModel
             {
                 BookingId = (int) bookingId,
-                PeopleAdded = 1
+                PeopleAdded = 1,
+                ErrorMessage = "",
+                MaxPeople = booking.Brochure.MaxPeople
             };
             return View(model);
         }
@@ -193,8 +201,18 @@ namespace Walton_Happy_Travel.Controllers
                 //get brochure from database
                 var brochure = await _context.Brochures.FindAsync(booking.BrochureId);
 
-                if(model.PeopleAdded < 1 || model.PeopleAdded > brochure.MaxPeople)
+                if(model.PeopleAdded < 1)
+                {
+                    model.ErrorMessage = "Please enter a positive whole number";
                     return View(model);
+                }
+
+                if(model.PeopleAdded > brochure.MaxPeople)
+                {
+                    model.ErrorMessage = "Too many people";
+                    return View(model);
+                }
+                    
 
                 //updating the total price of the booking
                 booking.TotalPrice = brochure.PricePerPerson * model.PeopleAdded;
@@ -238,7 +256,8 @@ namespace Walton_Happy_Travel.Controllers
                 BookingId = (int) bookingId,
                 NumberOfPeople = (int) numberOfPeople,
                 PeopleToAdd = peopleToAdd,
-                SpecialRequirements = ""
+                SpecialRequirements = "",
+                ErrorMessage = ""
             };
             return View(model);
         }
@@ -277,6 +296,7 @@ namespace Walton_Happy_Travel.Controllers
 
             //on fail, return view
             model.NumberOfPeople = model.PeopleToAdd.Count();
+            model.ErrorMessage = "Insuffiecent Details";
             return View(model);
         }
     }
