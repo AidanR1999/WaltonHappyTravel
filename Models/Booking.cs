@@ -29,6 +29,7 @@ namespace Walton_Happy_Travel.Models
         /// </summary>
         /// <value>DateTime</value>
         [Required]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date of departure")]
         public DateTime DepartureDate { get; set; }
@@ -61,6 +62,17 @@ namespace Walton_Happy_Travel.Models
         /// <value>string</value>
         [Required]
         public string Status { get; set; }
+
+        /// <summary>
+        /// shows date of when booking was completed
+        /// </summary>
+        /// <value>DateTime</value>
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date Completed")]
+        public DateTime DateCompleted { get; set; }
+
 
         /// <summary>
         /// Parameterless constructor to initialise the Enumerable of people
@@ -105,6 +117,6 @@ namespace Walton_Happy_Travel.Models
     /// </summary>
     public enum PaymentType
     {
-        STRIPE, PAYPAL
+        FULL, LOW, STANDARD, MONTHLY
     }
 }

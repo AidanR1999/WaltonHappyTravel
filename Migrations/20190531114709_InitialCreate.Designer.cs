@@ -13,9 +13,10 @@ using Walton_Happy_Travel.Models;
 namespace WaltonHappyTravel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190531114709_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,6 +237,8 @@ namespace WaltonHappyTravel.Migrations
                     b.Property<double>("AmountPaid");
 
                     b.Property<int>("BrochureId");
+
+                    b.Property<DateTime>("DateCompleted");
 
                     b.Property<DateTime>("DepartureDate");
 
