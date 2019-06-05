@@ -1,14 +1,14 @@
 @using Newtonsoft.Json;
-@model Walton_Happy_Travel.Models.CheckDateViewModel
+@model Walton_Happy_Travel.Models.ChangeDateViewModel
 
 @{
     ViewData["Title"] = "Availability";
 }
 
 <br/>
-@using (Html.BeginForm("CheckDate", "Booking", FormMethod.Post))
+@using (Html.BeginForm("ChangeDate", "Booking", FormMethod.Post))
 {
-    @Html.HiddenFor(m => m.BrochureId)
+    @Html.HiddenFor(m => m.BookingId)
 
     if(Model.ErrorMessage.Length > 1)
     {

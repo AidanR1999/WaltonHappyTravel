@@ -287,7 +287,6 @@ namespace Walton_Happy_Travel.Controllers
                 {
                     _context.Remove(oldBooking);
                 }
-                //var oldBooking = await userResults.FirstOrDefaultAsync();
             }
 
             //create a new booking
@@ -311,6 +310,93 @@ namespace Walton_Happy_Travel.Controllers
 
             //redirect to AddPeople action
             return RedirectToAction("AddNumberOfPeople", "Person", new { bookingId = booking.BookingId });
+        }
+
+        /// <summary>
+        /// allows the user to change the date of the booking
+        /// </summary>
+        /// <param name="bookingId">id of booking</param>
+        /// <returns>ChangeDate page</returns>
+        public ActionResult ChangeDate(int? bookingId)
+        {
+            //populate the model
+            ChangeDateViewModel model = new ChangeDateViewModel()
+            { 
+                BookingId = (int) bookingId,
+                DepartureDate = DateTime.Now,
+                ErrorMessage = ""
+            };
+
+            //load ChangeDate page
+            return View(model);
+        }
+
+        /// <summary>
+        /// checks if new date is available and updates it
+        /// </summary>
+        /// <param name="model">viewmodel for the page</param>
+        /// <returns>Redirects to confirmation page</returns>
+        [HttpPost]
+        public async Task<IActionResult> ChangeDate(ChangeDateViewModel model)
+        {
+            //if date is in the past, reload page
+            if(model.DepartureDate < DateTime.Now || model.DepartureDate == null)
+            {
+                model.ErrorMessage = "Date not allowed";
+                return View(model);
+            }
+
+            //get users currrent booking from the database
+            var userBooking = await _context.Bookings
+                .Where(b => b.BookingId == model.BookingId)
+                .Include(b => b.Brochure)
+                .FirstOrDefaultAsync();
+
+            //get all the bookings from the database where it shares the same brochure
+            var bookings = _context.Bookings
+                .Where(b => b.BrochureId == userBooking.BrochureId && b.Status.Equals("Completed"))
+                .Include(b => b.Brochure);
+
+            List<DateTime> unavailableDates = new List<DateTime>();
+
+            //store the dates for every booking
+            foreach(var oldBooking in bookings)
+            {
+                //store departure date
+                unavailableDates.Add(oldBooking.DepartureDate);
+
+                //store the dates included in the duration after departure
+                var duration = oldBooking.Brochure.Duration;
+                var daysBefore = duration - 1;
+
+                while(duration > 0)
+                {
+                    unavailableDates.Add(oldBooking.DepartureDate.AddDays(duration));
+                    duration--;
+                }
+
+                //store the dates included in the lead upto the departure so bookings dont overlap
+                while(daysBefore > 0)
+                {
+                    unavailableDates.Add(oldBooking.DepartureDate.AddDays(-daysBefore));
+                    daysBefore--;
+                }
+            }
+
+            //if booking is already taken
+            if(unavailableDates.Contains(model.DepartureDate))
+            {
+                model.ErrorMessage = "Date is already booked";
+                return View(model);
+            }
+
+            //update booking in database
+            userBooking.DepartureDate = model.DepartureDate;
+            _context.Bookings.Update(userBooking);
+            await _context.SaveChangesAsync();
+
+            //redirect to AddPeople action
+            return RedirectToAction(nameof(BookingController.Confirmation), new { bookingId = model.BookingId });
         }
 
         /// <summary>

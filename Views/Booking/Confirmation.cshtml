@@ -26,6 +26,7 @@
     <tr>
         <th>Departure Date</th>
         <td>@Model.DepartureDate</td>
+        <td>@Html.ActionLink("Change", "ChangeDate", "Booking", new { bookingId = Model.BookingId })</td>
     </tr>
     <tr>
         <th>Duration</th>
