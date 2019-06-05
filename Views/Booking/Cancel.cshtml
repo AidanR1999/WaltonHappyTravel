@@ -11,16 +11,12 @@
 
 
 <p>Are you sure you wish to cancel this booking to <b> @Model.Brochure.Accomodation.AccomodationName </b> on <b>@Model.DepartureDate</b>?</p>
-    @{  var charge = 1.00;
-        if(((Model.DepartureDate - DateTime.Now).TotalDays) > 7)
+    @{  var charge = Math.Round(Model.TotalPrice - Model.AmountPaid, 2);
+        if(!Model.PaymentType.ToString().Equals("FULL"))
         {
-            charge = Model.TotalPrice * 0.75;
-            <p>Since this booking is less than 7 days from departure, you will be charged £@Math.Round(charge, 2)</p>
+            <p>You <b>WILL</b> be charged <b>£@charge</b></p>
         }
-        else
-        {
-            <p>Please enter payment details below in order to confirm cancellation. <b>You WILL be charged the outstanding balance left of the payment</b> </p>
-        }
+
         <form asp-action="Cancel" asp-route-bookingId="@Model.BookingId">
             @if(!Model.PaymentType.ToString().Equals("FULL"))
             {
@@ -43,9 +39,20 @@
             }
             else 
             {
-                <div class="form-control">
-                    <input type="button" class="btn btn-danger">
+                <div>
+                    @Html.ActionLink("Cancel", "CancelConfirmed", "Booking", new { bookingId = Model.BookingId, stripeEmail = "", stripeToken = "" }, new { @class = "btn cancelFull btn-danger",  onclick = "return false;"})
                 </div>
             }
         </form>
     }
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+        $('.cancelFull').click(function () {
+            $(this).closest('form')[0].submit();
+        });
+    });
+    </script>
+    
+}

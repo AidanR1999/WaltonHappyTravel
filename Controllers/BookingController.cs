@@ -724,20 +724,15 @@ namespace Walton_Happy_Travel.Controllers
         {
             //gets the booking from the database
             var booking = await _context.Bookings.FindAsync(bookingId);
-
-            //finds out how many days are between the booking and cancelling
-            var daysBetween = (booking.DepartureDate - DateTime.Now).TotalDays;
-            var price = booking.TotalPrice - booking.AmountPaid;
-
-            //if its less than 7 days before departure, charge a 75% fee of the initial payment
-            if(daysBetween > 7)
-            {
-                price *= 0.75;
-            }
             
             //creates new objects required from the stripe API
             if(!booking.PaymentType.ToString().Equals("FULL"))
             {
+                //finds out how many days are between the booking and cancelling
+                var daysBetween = (booking.DepartureDate - DateTime.Now).TotalDays;
+                var price = booking.TotalPrice - booking.AmountPaid;
+
+                //creating the services required for stripe payment
                 var customerService = new CustomerService();
                 var chargeService = new ChargeService();
 
@@ -764,7 +759,7 @@ namespace Walton_Happy_Travel.Controllers
             await _context.SaveChangesAsync();
 
             //redirect to my bookings page
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(CustomerController.UserBookings), "Customer");
         }
     
         /// <summary>
