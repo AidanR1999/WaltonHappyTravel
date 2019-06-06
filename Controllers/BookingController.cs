@@ -17,6 +17,9 @@ using System.Text.Encodings.Web;
 
 namespace Walton_Happy_Travel.Controllers
 {
+    /// <summary>
+    /// Manages all pages that relates to making a booking
+    /// </summary>
     public class BookingController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -16,6 +16,9 @@ using Walton_Happy_Travel.Services;
 
 namespace Walton_Happy_Travel.Controllers
 {
+    /// <summary>
+    /// Manages all pages related to user profiles
+    /// </summary>
     [Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller

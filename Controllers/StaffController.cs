@@ -13,10 +13,13 @@ using Walton_Happy_Travel.Models;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Drawing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Walton_Happy_Travel
 {
-    
+    /// <summary>
+    /// Manages all pages related to creating, editing and removing staff members
+    /// </summary>
     public class StaffController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -32,6 +35,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Staff
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             //get staff from database
@@ -51,6 +55,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Staff/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -69,6 +74,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Staff/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["Roles"] = new SelectList(_context.Roles.Where(r => !r.Name.Equals("Customer")), "Name", "Name");
@@ -80,6 +86,7 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateStaffViewModel model)
         {
             var results = await _userManager.FindByEmailAsync(model.Email);
@@ -108,6 +115,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Staff/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -148,6 +156,7 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id, EditStaffViewModel model)
         {
             if (id != model.Id)
@@ -192,6 +201,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Staff/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -212,6 +222,7 @@ namespace Walton_Happy_Travel
         // POST: Staff/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var staff = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
@@ -229,6 +240,7 @@ namespace Walton_Happy_Travel
         /// loads the page which allows for sales reports to be generated
         /// </summary>
         /// <returns>Reports page</returns>
+        [Authorize(Roles = "Admin, ShopManager, InvoiceClerk")]
         public ActionResult Reports()
         {
             //create the model
@@ -255,6 +267,7 @@ namespace Walton_Happy_Travel
         /// <param name="model">View model for page</param>
         /// <returns>Generates report and reloads reports page</returns>
         [HttpPost]
+        [Authorize(Roles = "Admin, ShopManager, InvoiceClerk")]
         public async Task<IActionResult> Reports(StaffReportsViewModel model)
         {
             //if no report is selected

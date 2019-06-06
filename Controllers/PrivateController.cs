@@ -8,9 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Walton_Happy_Travel
 {
+    /// <summary>
+    /// Manages all pages related to creating, editing and removing private properties
+    /// </summary>
     public class PrivateController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +25,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Private
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Index()
         {
             //get all private properties from the database
@@ -43,6 +48,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Private/Details/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -63,6 +69,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Private/Create
+        [Authorize(Roles = "Admin, ShopManager")]
         public IActionResult Create()
         {
             ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
@@ -75,6 +82,7 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Create([Bind("AccomodationId,AccomodationName,AccomodationAddress,Description,CountryId,UserId")] Private @private)
         {
             if (ModelState.IsValid)
@@ -90,6 +98,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Private/Edit/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,6 +122,7 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Edit(int id, [Bind("AccomodationId,AccomodationName,AccomodationAddress,Description,CountryId,UserId")] Private @private)
         {
             if (id != @private.AccomodationId)
@@ -147,6 +157,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Private/Delete/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -169,6 +180,7 @@ namespace Walton_Happy_Travel
         // POST: Private/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var @private = await _context.Accomodations.SingleOrDefaultAsync(m => m.AccomodationId == id);

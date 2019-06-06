@@ -23,6 +23,9 @@ namespace Walton_Happy_Travel.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
+    /// <summary>
+    /// Manages all pages account related
+    /// </summary>
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

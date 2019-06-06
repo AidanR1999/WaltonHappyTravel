@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,9 @@ using Walton_Happy_Travel.Models;
 
 namespace Walton_Happy_Travel
 {
+    /// <summary>
+    /// Manages the pages that relate to the creating, editing and removing hotels
+    /// </summary>
     public class HotelController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,6 +24,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Hotel
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Index()
         {
             //get all hotels from the database
@@ -42,6 +47,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Hotel/Details/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -61,6 +67,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Hotel/Create
+        [Authorize(Roles = "Admin, ShopManager")]
         public IActionResult Create()
         {
             ViewData["Staff"] = new SelectList(_context.Users.Where(p => p.GetType() == typeof(Staff)), "Id", "Email");
@@ -73,6 +80,7 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Create([Bind("Rating,AccomodationId,AccomodationName,AccomodationAddress,Description,CountryId,UserId")] Hotel hotel)
         {
             if (ModelState.IsValid)
@@ -87,6 +95,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Hotel/Edit/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -109,6 +118,7 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Edit(int id, [Bind("Rating,AccomodationId,AccomodationName,AccomodationAddress,Description,CountryId,UserId")] Hotel hotel)
         {
             if (id != hotel.AccomodationId)
@@ -142,6 +152,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Hotel/Delete/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -164,6 +175,7 @@ namespace Walton_Happy_Travel
         // POST: Hotel/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var hotel = await _context.Accomodations.SingleOrDefaultAsync(m => m.AccomodationId == id);

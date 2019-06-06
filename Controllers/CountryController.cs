@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,9 @@ using Walton_Happy_Travel.Models;
 
 namespace Walton_Happy_Travel.Controllers
 {
+    /// <summary>
+    /// Manages all pages related to creating, editing and removing countries
+    /// </summary>
     public class CountryController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,12 +24,14 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Country
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Countrys.ToListAsync());
         }
 
         // GET: Country/Details/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +50,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Country/Create
+        [Authorize(Roles = "Admin, ShopManager")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +61,7 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Create([Bind("CountryId,CountryName")] Country country)
         {
             if (ModelState.IsValid)
@@ -66,6 +74,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Country/Edit/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +95,7 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Edit(int id, [Bind("CountryId,CountryName")] Country country)
         {
             if (id != country.CountryId)
@@ -117,6 +127,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Country/Delete/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +148,7 @@ namespace Walton_Happy_Travel.Controllers
         // POST: Country/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var country = await _context.Countrys.SingleOrDefaultAsync(m => m.CountryId == id);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,9 @@ using Walton_Happy_Travel.Models;
 
 namespace Walton_Happy_Travel.Controllers
 {
+    /// <summary>
+    /// Manages the pages related to the people attatched to bookings
+    /// </summary>
     public class PersonController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,6 +24,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Person
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Persons.Include(p => p.Booking);
@@ -27,6 +32,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Person/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +52,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Person/Create
+        [Authorize]
         public IActionResult Create(int? bookingId)
         {
             ViewData["BookingId"] = (int) bookingId;
@@ -57,6 +64,7 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("PersonId,Forename,MiddleNames,Surname,DateOfBirth,BookingId")] Person person)
         {
             if (ModelState.IsValid)
@@ -70,6 +78,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Person/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,6 +100,7 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("PersonId,Forename,MiddleNames,Surname,DateOfBirth,BookingId")] Person person)
         {
             if (id != person.PersonId)
@@ -126,6 +136,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Person/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,6 +155,7 @@ namespace Walton_Happy_Travel.Controllers
             return View(person);
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var person = await _context.Persons.SingleOrDefaultAsync(m => m.PersonId == id);
@@ -162,6 +174,7 @@ namespace Walton_Happy_Travel.Controllers
         /// </summary>
         /// <param name="bookingId">bookingId for booking</param>
         /// <returns>AddNumberOfPeople page</returns>
+        [Authorize]
         public async Task<IActionResult> AddNumberOfPeople(int? bookingId)
         {
             //if brochureId is null, redirect to browse brochures page
@@ -190,6 +203,7 @@ namespace Walton_Happy_Travel.Controllers
         /// <param name="model">Viewmodel from page</param>
         /// <returns>Redirects to AddPeople page</returns>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddNumberOfPeople(AddNumberOfPeopleViewModel model)
         {
             //get booking from database
@@ -232,6 +246,7 @@ namespace Walton_Happy_Travel.Controllers
         /// </summary>
         /// <param name="bookingId">bookingId of the booking</param>
         /// <returns>AddPeople Page</returns>
+        [Authorize]
         public ActionResult AddPeople(int? bookingId, int? numberOfPeople)
         {
             //if bookingId is null, redirect to browse brochures page
@@ -268,6 +283,7 @@ namespace Walton_Happy_Travel.Controllers
         /// <param name="model">view model from page</param>
         /// <returns>Redirects to Confirmation page</returns>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddPeople(AddPeopleToBookingViewModel model)
         {
             model.NumberOfPeople = model.PeopleToAdd.Count();

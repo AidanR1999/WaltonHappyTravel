@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace Walton_Happy_Travel.Controllers
 {
+    /// <summary>
+    /// Manages all pages related to making and showing brochures
+    /// </summary>
     public class BrochureController : Controller
     {
         private readonly ApplicationDbContext _context;

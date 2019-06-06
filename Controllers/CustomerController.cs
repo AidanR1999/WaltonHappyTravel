@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,9 @@ using Walton_Happy_Travel.Models;
 
 namespace Walton_Happy_Travel
 {
+    /// <summary>
+    /// Manages all pages related to customers
+    /// </summary>
     public class CustomerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,6 +29,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Customer
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             //get all customers in database
@@ -44,6 +49,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Customer/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -62,6 +68,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Customer/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -72,6 +79,7 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateCustomerViewModel model)
         {
             if (ModelState.IsValid)
@@ -98,6 +106,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Customer/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -127,6 +136,7 @@ namespace Walton_Happy_Travel
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id, EditCustomerViewModel model)
         {
             if (id != model.Id)
@@ -166,6 +176,7 @@ namespace Walton_Happy_Travel
         }
 
         // GET: Customer/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -186,6 +197,7 @@ namespace Walton_Happy_Travel
         // POST: Customer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var customer = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
@@ -202,7 +214,7 @@ namespace Walton_Happy_Travel
         /// <summary>
         /// displays all bookings the user has made
         /// </summary>
-        /// <returns></returns>
+        /// <returns>UserBookings page</returns>
         public ActionResult UserBookings()
         {
             //if user is not logged in, redirect to home

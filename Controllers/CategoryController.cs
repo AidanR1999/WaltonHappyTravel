@@ -1,3 +1,4 @@
+using System.Net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Walton_Happy_Travel.Data;
 using Walton_Happy_Travel.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Walton_Happy_Travel.Controllers
 {
+    /// <summary>
+    /// Manages all pages related to creating, editing and deleting categories
+    /// </summary>
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,12 +25,14 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Category
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categorys.ToListAsync());
         }
 
         // GET: Category/Details/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +51,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Category/Create
+        [Authorize(Roles = "Admin, ShopManager")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +62,7 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
         {
             if (ModelState.IsValid)
@@ -66,6 +75,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Category/Edit/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +96,7 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
         {
             if (id != category.CategoryId)
@@ -117,6 +128,7 @@ namespace Walton_Happy_Travel.Controllers
         }
 
         // GET: Category/Delete/5
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +149,7 @@ namespace Walton_Happy_Travel.Controllers
         // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, ShopManager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var category = await _context.Categorys.SingleOrDefaultAsync(m => m.CategoryId == id);

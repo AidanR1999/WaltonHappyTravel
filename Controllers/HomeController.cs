@@ -8,6 +8,9 @@ using Walton_Happy_Travel.Models;
 
 namespace Walton_Happy_Travel.Controllers
 {
+    /// <summary>
+    /// Manages the default pages for ASP.NET
+    /// </summary>
     public class HomeController : Controller
     {
         public IActionResult Index()
