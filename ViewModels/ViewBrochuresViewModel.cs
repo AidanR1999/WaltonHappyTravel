@@ -9,6 +9,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
+    /// <summary>
+    /// ViewModel for browsing and searching brochures
+    /// </summary>
     public class ViewBrochuresViewModel
     {
         public IEnumerable<Brochure> Brochures { get; set; }

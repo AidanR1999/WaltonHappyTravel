@@ -8,6 +8,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
+    /// <summary>
+    /// ViewModel for editing customer details
+    /// </summary>
     public class EditCustomerViewModel
     {
         [DataType(DataType.Text)]

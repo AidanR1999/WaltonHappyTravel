@@ -258,7 +258,7 @@ namespace Walton_Happy_Travel
         public async Task<IActionResult> Reports(StaffReportsViewModel model)
         {
             //if no report is selected
-            if(!ModelState.IsValid)
+            if(model.Report == null || model.Report.Equals(""))
             {
                 //get the types of reports into the view
                 ViewData["Reports"] = new SelectList(new List<string>
@@ -267,9 +267,6 @@ namespace Walton_Happy_Travel
                     "Daily Booking Report",
                     "Monthly Booking Report"
                 });
-
-                //if no report has been selected, reload the page
-                if(model.Report == null) return View(model);
 
                 //reload page
                 return View(model);

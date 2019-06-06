@@ -9,6 +9,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
+    /// <summary>
+    /// ViewModel for displaying the users own bookings
+    /// </summary>
     public class UserBookingsViewModel
     {
         public IEnumerable<Booking> Bookings { get; set; }

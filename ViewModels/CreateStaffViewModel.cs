@@ -8,6 +8,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
+    /// <summary>
+    /// ViewModel for creating a new staff member
+    /// </summary>
     public class CreateStaffViewModel
     {
         [Required]

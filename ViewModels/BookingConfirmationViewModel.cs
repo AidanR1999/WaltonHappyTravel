@@ -8,6 +8,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
+    /// <summary>
+    /// ViewModel for showing booking details
+    /// </summary>
     public class BookingConfirmationViewModel
     {
         public int BookingId { get; set; }

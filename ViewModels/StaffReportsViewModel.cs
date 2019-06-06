@@ -8,6 +8,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walton_Happy_Travel.Models
 {
+    /// <summary>
+    /// ViewModel for report generation
+    /// </summary>
     public class StaffReportsViewModel
     {
         public string Report { get; set; }
