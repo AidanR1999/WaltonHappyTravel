@@ -33,6 +33,10 @@
             </div>
         </div>
     </div>
+    @if(Model.ErrorMessage.Count() > 0)
+    {
+        <p class="text-danger">@Model.ErrorMessage</p>
+    }
 </form>
 
 <br/>

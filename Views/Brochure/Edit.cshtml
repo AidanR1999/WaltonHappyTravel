@@ -12,6 +12,8 @@
 <form method="post" enctype="multipart/form-data">
   <div class="form-row">
     <input type="hidden" asp-for="BrochureId" />
+    <input type="hidden" asp-for="ImageLink" />
+    
     <div class="form-group col-md-8">
         <label class="control-label">Accomodation</label>
         <select asp-for="AccomodationId" class="form-control" asp-items="ViewBag.AccomodationId"></select>

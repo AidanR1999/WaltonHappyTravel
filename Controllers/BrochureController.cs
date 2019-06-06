@@ -96,7 +96,7 @@ namespace Walton_Happy_Travel.Controllers
                 var files = HttpContext.Request.Form.Files;
 
                 //if image is uploaded
-                if(files.Count != 0)
+                if(!files.FirstOrDefault().FileName.Equals(""))
                 {
                     //getting the extension and path of the image
                     var uploads = Path.Combine(webRootPath, SD.ImageFolder);
@@ -174,7 +174,7 @@ namespace Walton_Happy_Travel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BrochureId,DepartureDate,Duration,PricePerPerson,Description,Catering,MaxPeople,MaxRooms,CategoryId,AccomodationId")] Brochure brochure)
+        public async Task<IActionResult> Edit(int id, Brochure brochure)
         {
             if (id != brochure.BrochureId)
             {
@@ -190,7 +190,7 @@ namespace Walton_Happy_Travel.Controllers
                     var files = HttpContext.Request.Form.Files;
 
                     //if image is uploaded
-                    if(files.Count != 0)
+                    if(!files.FirstOrDefault().FileName.Equals(""))
                     {
                         //getting the extension and path of the image
                         var uploads = Path.Combine(webRootPath, SD.ImageFolder);
@@ -224,8 +224,15 @@ namespace Walton_Happy_Travel.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "Discriminator", brochure.AccomodationId);
-            ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryId", brochure.CategoryId);
+
+            ViewData["Catering"] = new SelectList(new List<Catering>
+            {
+                Catering.ALL_INCLUSIVE,
+                Catering.HALF_BOARD,
+                Catering.SELF_CATERING
+            });
+            ViewData["AccomodationId"] = new SelectList(_context.Accomodations, "AccomodationId", "AccomodationName");
+            ViewData["CategoryId"] = new SelectList(_context.Categorys, "CategoryId", "CategoryName");
             return View(brochure);
         }
 
@@ -277,7 +284,8 @@ namespace Walton_Happy_Travel.Controllers
                 //get all brochures from database
                 Brochures = await _context.Brochures.Include(b=> b.Accomodation)
                     .Include(b => b.Accomodation.Country)
-                    .ToListAsync()
+                    .ToListAsync(),
+                ErrorMessage = ""
             };
 
             //populate catering data for filtering
@@ -327,93 +335,108 @@ namespace Walton_Happy_Travel.Controllers
         [HttpPost]
         public async Task<IActionResult> Browse(ViewBrochuresViewModel model)
         {
-            //gets all brochures with the matching category
-            var brochuresWithCategory = _context.Brochures
-                .Where(b => b.Category.CategoryName.Equals(model.Category))
-                .Include(b => b.Accomodation.Country)
-                .ToAsyncEnumerable()
-                .ToEnumerable();
-
-            //gets all brochures with the matching country
-            var brochuresWithCatering = _context.Brochures
-                .Where(b => b.Catering.ToString().Equals(model.Catering))
-                .Include(b => b.Accomodation.Country)
-                .ToAsyncEnumerable()
-                .ToEnumerable();
-            
-            //gets all brochures with the matching country
-            var brochuresWithCountry = _context.Brochures
-                .Where(b => b.Accomodation.Country.CountryName.Equals(model.Country))
-                .Include(b => b.Accomodation.Country)
-                .ToAsyncEnumerable()
-                .ToEnumerable();
-
-            //instantiate empty list
-            IEnumerable<Brochure> brochuresWithAccomodation;
-
-            //if no value for accomodation is selected, create a new list
-            if(model.Accomodation == null)
-                brochuresWithAccomodation = new List<Brochure>();
-
-            //if hotel is selected, get all hotels from the database
-            else if(model.Accomodation.Equals("Hotel"))
-                brochuresWithAccomodation =  _context.Brochures
-                    .Where(b => b.Accomodation.GetType() == typeof(Hotel))
-                    .Include(b => b.Accomodation.Country)
-                    .ToAsyncEnumerable()
-                    .ToEnumerable();
-
-            //if private property is selected, get all private accomodations from the database
-            else if(model.Accomodation.Equals("Private"))
-                brochuresWithAccomodation = _context.Brochures
-                    .Where(b => b.Accomodation.GetType() == typeof(Private))
-                    .Include(b => b.Accomodation.Country)
-                    .ToAsyncEnumerable()
-                    .ToEnumerable();
-
-            //if reached this far, something has failed
-            else
-                brochuresWithAccomodation = new List<Brochure>();
-
-            //instantiate a list to contain all other lists
-            List<IEnumerable<Brochure>> allLists = new List<IEnumerable<Brochure>>();
-
-            //if category brochures have data, add list to allLists
-            if(brochuresWithCategory.Count() > 0)
-                allLists.Add(brochuresWithCategory);
-
-            //if catering brochures have data, add list to allLists
-            if(brochuresWithCatering.Count() > 0)
-                allLists.Add(brochuresWithCatering);
-
-            //if country brochures have data, add list to allLists
-            if(brochuresWithCountry.Count() > 0)
-                allLists.Add(brochuresWithCountry);
-
-            //if accomodation brochures have data, add list to allLists
-            if(brochuresWithAccomodation.Count() > 0)
-                allLists.Add(brochuresWithAccomodation);
-
-            //if allLists contains a single list
-            if(allLists.Count() > 0)
+            //if there is search criteria, do the search
+            if(model.Accomodation != null || model.Category != null || model.Catering != null || model.Country != null)
             {
-                //iterate through each list, find all brochures that match and store in seperate list
-                var brochures = allLists
-                    .Skip(1)
-                    .Aggregate(
-                        new HashSet<Brochure>(allLists.First()),
-                        (h, e) => { h.IntersectWith(e); return h; }
-                    );
+                //gets all brochures with the matching category
+                var brochuresWithCategory = _context.Brochures
+                    .Where(b => b.Category.CategoryName.Equals(model.Category))
+                    .Include(b => b.Accomodation.Country)
+                    .ToAsyncEnumerable()
+                    .ToEnumerable();
 
-                //add filtered brochures to model
-                model.Brochures = brochures.ToList();
+                //gets all brochures with the matching country
+                var brochuresWithCatering = _context.Brochures
+                    .Where(b => b.Catering.ToString().Equals(model.Catering))
+                    .Include(b => b.Accomodation.Country)
+                    .ToAsyncEnumerable()
+                    .ToEnumerable();
+                
+                //gets all brochures with the matching country
+                var brochuresWithCountry = _context.Brochures
+                    .Where(b => b.Accomodation.Country.CountryName.Equals(model.Country))
+                    .Include(b => b.Accomodation.Country)
+                    .ToAsyncEnumerable()
+                    .ToEnumerable();
+
+                //instantiate empty list
+                IEnumerable<Brochure> brochuresWithAccomodation;
+
+                //if no value for accomodation is selected, create a new list
+                if(model.Accomodation == null)
+                    brochuresWithAccomodation = new List<Brochure>();
+
+                //if hotel is selected, get all hotels from the database
+                else if(model.Accomodation.Equals("Hotel"))
+                    brochuresWithAccomodation =  _context.Brochures
+                        .Where(b => b.Accomodation.GetType() == typeof(Hotel))
+                        .Include(b => b.Accomodation.Country)
+                        .ToAsyncEnumerable()
+                        .ToEnumerable();
+
+                //if private property is selected, get all private accomodations from the database
+                else if(model.Accomodation.Equals("Private"))
+                    brochuresWithAccomodation = _context.Brochures
+                        .Where(b => b.Accomodation.GetType() == typeof(Private))
+                        .Include(b => b.Accomodation.Country)
+                        .ToAsyncEnumerable()
+                        .ToEnumerable();
+
+                //if reached this far, something has failed
+                else
+                    brochuresWithAccomodation = new List<Brochure>();
+
+                //instantiate a list to contain all other lists
+                List<IEnumerable<Brochure>> allLists = new List<IEnumerable<Brochure>>();
+
+                //if category brochures have data, add list to allLists
+                if(brochuresWithCategory.Count() > 0)
+                    allLists.Add(brochuresWithCategory);
+
+                //if catering brochures have data, add list to allLists
+                if(brochuresWithCatering.Count() > 0)
+                    allLists.Add(brochuresWithCatering);
+
+                //if country brochures have data, add list to allLists
+                if(brochuresWithCountry.Count() > 0)
+                    allLists.Add(brochuresWithCountry);
+
+                //if accomodation brochures have data, add list to allLists
+                if(brochuresWithAccomodation.Count() > 0)
+                    allLists.Add(brochuresWithAccomodation);
+
+                //if allLists contains a single list
+                if(allLists.Count() > 0)
+                {
+                    //iterate through each list, find all brochures that match and store in seperate list
+                    var brochures = allLists
+                        .Skip(1)
+                        .Aggregate(
+                            new HashSet<Brochure>(allLists.First()),
+                            (h, e) => { h.IntersectWith(e); return h; }
+                        );
+
+                    //add filtered brochures to model
+                    model.Brochures = brochures.ToList();
+
+                    model.ErrorMessage = "";
+                }
+                //no matches have been found, display all brochures
+                else
+                {
+                    model.Brochures = await _context.Brochures.Include(b=> b.Accomodation)
+                        .Include(b => b.Accomodation.Country)
+                        .ToListAsync();
+
+                        model.ErrorMessage = "No results match search criteria";
+                }
             }
-            //no matches have been found, display all brochures
             else
             {
                 model.Brochures = await _context.Brochures.Include(b=> b.Accomodation)
-                    .Include(b => b.Accomodation.Country)
-                    .ToListAsync();
+                        .Include(b => b.Accomodation.Country)
+                        .ToListAsync();
+                model.ErrorMessage = "";
             }
 
             //populate catering data for filtering

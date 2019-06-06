@@ -42,7 +42,7 @@
         <tr>
                 <th>Payment #@i</th>
                 <td>@DateTime.Now.Date</td>
-                <td>£@Model.InitialPay</td>
+                <td>£@Math.Round(Model.InitialPay, 2)</td>
                 @{i++;}
         </tr>
         @foreach (var payment in Model.FuturePayments)
@@ -50,7 +50,7 @@
             <tr>
                 <th>Payment #@i</th>
                 <td>@payment.Key</td>
-                <td>£@payment.Value</td>
+                <td>£@Math.Round(payment.Value, 2)</td>
                 <td>
                 @{i++;}
             </tr>

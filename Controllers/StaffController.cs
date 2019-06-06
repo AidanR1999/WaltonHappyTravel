@@ -82,7 +82,8 @@ namespace Walton_Happy_Travel
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateStaffViewModel model)
         {
-            if (ModelState.IsValid)
+            var results = await _userManager.FindByEmailAsync(model.Email);
+            if (ModelState.IsValid && results == null)
             {
                 var staff = new Staff()
                 {

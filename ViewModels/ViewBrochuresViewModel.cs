@@ -23,5 +23,6 @@ namespace Walton_Happy_Travel.Models
         public string Country { get; set; }
         public string Catering { get; set; }
         public string Category { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }
